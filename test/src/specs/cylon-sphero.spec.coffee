@@ -1,6 +1,6 @@
 'use strict';
 
-cylonSphero = source("cylon-sphero")
+sphero = source("cylon-sphero")
 
 describe "basic tests", ->
   it "standard async test", (done) ->
@@ -30,7 +30,6 @@ describe "basic tests", ->
     data[0].should.be.equal obj
 
   # Now on to a `real` test
-  it "cylon-sphero should be awesome", ->
-    cylonSphero.should.have.keys 'awesome'
-    cylonSphero.awesome.should.be.a 'function'
-    cylonSphero.awesome().should.be.equal 'awesome'
+  it "cylon-sphero should have an adaptor interface", ->
+    assert typeof sphero.adaptor is 'function'
+    assert typeof sphero.register is 'function'

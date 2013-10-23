@@ -1,8 +1,8 @@
 (function() {
   'use strict';
-  var cylonSphero;
+  var sphero;
 
-  cylonSphero = source("cylon-sphero");
+  sphero = source("cylon-sphero");
 
   describe("basic tests", function() {
     it("standard async test", function(done) {
@@ -34,10 +34,9 @@
       data[0].should.be.eql(obj);
       return data[0].should.be.equal(obj);
     });
-    return it("cylon-sphero should be awesome", function() {
-      cylonSphero.should.have.keys('awesome');
-      cylonSphero.awesome.should.be.a('function');
-      return cylonSphero.awesome().should.be.equal('awesome');
+    return it("cylon-sphero should have an adaptor interface", function() {
+      assert(typeof sphero.adaptor === 'function');
+      return assert(typeof sphero.register === 'function');
     });
   });
 
