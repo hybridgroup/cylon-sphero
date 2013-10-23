@@ -10,27 +10,39 @@
 
 module.exports =
   adaptor: (args...) ->
-    new Sphero(args...)
+    new Adaptor.Sphero(args...)
+
+  driver: (args...) ->
+    new Driver.Sphero(args...)
 
   register: (robot) ->
     console.log "Registering Sphero adaptor for #{robot.name}"
     robot.registerAdaptor 'sphero', 'sphero'
 
+    console.log "Registering Sphero driver for #{robot.name}"
+    robot.registerDriver 'sphero', 'sphero'
+
 Spheron = require('spheron')
 
-class Sphero
-  self = this
+Adaptor =
+  Sphero: class Sphero
+    self = this
 
-  constructor: (opts) ->
-    @connection = opts.connection
-    @name = opts.name
-    @sphero = Spheron.sphero()
+    constructor: (opts) ->
+      @connection = opts.connection
+      @name = opts.name
+      @sphero = Spheron.sphero()
 
-  connect: ->
-    console.log "Connecting to Sphero '#{@name}'..."
-    @sphero.open(@connection.port);
-    self
+    connect: ->
+      console.log "Connecting to Sphero '#{@name}'..."
+      @sphero.open(@connection.port);
+      self
 
-  disconnect: ->
-    console.log "Disconnecting from Sphero '#{@name}'..."
-    @sphero.close
+    disconnect: ->
+      console.log "Disconnecting from Sphero '#{@name}'..."
+      @sphero.close
+
+Driver =
+  Sphero: class Sphero
+    constructor: (opts) ->
+      @device = opts.device
