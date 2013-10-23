@@ -4,7 +4,7 @@
 
   sphero = source("cylon-sphero");
 
-  describe("basic tests", function() {
+  describe("Sphero", function() {
     it("standard async test", function(done) {
       var bool;
       bool = false;
@@ -34,9 +34,11 @@
       data[0].should.be.eql(obj);
       return data[0].should.be.equal(obj);
     });
-    return it("cylon-sphero should have an adaptor interface", function() {
-      assert(typeof sphero.adaptor === 'function');
-      return assert(typeof sphero.register === 'function');
+    it("should be able to register", function() {
+      return sphero.register.should.be.a('function');
+    });
+    return it("should be able to create adaptor", function() {
+      return sphero.adaptor.should.be.a('function');
     });
   });
 
