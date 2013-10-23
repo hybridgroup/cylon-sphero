@@ -8,5 +8,22 @@
 
 'use strict';
 
-exports.awesome = ->
-  'awesome'
+module.exports =
+  adaptor: (args...) ->
+    new Sphero(args...)
+
+  register: (robot) ->
+    console.log "Registering Sphero adaptor for #{robot.name}"
+
+class Sphero
+  self = this
+
+  constructor: (opts) ->
+    @name = opts.name
+
+  connect: ->
+    console.log "Connecting to Sphero '#{@name}'..."
+    self
+
+  disconnect: ->
+    console.log "Disconnecting from Sphero '#{@name}'..."
