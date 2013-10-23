@@ -2,7 +2,7 @@
 
 sphero = source("cylon-sphero")
 
-describe "basic tests", ->
+describe "Sphero", ->
   it "standard async test", (done) ->
     bool = false
     bool.should.be.false
@@ -29,7 +29,9 @@ describe "basic tests", ->
     # hard equal
     data[0].should.be.equal obj
 
-  # Now on to a `real` test
-  it "cylon-sphero should have an adaptor interface", ->
-    assert typeof sphero.adaptor is 'function'
-    assert typeof sphero.register is 'function'
+  it "should be able to register", ->
+    sphero.register.should.be.a 'function'
+
+  it "should be able to create adaptor", ->
+    sphero.adaptor.should.be.a 'function'
+    

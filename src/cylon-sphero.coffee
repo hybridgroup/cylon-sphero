@@ -14,16 +14,23 @@ module.exports =
 
   register: (robot) ->
     console.log "Registering Sphero adaptor for #{robot.name}"
+    robot.registerAdaptor 'sphero', 'sphero'
+
+Spheron = require('spheron')
 
 class Sphero
   self = this
 
   constructor: (opts) ->
+    @connection = opts.connection
     @name = opts.name
+    @sphero = Spheron.sphero()
 
   connect: ->
     console.log "Connecting to Sphero '#{@name}'..."
+    @sphero.open(@connection.port);
     self
 
   disconnect: ->
     console.log "Disconnecting from Sphero '#{@name}'..."
+    @sphero.close

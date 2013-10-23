@@ -9,7 +9,7 @@
 
 (function() {
   'use strict';
-  var Sphero,
+  var Sphero, Spheron,
     __slice = [].slice;
 
   module.exports = {
@@ -23,9 +23,12 @@
       })(Sphero, args, function(){});
     },
     register: function(robot) {
-      return console.log("Registering Sphero adaptor for " + robot.name);
+      console.log("Registering Sphero adaptor for " + robot.name);
+      return robot.registerAdaptor('sphero', 'sphero');
     }
   };
+
+  Spheron = require('spheron');
 
   Sphero = (function() {
     var self;
@@ -33,16 +36,20 @@
     self = Sphero;
 
     function Sphero(opts) {
+      this.connection = opts.connection;
       this.name = opts.name;
+      this.sphero = Spheron.sphero();
     }
 
     Sphero.prototype.connect = function() {
       console.log("Connecting to Sphero '" + this.name + "'...");
+      this.sphero.open(this.connection.port);
       return self;
     };
 
     Sphero.prototype.disconnect = function() {
-      return console.log("Disconnecting from Sphero '" + this.name + "'...");
+      console.log("Disconnecting from Sphero '" + this.name + "'...");
+      return this.sphero.close;
     };
 
     return Sphero;
