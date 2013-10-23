@@ -1,0 +1,34 @@
+{
+  "name": "cylon-sphero",
+  "version": "0.0.0",
+  "main": "lib/cylon-sphero.js",
+  "description": "Cylon module for Sphero robot",
+  "homepage": "http://cylonjs.com",
+  "bugs": "https://github.com/hybridgroup/cylon-sphero/issues",
+  "author": {
+    "name": "The Hybrid Group",
+    "email": "",
+    "url": "http://hybridgroup.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hybridgroup/cylon-sphero"
+  },
+  "licenses": [
+    {
+      "type": "Apache 2.0"
+    }
+  ],
+  "devDependencies": {
+    "matchdep": "~0.1.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-watch": "~0.5.0",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-simple-mocha": "~0.4.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "sinon-chai": "~2.4.0",
+    "chai": "~1.7.2",
+    "mocha": "~1.12.1",
+    "sinon": "~1.7.3"
+  }
+}
