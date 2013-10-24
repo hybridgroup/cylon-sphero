@@ -33,9 +33,9 @@
     },
     register: function(robot) {
       console.log("Registering Sphero adaptor for " + robot.name);
-      robot.registerAdaptor('sphero', 'sphero');
+      robot.registerAdaptor('cylon-sphero', 'sphero');
       console.log("Registering Sphero driver for " + robot.name);
-      return robot.registerDriver('sphero', 'sphero');
+      return robot.registerDriver('cylon-sphero', 'sphero');
     }
   };
 
