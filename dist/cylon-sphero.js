@@ -9,8 +9,10 @@
 
 (function() {
   'use strict';
-  var Adaptor, Commands, Driver, Sphero, Spheron,
-    __slice = [].slice;
+  var Adaptor, Base, Commands, Driver, Sphero, Spheron,
+    __slice = [].slice,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   module.exports = {
     adaptor: function() {
@@ -32,9 +34,9 @@
       })(Driver.Sphero, args, function(){});
     },
     register: function(robot) {
-      console.log("Registering Sphero adaptor for " + robot.name);
+      Logger.info("Registering Sphero adaptor for " + robot.name);
       robot.registerAdaptor('cylon-sphero', 'sphero');
-      console.log("Registering Sphero driver for " + robot.name);
+      Logger.info("Registering Sphero driver for " + robot.name);
       return robot.registerDriver('cylon-sphero', 'sphero');
     }
   };
@@ -43,22 +45,34 @@
 
   Commands = ['roll', 'setRGB'];
 
+  Base = (function() {
+    function Base(opts) {
+      this.self = this;
+    }
+
+    Base.prototype.commands = function() {
+      return Commands;
+    };
+
+    return Base;
+
+  })();
+
   Adaptor = {
-    Sphero: Sphero = (function() {
+    Sphero: Sphero = (function(_super) {
+      __extends(Sphero, _super);
+
       function Sphero(opts) {
-        this.self = this;
+        Sphero.__super__.constructor.apply(this, arguments);
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
+        this.setupCommands();
       }
-
-      Sphero.prototype.commands = function() {
-        return Commands;
-      };
 
       Sphero.prototype.connect = function(connection) {
         this.connection = connection;
-        console.log("Connecting to Sphero '" + this.name + "'...");
+        Logger.info("Connecting to Sphero '" + this.name + "'...");
         this.sphero.on('open', function() {
           return this.connection.emit('connect', this.self);
         });
@@ -82,33 +96,40 @@
       };
 
       Sphero.prototype.disconnect = function() {
-        console.log("Disconnecting from Sphero '" + this.name + "'...");
+        Logger.info("Disconnecting from Sphero '" + this.name + "'...");
         return this.sphero.close;
       };
 
-      Sphero.prototype.roll = function(speed, heading, state) {
-        return this.sphero.roll(speed, heading, state);
-      };
-
-      Sphero.prototype.setRGB = function(color, persist) {
-        return this.sphero.roll(color, persist);
+      Sphero.prototype.setupCommands = function() {
+        var command, _i, _len;
+        for (_i = 0, _len = Commands.length; _i < _len; _i++) {
+          command = Commands[_i];
+          if (typeof this.self[command] === 'function') {
+            return;
+          }
+          this.self[command] = function() {
+            var args, _ref;
+            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+            return (_ref = this.sphero)[command].apply(_ref, args);
+          };
+        }
       };
 
       return Sphero;
 
-    })()
+    })(Base)
   };
 
   Driver = {
-    Sphero: Sphero = (function() {
+    Sphero: Sphero = (function(_super) {
+      __extends(Sphero, _super);
+
       function Sphero(opts) {
+        Sphero.__super__.constructor.apply(this, arguments);
         this.device = opts.device;
         this.connection = this.device.connection;
+        this.setupCommands();
       }
-
-      Sphero.prototype.commands = function() {
-        return Commands;
-      };
 
       Sphero.prototype.start = function() {
         Logger.info("started");
@@ -120,20 +141,24 @@
         });
       };
 
-      Sphero.prototype.roll = function(speed, heading, state) {
-        if (state == null) {
-          state = 1;
+      Sphero.prototype.setupCommands = function() {
+        var command, _i, _len;
+        for (_i = 0, _len = Commands.length; _i < _len; _i++) {
+          command = Commands[_i];
+          if (typeof this.self[command] === 'function') {
+            return;
+          }
+          this.self[command] = function() {
+            var args, _ref;
+            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+            return (_ref = this.connection)[command].apply(_ref, args);
+          };
         }
-        return this.connection.roll(speed, heading, state);
-      };
-
-      Sphero.prototype.setRGB = function(color, persist) {
-        return this.connection.roll(color, persist);
       };
 
       return Sphero;
 
-    })()
+    })(Base)
   };
 
 }).call(this);

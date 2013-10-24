@@ -16,31 +16,35 @@ module.exports =
     new Driver.Sphero(args...)
 
   register: (robot) ->
-    console.log "Registering Sphero adaptor for #{robot.name}"
+    Logger.info "Registering Sphero adaptor for #{robot.name}"
     robot.registerAdaptor 'cylon-sphero', 'sphero'
 
-    console.log "Registering Sphero driver for #{robot.name}"
+    Logger.info "Registering Sphero driver for #{robot.name}"
     robot.registerDriver 'cylon-sphero', 'sphero'
 
 Spheron = require('spheron')
 
 Commands = ['roll', 'setRGB']
 
-Adaptor =
-  Sphero: class Sphero
+class Base
+  constructor: (opts) ->
+    @self = this
 
+  commands: ->
+    Commands
+
+Adaptor =
+  Sphero: class Sphero extends Base
     constructor: (opts) ->
-      @self = this
+      super
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
-
-    commands: ->
-      Commands
+      @setupCommands()
 
     connect: (connection) ->
       @connection = connection
-      console.log "Connecting to Sphero '#{@name}'..."
+      Logger.info "Connecting to Sphero '#{@name}'..."
 
       @sphero.on 'open', ->
         @connection.emit 'connect', @self
@@ -64,23 +68,21 @@ Adaptor =
       @self
 
     disconnect: ->
-      console.log "Disconnecting from Sphero '#{@name}'..."
+      Logger.info "Disconnecting from Sphero '#{@name}'..."
       @sphero.close
 
-    roll: (speed, heading, state) ->
-      @sphero.roll(speed, heading, state)
-
-    setRGB: (color, persist) ->
-      @sphero.roll(color, persist)
+    setupCommands: ->
+      for command in Commands
+        return if typeof @self[command] is 'function'
+        @self[command] = (args...) -> @sphero[command](args...)
 
 Driver =
-  Sphero: class Sphero
+  Sphero: class Sphero extends Base
     constructor: (opts) ->
+      super
       @device = opts.device
       @connection = @device.connection
-
-    commands: ->
-      Commands
+      @setupCommands()
 
     start: ->
       Logger.info "started"
@@ -90,9 +92,7 @@ Driver =
       @connection.on 'notification', (data) ->
         @device.emit 'notification', @self, data
 
-
-    roll: (speed, heading, state = 1) ->
-      @connection.roll(speed, heading, state)
-
-    setRGB: (color, persist) ->
-      @connection.roll(color, persist)
+    setupCommands: ->
+      for command in Commands
+        return if typeof @self[command] is 'function'
+        @self[command] = (args...) -> @connection[command](args...)
