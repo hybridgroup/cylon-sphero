@@ -26,9 +26,9 @@ Spheron = require('spheron')
 
 Adaptor =
   Sphero: class Sphero
-    self = this
 
     constructor: (opts) ->
+      @self = this
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
@@ -37,7 +37,7 @@ Adaptor =
       @connection = connection
       console.log "Connecting to Sphero '#{@name}'..."
       @sphero.open(@connection.port.toString())
-      self
+      @self
 
     disconnect: ->
       console.log "Disconnecting from Sphero '#{@name}'..."
