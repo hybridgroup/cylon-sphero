@@ -35,7 +35,7 @@ Adaptor =
 
     connect: ->
       console.log "Connecting to Sphero '#{@name}'..."
-      @sphero.open(@connection.port);
+      @sphero.open(@connection.port.toString())
       self
 
     disconnect: ->
