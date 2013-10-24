@@ -33,7 +33,8 @@ Adaptor =
       @name = opts.name
       @sphero = Spheron.sphero()
 
-    connect: ->
+    connect: (connection) ->
+      @connection = connection
       console.log "Connecting to Sphero '#{@name}'..."
       @sphero.open(@connection.port.toString())
       self
