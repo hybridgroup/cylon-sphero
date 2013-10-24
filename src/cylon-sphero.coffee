@@ -24,7 +24,7 @@ module.exports =
 
 Spheron = require('spheron')
 
-Commands = ['roll', 'setRGB']
+Commands = ['roll', 'setRGB', 'configureCollisionDetection']
 
 class Base
   constructor: (opts) ->
@@ -76,6 +76,10 @@ Adaptor =
         return if typeof @self[command] is 'function'
         @self[command] = (args...) -> @sphero[command](args...)
 
+    configureCollisionDetection: ->
+      @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50)
+
+
 Driver =
   Sphero: class Sphero extends Base
     constructor: (opts) ->
@@ -99,6 +103,10 @@ Driver =
 
     roll: (speed, heading, state = 1) ->
       @connection.roll(speed, heading, state)
+
+    configureCollisionDetection: ->
+      @connection.configureCollisionDetection()
+
 
     setRGB: (color, persist) ->
       @connection.roll(color, persist)
