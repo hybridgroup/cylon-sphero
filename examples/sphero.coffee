@@ -2,7 +2,7 @@ Cylon = require('cylon')
 
 Cylon.robot
   connection:
-    name: 'sphero', adaptor: 'sphero', port: '/dev/Sphero-RPB'
+    name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm0'
 
   device:
     name: 'sphero', driver: 'sphero'

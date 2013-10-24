@@ -59,6 +59,24 @@
       Sphero.prototype.connect = function(connection) {
         this.connection = connection;
         console.log("Connecting to Sphero '" + this.name + "'...");
+        this.sphero.on('open', function() {
+          return this.connection.emit('connect', this.self);
+        });
+        this.sphero.on('close', function() {
+          return this.connection.emit('disconnect', this.self);
+        });
+        this.sphero.on('error', function() {
+          return this.connection.emit('error', this.self);
+        });
+        this.sphero.on('data', function(data) {
+          return this.connection.emit('update', this.self, data);
+        });
+        this.sphero.on('message', function(data) {
+          return this.connection.emit('message', this.self, data);
+        });
+        this.sphero.on('notification', function(data) {
+          return this.connection.emit('notification', this.self, data);
+        });
         this.sphero.open(this.connection.port.toString());
         return this.self;
       };
@@ -93,10 +111,19 @@
       };
 
       Sphero.prototype.start = function() {
-        return Logger.info("started");
+        Logger.info("started");
+        this.connection.on('message', function(data) {
+          return this.device.emit('message', this.self, data);
+        });
+        return this.connection.on('notification', function(data) {
+          return this.device.emit('notification', this.self, data);
+        });
       };
 
       Sphero.prototype.roll = function(speed, heading, state) {
+        if (state == null) {
+          state = 1;
+        }
         return this.connection.roll(speed, heading, state);
       };
 

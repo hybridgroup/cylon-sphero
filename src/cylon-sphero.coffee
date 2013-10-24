@@ -41,6 +41,25 @@ Adaptor =
     connect: (connection) ->
       @connection = connection
       console.log "Connecting to Sphero '#{@name}'..."
+
+      @sphero.on 'open', ->
+        @connection.emit 'connect', @self
+
+      @sphero.on 'close', ->
+        @connection.emit 'disconnect', @self
+
+      @sphero.on 'error', ->
+        @connection.emit 'error', @self
+
+      @sphero.on 'data', (data) ->
+        @connection.emit 'update', @self, data
+
+      @sphero.on 'message', (data) ->
+        @connection.emit 'message', @self, data
+
+      @sphero.on 'notification', (data) ->
+        @connection.emit 'notification', @self, data
+
       @sphero.open(@connection.port.toString())
       @self
 
@@ -65,8 +84,14 @@ Driver =
 
     start: ->
       Logger.info "started"
+      @connection.on 'message', (data) ->
+        @device.emit 'message', @self, data
 
-    roll: (speed, heading, state) ->
+      @connection.on 'notification', (data) ->
+        @device.emit 'notification', @self, data
+
+
+    roll: (speed, heading, state = 1) ->
       @connection.roll(speed, heading, state)
 
     setRGB: (color, persist) ->
