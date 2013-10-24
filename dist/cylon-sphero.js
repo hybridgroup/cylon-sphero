@@ -43,11 +43,8 @@
 
   Adaptor = {
     Sphero: Sphero = (function() {
-      var self;
-
-      self = Sphero;
-
       function Sphero(opts) {
+        this.self = this;
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
@@ -57,7 +54,7 @@
         this.connection = connection;
         console.log("Connecting to Sphero '" + this.name + "'...");
         this.sphero.open(this.connection.port.toString());
-        return self;
+        return this.self;
       };
 
       Sphero.prototype.disconnect = function() {

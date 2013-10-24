@@ -2,9 +2,12 @@ Cylon = require('cylon')
 
 Cylon.robot
   connection:
-    name: 'Sphero', adaptor: 'sphero', port: '/dev/Sphero-RPB'
+    name: 'sphero', adaptor: 'sphero', port: '/dev/Sphero-RPB'
 
-  work: ->
-    every 2.seconds(), -> Logger.info "Required cylon-sphero adaptor!"
+  device:
+    name: 'sphero', driver: 'sphero'
+
+  work: (self) ->
+    every 1.second(), -> self.sphero.roll(60, Math.floor(Math.random() * 360), 1)
 
 .start()
