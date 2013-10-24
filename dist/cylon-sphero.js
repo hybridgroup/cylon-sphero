@@ -53,9 +53,10 @@
         this.sphero = Spheron.sphero();
       }
 
-      Sphero.prototype.connect = function() {
+      Sphero.prototype.connect = function(connection) {
+        this.connection = connection;
         console.log("Connecting to Sphero '" + this.name + "'...");
-        this.sphero.open(this.connection.port);
+        this.sphero.open(this.connection.port.toString());
         return self;
       };
 
