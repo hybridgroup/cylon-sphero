@@ -43,7 +43,7 @@
 
   Spheron = require('spheron');
 
-  Commands = ['roll', 'setRGB'];
+  Commands = ['roll', 'setRGB', 'detectCollisions', 'close'];
 
   Base = (function() {
     function Base(opts) {
@@ -71,25 +71,26 @@
       }
 
       Sphero.prototype.connect = function(connection) {
+        var _this = this;
         this.connection = connection;
         Logger.info("Connecting to Sphero '" + this.name + "'...");
         this.sphero.on('open', function() {
-          return this.connection.emit('connect', this.self);
+          return _this.connection.emit('connect', _this.self);
         });
         this.sphero.on('close', function() {
-          return this.connection.emit('disconnect', this.self);
+          return _this.connection.emit('disconnect', _this.self);
         });
         this.sphero.on('error', function() {
-          return this.connection.emit('error', this.self);
+          return _this.connection.emit('error', _this.self);
         });
         this.sphero.on('data', function(data) {
-          return this.connection.emit('update', this.self, data);
+          return _this.connection.emit('update', _this.self, data);
         });
         this.sphero.on('message', function(data) {
-          return this.connection.emit('message', this.self, data);
+          return _this.connection.emit('message', _this.self, data);
         });
         this.sphero.on('notification', function(data) {
-          return this.connection.emit('notification', this.self, data);
+          return _this.connection.emit('notification', _this.self, data);
         });
         this.sphero.open(this.connection.port.toString());
         return this.self;
@@ -115,6 +116,18 @@
         }
       };
 
+      Sphero.prototype.roll = function(speed, heading, state) {
+        return this.sphero.roll(speed, heading, state);
+      };
+
+      Sphero.prototype.setRGB = function(color, persist) {
+        return this.sphero.setRGB(color, persist);
+      };
+
+      Sphero.prototype.detectCollisions = function() {
+        return this.sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50);
+      };
+
       return Sphero;
 
     })(Base)
@@ -132,12 +145,13 @@
       }
 
       Sphero.prototype.start = function() {
+        var _this = this;
         Logger.info("started");
         this.connection.on('message', function(data) {
-          return this.device.emit('message', this.self, data);
+          return _this.device.emit('message', _this.self, data);
         });
         return this.connection.on('notification', function(data) {
-          return this.device.emit('notification', this.self, data);
+          return _this.device.emit('notification', _this.self, data);
         });
       };
 
@@ -154,6 +168,21 @@
             return (_ref = this.connection)[command].apply(_ref, args);
           };
         }
+      };
+
+      Sphero.prototype.roll = function(speed, heading, state) {
+        if (state == null) {
+          state = 1;
+        }
+        return this.connection.roll(speed, heading, state);
+      };
+
+      Sphero.prototype.detectCollisions = function() {
+        return this.connection.detectCollisions();
+      };
+
+      Sphero.prototype.setRGB = function(color, persist) {
+        return this.connection.setRGB(color, persist);
       };
 
       return Sphero;

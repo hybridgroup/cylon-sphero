@@ -24,7 +24,7 @@ module.exports =
 
 Spheron = require('spheron')
 
-Commands = ['roll', 'setRGB']
+Commands = ['roll', 'setRGB', 'detectCollisions']
 
 class Base
   constructor: (opts) ->
@@ -46,22 +46,22 @@ Adaptor =
       @connection = connection
       Logger.info "Connecting to Sphero '#{@name}'..."
 
-      @sphero.on 'open', ->
+      @sphero.on 'open', =>
         @connection.emit 'connect', @self
 
-      @sphero.on 'close', ->
+      @sphero.on 'close', =>
         @connection.emit 'disconnect', @self
 
-      @sphero.on 'error', ->
+      @sphero.on 'error', =>
         @connection.emit 'error', @self
 
-      @sphero.on 'data', (data) ->
+      @sphero.on 'data', (data) =>
         @connection.emit 'update', @self, data
 
-      @sphero.on 'message', (data) ->
+      @sphero.on 'message', (data) =>
         @connection.emit 'message', @self, data
 
-      @sphero.on 'notification', (data) ->
+      @sphero.on 'notification', (data) =>
         @connection.emit 'notification', @self, data
 
       @sphero.open(@connection.port.toString())
@@ -76,6 +76,15 @@ Adaptor =
         return if typeof @self[command] is 'function'
         @self[command] = (args...) -> @sphero[command](args...)
 
+    roll: (speed, heading, state) ->
+      @sphero.roll(speed, heading, state)
+
+    setRGB: (color, persist) ->
+      @sphero.setRGB(color, persist)
+
+    detectCollisions: ->
+      @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50,)
+
 Driver =
   Sphero: class Sphero extends Base
     constructor: (opts) ->
@@ -86,13 +95,24 @@ Driver =
 
     start: ->
       Logger.info "started"
-      @connection.on 'message', (data) ->
+
+      @connection.on 'message', (data) =>
         @device.emit 'message', @self, data
 
-      @connection.on 'notification', (data) ->
+      @connection.on 'notification', (data) =>
         @device.emit 'notification', @self, data
 
     setupCommands: ->
       for command in Commands
         return if typeof @self[command] is 'function'
         @self[command] = (args...) -> @connection[command](args...)
+
+    roll: (speed, heading, state = 1) ->
+      @connection.roll(speed, heading, state)
+
+    detectCollisions: ->
+      @connection.detectCollisions()
+
+
+    setRGB: (color, persist) ->
+      @connection.setRGB(color, persist)
