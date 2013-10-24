@@ -101,7 +101,6 @@
         return this.sphero.close;
       };
 
-<<<<<<< HEAD
       Sphero.prototype.setupCommands = function() {
         var command, _i, _len;
         for (_i = 0, _len = Commands.length; _i < _len; _i++) {
@@ -115,14 +114,14 @@
             return (_ref = this.sphero)[command].apply(_ref, args);
           };
         }
-=======
+      };
+
       Sphero.prototype.roll = function(speed, heading, state) {
         return this.sphero.roll(speed, heading, state);
       };
 
       Sphero.prototype.setRGB = function(color, persist) {
         return this.sphero.setRGB(color, persist);
->>>>>>> Fixes incorrect setRGB call.
       };
 
       Sphero.prototype.detectCollisions = function() {
@@ -169,8 +168,12 @@
             return (_ref = this.connection)[command].apply(_ref, args);
           };
         }
-<<<<<<< HEAD
-=======
+      };
+
+      Sphero.prototype.roll = function(speed, heading, state) {
+        if (state == null) {
+          state = 1;
+        }
         return this.connection.roll(speed, heading, state);
       };
 
@@ -179,12 +182,7 @@
       };
 
       Sphero.prototype.setRGB = function(color, persist) {
-<<<<<<< HEAD
-        return this.connection.roll(color, persist);
->>>>>>> WIP on configureCollisionDetection and event emitter.
-=======
         return this.connection.setRGB(color, persist);
->>>>>>> Fixes incorrect setRGB call.
       };
 
       return Sphero;
