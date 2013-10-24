@@ -9,7 +9,7 @@
 
 (function() {
   'use strict';
-  var Adaptor, Driver, Sphero, Spheron,
+  var Adaptor, Commands, Driver, Sphero, Spheron,
     __slice = [].slice;
 
   module.exports = {
@@ -41,6 +41,8 @@
 
   Spheron = require('spheron');
 
+  Commands = ['roll', 'setRGB'];
+
   Adaptor = {
     Sphero: Sphero = (function() {
       function Sphero(opts) {
@@ -49,6 +51,10 @@
         this.name = opts.name;
         this.sphero = Spheron.sphero();
       }
+
+      Sphero.prototype.commands = function() {
+        return Commands;
+      };
 
       Sphero.prototype.connect = function(connection) {
         this.connection = connection;
@@ -62,6 +68,14 @@
         return this.sphero.close;
       };
 
+      Sphero.prototype.roll = function(speed, heading, state) {
+        return this.sphero.roll(speed, heading, state);
+      };
+
+      Sphero.prototype.setRGB = function(color, persist) {
+        return this.sphero.roll(color, persist);
+      };
+
       return Sphero;
 
     })()
@@ -71,7 +85,24 @@
     Sphero: Sphero = (function() {
       function Sphero(opts) {
         this.device = opts.device;
+        this.connection = this.device.connection;
       }
+
+      Sphero.prototype.commands = function() {
+        return Commands;
+      };
+
+      Sphero.prototype.start = function() {
+        return Logger.info("started");
+      };
+
+      Sphero.prototype.roll = function(speed, heading, state) {
+        return this.connection.roll(speed, heading, state);
+      };
+
+      Sphero.prototype.setRGB = function(color, persist) {
+        return this.connection.roll(color, persist);
+      };
 
       return Sphero;
 

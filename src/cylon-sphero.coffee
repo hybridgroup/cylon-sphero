@@ -24,6 +24,8 @@ module.exports =
 
 Spheron = require('spheron')
 
+Commands = ['roll', 'setRGB']
+
 Adaptor =
   Sphero: class Sphero
 
@@ -32,6 +34,9 @@ Adaptor =
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
+
+    commands: ->
+      Commands
 
     connect: (connection) ->
       @connection = connection
@@ -43,7 +48,26 @@ Adaptor =
       console.log "Disconnecting from Sphero '#{@name}'..."
       @sphero.close
 
+    roll: (speed, heading, state) ->
+      @sphero.roll(speed, heading, state)
+
+    setRGB: (color, persist) ->
+      @sphero.roll(color, persist)
+
 Driver =
   Sphero: class Sphero
     constructor: (opts) ->
       @device = opts.device
+      @connection = @device.connection
+
+    commands: ->
+      Commands
+
+    start: ->
+      Logger.info "started"
+
+    roll: (speed, heading, state) ->
+      @connection.roll(speed, heading, state)
+
+    setRGB: (color, persist) ->
+      @connection.roll(color, persist)
