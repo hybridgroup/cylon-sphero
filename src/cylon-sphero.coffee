@@ -17,10 +17,10 @@ module.exports =
 
   register: (robot) ->
     console.log "Registering Sphero adaptor for #{robot.name}"
-    robot.registerAdaptor 'sphero', 'sphero'
+    robot.registerAdaptor 'cylon-sphero', 'sphero'
 
     console.log "Registering Sphero driver for #{robot.name}"
-    robot.registerDriver 'sphero', 'sphero'
+    robot.registerDriver 'cylon-sphero', 'sphero'
 
 Spheron = require('spheron')
 
