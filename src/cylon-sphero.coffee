@@ -24,7 +24,7 @@ module.exports =
 
 Spheron = require('spheron')
 
-Commands = ['roll', 'setRGB', 'detectCollisions', 'close']
+Commands = ['roll', 'setRGB', 'detectCollisions']
 
 class Base
   constructor: (opts) ->
