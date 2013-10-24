@@ -24,7 +24,7 @@ module.exports =
 
 Spheron = require('spheron')
 
-Commands = ['roll', 'setRGB', 'configureCollisionDetection']
+Commands = ['roll', 'setRGB', 'detectCollisions', 'close']
 
 class Base
   constructor: (opts) ->
@@ -76,9 +76,14 @@ Adaptor =
         return if typeof @self[command] is 'function'
         @self[command] = (args...) -> @sphero[command](args...)
 
-    configureCollisionDetection: ->
-      @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50)
+    roll: (speed, heading, state) ->
+      @sphero.roll(speed, heading, state)
 
+    setRGB: (color, persist) ->
+      @sphero.setRGB(color, persist)
+
+    detectCollisions: ->
+      @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50,)
 
 Driver =
   Sphero: class Sphero extends Base
@@ -90,6 +95,7 @@ Driver =
 
     start: ->
       Logger.info "started"
+
       @connection.on 'message', (data) =>
         @device.emit 'message', @self, data
 
@@ -104,9 +110,9 @@ Driver =
     roll: (speed, heading, state = 1) ->
       @connection.roll(speed, heading, state)
 
-    configureCollisionDetection: ->
-      @connection.configureCollisionDetection()
+    detectCollisions: ->
+      @connection.detectCollisions()
 
 
     setRGB: (color, persist) ->
-      @connection.roll(color, persist)
+      @connection.setRGB(color, persist)
