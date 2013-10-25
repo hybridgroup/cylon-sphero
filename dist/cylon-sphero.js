@@ -129,7 +129,7 @@
       };
 
       Sphero.prototype.stop = function() {
-        return this.sphero.roll(0, 0, 1);
+        return this.sphero.roll(0, 0, 0);
       };
 
       return Sphero;

@@ -86,7 +86,7 @@ Adaptor =
       @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50,)
 
     stop: ->
-      @sphero.roll(0, 0, 1)
+      @sphero.roll(0, 0, 0)
 
 Driver =
   Sphero: class Sphero extends Base
