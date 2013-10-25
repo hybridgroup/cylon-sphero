@@ -113,6 +113,5 @@ Driver =
     detectCollisions: ->
       @connection.detectCollisions()
 
-
-    setRGB: (color, persist) ->
+    setRGB: (color, persist = true) ->
       @connection.setRGB(color, persist)
