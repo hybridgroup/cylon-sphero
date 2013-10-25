@@ -43,7 +43,7 @@
 
   Spheron = require('spheron');
 
-  Commands = ['roll', 'setRGB', 'detectCollisions'];
+  Commands = ['roll', 'setRGB', 'detectCollisions', 'stop'];
 
   Base = (function() {
     function Base(opts) {
@@ -128,6 +128,10 @@
         return this.sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50);
       };
 
+      Sphero.prototype.stop = function() {
+        return this.sphero.roll(0, 0, 1);
+      };
+
       return Sphero;
 
     })(Base)
@@ -179,6 +183,10 @@
 
       Sphero.prototype.detectCollisions = function() {
         return this.connection.detectCollisions();
+      };
+
+      Sphero.prototype.stop = function() {
+        return this.connection.stop();
       };
 
       Sphero.prototype.setRGB = function(color, persist) {
