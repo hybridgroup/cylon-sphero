@@ -97,13 +97,16 @@ Driver =
       @setupCommands()
 
     start: ->
-      Logger.info "started"
+      Logger.info "#{@device.name} started"
 
-      @connection.on 'message', (data) =>
-        @device.emit 'message', @self, data
+      @connection.on 'connect', (obj) =>
+        @device.emit 'connect'
 
-      @connection.on 'notification', (data) =>
-        @device.emit 'notification', @self, data
+      @connection.on 'message', (obj, data) =>
+        @device.emit 'message', data
+
+      @connection.on 'notification', (obj, data) =>
+        @device.emit 'notification', data
 
     setupCommands: ->
       for command in Commands

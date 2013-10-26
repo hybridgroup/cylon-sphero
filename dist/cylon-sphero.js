@@ -150,12 +150,15 @@
 
       Sphero.prototype.start = function() {
         var _this = this;
-        Logger.info("started");
-        this.connection.on('message', function(data) {
-          return _this.device.emit('message', _this.self, data);
+        Logger.info("" + this.device.name + " started");
+        this.connection.on('connect', function(obj) {
+          return _this.device.emit('connect');
         });
-        return this.connection.on('notification', function(data) {
-          return _this.device.emit('notification', _this.self, data);
+        this.connection.on('message', function(obj, data) {
+          return _this.device.emit('message', data);
+        });
+        return this.connection.on('notification', function(obj, data) {
+          return _this.device.emit('notification', data);
         });
       };
 
