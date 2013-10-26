@@ -42,8 +42,7 @@ Adaptor =
       @sphero = Spheron.sphero()
       @setupCommands()
 
-    connect: (connection) ->
-      @connection = connection
+    connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
 
       @sphero.on 'open', =>
@@ -65,7 +64,7 @@ Adaptor =
         @connection.emit 'notification', @self, data
 
       @sphero.open(@connection.port.toString())
-      @self
+      (callback)(null)
 
     disconnect: ->
       Logger.info "Disconnecting from Sphero '#{@name}'..."
@@ -96,7 +95,7 @@ Driver =
       @connection = @device.connection
       @setupCommands()
 
-    start: ->
+    start: (callback) ->
       Logger.info "#{@device.name} started"
 
       @connection.on 'connect', (obj) =>
@@ -107,6 +106,8 @@ Driver =
 
       @connection.on 'notification', (obj, data) =>
         @device.emit 'notification', data
+
+      (callback)(null)
 
     setupCommands: ->
       for command in Commands

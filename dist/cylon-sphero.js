@@ -70,9 +70,8 @@
         this.setupCommands();
       }
 
-      Sphero.prototype.connect = function(connection) {
+      Sphero.prototype.connect = function(callback) {
         var _this = this;
-        this.connection = connection;
         Logger.info("Connecting to Sphero '" + this.name + "'...");
         this.sphero.on('open', function() {
           return _this.connection.emit('connect', _this.self);
@@ -93,7 +92,7 @@
           return _this.connection.emit('notification', _this.self, data);
         });
         this.sphero.open(this.connection.port.toString());
-        return this.self;
+        return callback(null);
       };
 
       Sphero.prototype.disconnect = function() {
@@ -148,7 +147,7 @@
         this.setupCommands();
       }
 
-      Sphero.prototype.start = function() {
+      Sphero.prototype.start = function(callback) {
         var _this = this;
         Logger.info("" + this.device.name + " started");
         this.connection.on('connect', function(obj) {
@@ -157,9 +156,10 @@
         this.connection.on('message', function(obj, data) {
           return _this.device.emit('message', data);
         });
-        return this.connection.on('notification', function(obj, data) {
+        this.connection.on('notification', function(obj, data) {
           return _this.device.emit('notification', data);
         });
+        return callback(null);
       };
 
       Sphero.prototype.setupCommands = function() {
