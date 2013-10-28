@@ -40,7 +40,7 @@ Adaptor =
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
-      @setupCommands()
+      proxyFunctionsToObject Commands, @sphero, this
 
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
@@ -70,17 +70,6 @@ Adaptor =
       Logger.info "Disconnecting from Sphero '#{@name}'..."
       @sphero.close
 
-    setupCommands: ->
-      for command in Commands
-        return if typeof @self[command] is 'function'
-        @self[command] = (args...) -> @sphero[command](args...)
-
-    roll: (speed, heading, state) ->
-      @sphero.roll(speed, heading, state)
-
-    setRGB: (color, persist) ->
-      @sphero.setRGB(color, persist)
-
     detectCollisions: ->
       @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50,)
 
@@ -93,7 +82,7 @@ Driver =
       super
       @device = opts.device
       @connection = @device.connection
-      @setupCommands()
+      proxyFunctionsToObject Commands, @connection, this
 
     start: (callback) ->
       Logger.info "#{@device.name} started"
@@ -109,19 +98,8 @@ Driver =
 
       (callback)(null)
 
-    setupCommands: ->
-      for command in Commands
-        return if typeof @self[command] is 'function'
-        @self[command] = (args...) -> @connection[command](args...)
-
     roll: (speed, heading, state = 1) ->
       @connection.roll(speed, heading, state)
-
-    detectCollisions: ->
-      @connection.detectCollisions()
-
-    stop: ->
-      @connection.stop()
 
     setRGB: (color, persist = true) ->
       @connection.setRGB(color, persist)

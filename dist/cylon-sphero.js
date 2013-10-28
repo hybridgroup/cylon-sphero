@@ -67,7 +67,7 @@
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
-        this.setupCommands();
+        proxyFunctionsToObject(Commands, this.sphero, this);
       }
 
       Sphero.prototype.connect = function(callback) {
@@ -100,29 +100,6 @@
         return this.sphero.close;
       };
 
-      Sphero.prototype.setupCommands = function() {
-        var command, _i, _len;
-        for (_i = 0, _len = Commands.length; _i < _len; _i++) {
-          command = Commands[_i];
-          if (typeof this.self[command] === 'function') {
-            return;
-          }
-          this.self[command] = function() {
-            var args, _ref;
-            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-            return (_ref = this.sphero)[command].apply(_ref, args);
-          };
-        }
-      };
-
-      Sphero.prototype.roll = function(speed, heading, state) {
-        return this.sphero.roll(speed, heading, state);
-      };
-
-      Sphero.prototype.setRGB = function(color, persist) {
-        return this.sphero.setRGB(color, persist);
-      };
-
       Sphero.prototype.detectCollisions = function() {
         return this.sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50);
       };
@@ -144,7 +121,7 @@
         Sphero.__super__.constructor.apply(this, arguments);
         this.device = opts.device;
         this.connection = this.device.connection;
-        this.setupCommands();
+        proxyFunctionsToObject(Commands, this.connection, this);
       }
 
       Sphero.prototype.start = function(callback) {
@@ -162,34 +139,11 @@
         return callback(null);
       };
 
-      Sphero.prototype.setupCommands = function() {
-        var command, _i, _len;
-        for (_i = 0, _len = Commands.length; _i < _len; _i++) {
-          command = Commands[_i];
-          if (typeof this.self[command] === 'function') {
-            return;
-          }
-          this.self[command] = function() {
-            var args, _ref;
-            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-            return (_ref = this.connection)[command].apply(_ref, args);
-          };
-        }
-      };
-
       Sphero.prototype.roll = function(speed, heading, state) {
         if (state == null) {
           state = 1;
         }
         return this.connection.roll(speed, heading, state);
-      };
-
-      Sphero.prototype.detectCollisions = function() {
-        return this.connection.detectCollisions();
-      };
-
-      Sphero.prototype.stop = function() {
-        return this.connection.stop();
       };
 
       Sphero.prototype.setRGB = function(color, persist) {
