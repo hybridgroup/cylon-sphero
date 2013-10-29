@@ -9,10 +9,16 @@
 
 (function() {
   'use strict';
-  var Adaptor, Base, Commands, Driver, Sphero, Spheron,
+  var Base, Commands, Spheron, namespace,
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  namespace = require('node-namespace');
+
+  Spheron = require('spheron');
+
+  Commands = ['roll', 'setRGB', 'detectCollisions', 'stop'];
 
   module.exports = {
     adaptor: function() {
@@ -41,10 +47,6 @@
     }
   };
 
-  Spheron = require('spheron');
-
-  Commands = ['roll', 'setRGB', 'detectCollisions', 'stop'];
-
   Base = (function() {
     function Base(opts) {
       this.self = this;
@@ -58,8 +60,8 @@
 
   })();
 
-  Adaptor = {
-    Sphero: Sphero = (function(_super) {
+  namespace("Adaptor", function() {
+    return this.Sphero = (function(_super) {
       var klass;
 
       __extends(Sphero, _super);
@@ -118,11 +120,11 @@
 
       return Sphero;
 
-    })(Base)
-  };
+    })(Base);
+  });
 
-  Driver = {
-    Sphero: Sphero = (function(_super) {
+  namespace("Driver", function() {
+    return this.Sphero = (function(_super) {
       var klass;
 
       __extends(Sphero, _super);
@@ -176,7 +178,7 @@
 
       return Sphero;
 
-    })(Base)
-  };
+    })(Base);
+  });
 
 }).call(this);

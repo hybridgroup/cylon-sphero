@@ -8,6 +8,12 @@
 
 'use strict';
 
+namespace = require 'node-namespace'
+
+Spheron = require('spheron')
+
+Commands = ['roll', 'setRGB', 'detectCollisions', 'stop']
+
 module.exports =
   adaptor: (args...) ->
     new Adaptor.Sphero(args...)
@@ -22,10 +28,6 @@ module.exports =
     Logger.info "Registering Sphero driver for #{robot.name}"
     robot.registerDriver 'cylon-sphero', 'sphero'
 
-Spheron = require('spheron')
-
-Commands = ['roll', 'setRGB', 'detectCollisions', 'stop']
-
 class Base
   constructor: (opts) ->
     @self = this
@@ -33,8 +35,8 @@ class Base
   commands: ->
     Commands
 
-Adaptor =
-  Sphero: class Sphero extends Base
+namespace "Adaptor", ->
+  class @Sphero extends Base
     klass = this
 
     constructor: (opts) ->
@@ -81,8 +83,8 @@ Adaptor =
     stop: ->
       @sphero.roll(0, 0, 0)
 
-Driver =
-  Sphero: class Sphero extends Base
+namespace "Driver", ->
+  class @Sphero extends Base
     klass = this
 
     constructor: (opts) ->
