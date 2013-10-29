@@ -73,7 +73,7 @@ Adaptor =
       @sphero.close
 
     detectCollisions: ->
-      @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50,)
+      @sphero.configureCollisionDetection(0x01, 0x40, 0x40, 0x50, 0x50, 0x50,)
 
      setRGB: (color, persist) ->
       @sphero.setRGB(color, persist)

@@ -105,8 +105,7 @@
       };
 
       Sphero.prototype.detectCollisions = function() {
-        console.log('Configure collision detection');
-        return this.sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50);
+        return this.sphero.configureCollisionDetection(0x01, 0x40, 0x40, 0x50, 0x50, 0x50);
       };
 
       Sphero.prototype.setRGB = function(color, persist) {
