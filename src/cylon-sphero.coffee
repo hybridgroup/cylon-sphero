@@ -75,6 +75,9 @@ Adaptor =
     detectCollisions: ->
       @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50,)
 
+     setRGB: (color, persist) ->
+      @sphero.setRGB(color, persist)
+
     stop: ->
       @sphero.roll(0, 0, 0)
 
@@ -99,11 +102,18 @@ Driver =
 
       @connection.on 'notification', (obj, data) =>
         @device.emit 'notification', data
+        @device.emit 'collision', data
 
       (callback)(null)
 
     roll: (speed, heading, state = 1) ->
       @connection.roll(speed, heading, state)
+
+    detectCollisions: ->
+      @connection.detectCollisions()
+
+    stop: ->
+      @connection.stop()
 
     setRGB: (color, persist = true) ->
       @connection.setRGB(color, persist)

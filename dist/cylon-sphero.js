@@ -105,7 +105,12 @@
       };
 
       Sphero.prototype.detectCollisions = function() {
+        console.log('Configure collision detection');
         return this.sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50);
+      };
+
+      Sphero.prototype.setRGB = function(color, persist) {
+        return this.sphero.setRGB(color, persist);
       };
 
       Sphero.prototype.stop = function() {
@@ -142,7 +147,8 @@
           return _this.device.emit('message', data);
         });
         this.connection.on('notification', function(obj, data) {
-          return _this.device.emit('notification', data);
+          _this.device.emit('notification', data);
+          return _this.device.emit('collision', data);
         });
         return callback(null);
       };
@@ -152,6 +158,14 @@
           state = 1;
         }
         return this.connection.roll(speed, heading, state);
+      };
+
+      Sphero.prototype.detectCollisions = function() {
+        return this.connection.detectCollisions();
+      };
+
+      Sphero.prototype.stop = function() {
+        return this.connection.stop();
       };
 
       Sphero.prototype.setRGB = function(color, persist) {
