@@ -28,7 +28,7 @@
         ctor.prototype = func.prototype;
         var child = new ctor, result = func.apply(child, args);
         return Object(result) === result ? result : child;
-      })(Adaptor.Sphero, args, function(){});
+      })(Cylon.Adaptor.Sphero, args, function(){});
     },
     driver: function() {
       var args;
@@ -37,7 +37,7 @@
         ctor.prototype = func.prototype;
         var child = new ctor, result = func.apply(child, args);
         return Object(result) === result ? result : child;
-      })(Driver.Sphero, args, function(){});
+      })(Cylon.Driver.Sphero, args, function(){});
     },
     register: function(robot) {
       Logger.info("Registering Sphero adaptor for " + robot.name);
@@ -47,7 +47,7 @@
     }
   };
 
-  namespace("Adaptor", function() {
+  namespace("Cylon.Adaptor", function() {
     return this.Sphero = (function(_super) {
       __extends(Sphero, _super);
 
@@ -110,7 +110,7 @@
     })(Cylon.Basestar);
   });
 
-  namespace("Driver", function() {
+  namespace("Cylon.Driver", function() {
     return this.Sphero = (function(_super) {
       __extends(Sphero, _super);
 

@@ -16,10 +16,10 @@ Commands = ['roll', 'setRGB', 'detectCollisions', 'stop']
 
 module.exports =
   adaptor: (args...) ->
-    new Adaptor.Sphero(args...)
+    new Cylon.Adaptor.Sphero(args...)
 
   driver: (args...) ->
-    new Driver.Sphero(args...)
+    new Cylon.Driver.Sphero(args...)
 
   register: (robot) ->
     Logger.info "Registering Sphero adaptor for #{robot.name}"
@@ -28,7 +28,7 @@ module.exports =
     Logger.info "Registering Sphero driver for #{robot.name}"
     robot.registerDriver 'cylon-sphero', 'sphero'
 
-namespace "Adaptor", ->
+namespace "Cylon.Adaptor", ->
   class @Sphero extends Cylon.Basestar
     constructor: (opts) ->
       super
@@ -76,7 +76,7 @@ namespace "Adaptor", ->
     stop: ->
       @sphero.roll(0, 0, 0)
 
-namespace "Driver", ->
+namespace "Cylon.Driver", ->
   class @Sphero extends Cylon.Basestar
     constructor: (opts) ->
       super
