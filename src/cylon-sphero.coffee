@@ -8,12 +8,18 @@
 
 'use strict';
 
+namespace = require 'node-namespace'
+
+Spheron = require('spheron')
+
+Commands = ['roll', 'setRGB', 'detectCollisions', 'stop']
+
 module.exports =
   adaptor: (args...) ->
-    new Adaptor.Sphero(args...)
+    new Cylon.Adaptor.Sphero(args...)
 
   driver: (args...) ->
-    new Driver.Sphero(args...)
+    new Cylon.Driver.Sphero(args...)
 
   register: (robot) ->
     Logger.info "Registering Sphero adaptor for #{robot.name}"
@@ -22,27 +28,16 @@ module.exports =
     Logger.info "Registering Sphero driver for #{robot.name}"
     robot.registerDriver 'cylon-sphero', 'sphero'
 
-Spheron = require('spheron')
-
-Commands = ['roll', 'setRGB', 'detectCollisions', 'stop']
-
-class Base
-  constructor: (opts) ->
-    @self = this
-
-  commands: ->
-    Commands
-
-Adaptor =
-  Sphero: class Sphero extends Base
-    klass = this
-
+namespace "Cylon.Adaptor", ->
+  class @Sphero extends Cylon.Basestar
     constructor: (opts) ->
       super
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
-      proxyFunctionsToObject Commands, @sphero, klass
+      @proxyMethods Commands, @sphero, Sphero
+
+    commands: -> Commands
 
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
@@ -81,15 +76,15 @@ Adaptor =
     stop: ->
       @sphero.roll(0, 0, 0)
 
-Driver =
-  Sphero: class Sphero extends Base
-    klass = this
-
+namespace "Cylon.Driver", ->
+  class @Sphero extends Cylon.Basestar
     constructor: (opts) ->
       super
       @device = opts.device
       @connection = @device.connection
-      proxyFunctionsToObject Commands, @connection, klass
+      @proxyMethods Commands, @connection, Sphero
+
+    commands: -> Commands
 
     start: (callback) ->
       Logger.info "#{@device.name} started"

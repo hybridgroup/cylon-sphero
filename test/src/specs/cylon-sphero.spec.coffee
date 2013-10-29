@@ -1,5 +1,12 @@
 'use strict';
 
+namespace = require 'node-namespace'
+
+# Needed so that tests don't implode
+namespace 'Cylon', ->
+  class @Basestar
+    constructor: ->
+
 sphero = source("cylon-sphero")
 
 describe "Sphero", ->

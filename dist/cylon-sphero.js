@@ -9,10 +9,16 @@
 
 (function() {
   'use strict';
-  var Adaptor, Base, Commands, Driver, Sphero, Spheron,
+  var Commands, Spheron, namespace,
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  namespace = require('node-namespace');
+
+  Spheron = require('spheron');
+
+  Commands = ['roll', 'setRGB', 'detectCollisions', 'stop'];
 
   module.exports = {
     adaptor: function() {
@@ -22,7 +28,7 @@
         ctor.prototype = func.prototype;
         var child = new ctor, result = func.apply(child, args);
         return Object(result) === result ? result : child;
-      })(Adaptor.Sphero, args, function(){});
+      })(Cylon.Adaptor.Sphero, args, function(){});
     },
     driver: function() {
       var args;
@@ -31,7 +37,7 @@
         ctor.prototype = func.prototype;
         var child = new ctor, result = func.apply(child, args);
         return Object(result) === result ? result : child;
-      })(Driver.Sphero, args, function(){});
+      })(Cylon.Driver.Sphero, args, function(){});
     },
     register: function(robot) {
       Logger.info("Registering Sphero adaptor for " + robot.name);
@@ -41,38 +47,21 @@
     }
   };
 
-  Spheron = require('spheron');
-
-  Commands = ['roll', 'setRGB', 'detectCollisions', 'stop'];
-
-  Base = (function() {
-    function Base(opts) {
-      this.self = this;
-    }
-
-    Base.prototype.commands = function() {
-      return Commands;
-    };
-
-    return Base;
-
-  })();
-
-  Adaptor = {
-    Sphero: Sphero = (function(_super) {
-      var klass;
-
+  namespace("Cylon.Adaptor", function() {
+    return this.Sphero = (function(_super) {
       __extends(Sphero, _super);
-
-      klass = Sphero;
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
-        proxyFunctionsToObject(Commands, this.sphero, klass);
+        this.proxyMethods(Commands, this.sphero, Sphero);
       }
+
+      Sphero.prototype.commands = function() {
+        return Commands;
+      };
 
       Sphero.prototype.connect = function(callback) {
         var _this = this;
@@ -118,23 +107,23 @@
 
       return Sphero;
 
-    })(Base)
-  };
+    })(Cylon.Basestar);
+  });
 
-  Driver = {
-    Sphero: Sphero = (function(_super) {
-      var klass;
-
+  namespace("Cylon.Driver", function() {
+    return this.Sphero = (function(_super) {
       __extends(Sphero, _super);
-
-      klass = Sphero;
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
         this.device = opts.device;
         this.connection = this.device.connection;
-        proxyFunctionsToObject(Commands, this.connection, klass);
+        this.proxyMethods(Commands, this.connection, Sphero);
       }
+
+      Sphero.prototype.commands = function() {
+        return Commands;
+      };
 
       Sphero.prototype.start = function(callback) {
         var _this = this;
@@ -176,7 +165,7 @@
 
       return Sphero;
 
-    })(Base)
-  };
+    })(Cylon.Basestar);
+  });
 
 }).call(this);
