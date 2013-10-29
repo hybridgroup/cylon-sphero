@@ -60,14 +60,18 @@
 
   Adaptor = {
     Sphero: Sphero = (function(_super) {
+      var klass;
+
       __extends(Sphero, _super);
+
+      klass = Sphero;
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
-        proxyFunctionsToObject(Commands, this.sphero, this);
+        proxyFunctionsToObject(Commands, this.sphero, klass);
       }
 
       Sphero.prototype.connect = function(callback) {
@@ -115,13 +119,17 @@
 
   Driver = {
     Sphero: Sphero = (function(_super) {
+      var klass;
+
       __extends(Sphero, _super);
+
+      klass = Sphero;
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
         this.device = opts.device;
         this.connection = this.device.connection;
-        proxyFunctionsToObject(Commands, this.connection, this);
+        proxyFunctionsToObject(Commands, this.connection, klass);
       }
 
       Sphero.prototype.start = function(callback) {

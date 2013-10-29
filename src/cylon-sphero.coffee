@@ -35,12 +35,14 @@ class Base
 
 Adaptor =
   Sphero: class Sphero extends Base
+    klass = this
+
     constructor: (opts) ->
       super
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
-      proxyFunctionsToObject Commands, @sphero, this
+      proxyFunctionsToObject Commands, @sphero, klass
 
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
@@ -78,11 +80,13 @@ Adaptor =
 
 Driver =
   Sphero: class Sphero extends Base
+    klass = this
+
     constructor: (opts) ->
       super
       @device = opts.device
       @connection = @device.connection
-      proxyFunctionsToObject Commands, @connection, this
+      proxyFunctionsToObject Commands, @connection, klass
 
     start: (callback) ->
       Logger.info "#{@device.name} started"
