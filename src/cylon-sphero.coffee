@@ -28,23 +28,16 @@ module.exports =
     Logger.info "Registering Sphero driver for #{robot.name}"
     robot.registerDriver 'cylon-sphero', 'sphero'
 
-class Base
-  constructor: (opts) ->
-    @self = this
-
-  commands: ->
-    Commands
-
 namespace "Adaptor", ->
-  class @Sphero extends Base
-    klass = this
-
+  class @Sphero extends Cylon.Basestar
     constructor: (opts) ->
       super
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
-      proxyFunctionsToObject Commands, @sphero, klass
+      @proxyMethods Commands, @sphero, Sphero
+
+    commands: -> Commands
 
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
@@ -84,14 +77,14 @@ namespace "Adaptor", ->
       @sphero.roll(0, 0, 0)
 
 namespace "Driver", ->
-  class @Sphero extends Base
-    klass = this
-
+  class @Sphero extends Cylon.Basestar
     constructor: (opts) ->
       super
       @device = opts.device
       @connection = @device.connection
-      proxyFunctionsToObject Commands, @connection, klass
+      @proxyMethods Commands, @connection, Sphero
+
+    commands: -> Commands
 
     start: (callback) ->
       Logger.info "#{@device.name} started"

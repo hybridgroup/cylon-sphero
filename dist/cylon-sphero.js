@@ -9,7 +9,7 @@
 
 (function() {
   'use strict';
-  var Base, Commands, Spheron, namespace,
+  var Commands, Spheron, namespace,
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -47,34 +47,21 @@
     }
   };
 
-  Base = (function() {
-    function Base(opts) {
-      this.self = this;
-    }
-
-    Base.prototype.commands = function() {
-      return Commands;
-    };
-
-    return Base;
-
-  })();
-
   namespace("Adaptor", function() {
     return this.Sphero = (function(_super) {
-      var klass;
-
       __extends(Sphero, _super);
-
-      klass = Sphero;
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
-        proxyFunctionsToObject(Commands, this.sphero, klass);
+        this.proxyMethods(Commands, this.sphero, Sphero);
       }
+
+      Sphero.prototype.commands = function() {
+        return Commands;
+      };
 
       Sphero.prototype.connect = function(callback) {
         var _this = this;
@@ -120,23 +107,23 @@
 
       return Sphero;
 
-    })(Base);
+    })(Cylon.Basestar);
   });
 
   namespace("Driver", function() {
     return this.Sphero = (function(_super) {
-      var klass;
-
       __extends(Sphero, _super);
-
-      klass = Sphero;
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
         this.device = opts.device;
         this.connection = this.device.connection;
-        proxyFunctionsToObject(Commands, this.connection, klass);
+        this.proxyMethods(Commands, this.connection, Sphero);
       }
+
+      Sphero.prototype.commands = function() {
+        return Commands;
+      };
 
       Sphero.prototype.start = function(callback) {
         var _this = this;
@@ -178,7 +165,7 @@
 
       return Sphero;
 
-    })(Base);
+    })(Cylon.Basestar);
   });
 
 }).call(this);
