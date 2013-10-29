@@ -73,7 +73,6 @@ Adaptor =
       @sphero.close
 
     detectCollisions: ->
-      console.log('Configure collision detection')
       @sphero.configureCollisionDetection(0x01, 0x20, 0x20, 0x20, 0x20, 0x50,)
 
      setRGB: (color, persist) ->
