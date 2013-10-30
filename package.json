@@ -33,7 +33,7 @@
     "cylon": "0.0.0"
   },
   "dependencies": {
-    "spheron": "0.0.1",
+    "spheron": "git://github.com/hybridgroup/spheron.git",
     "node-namespace": "~1.0.0"
   }
 }
