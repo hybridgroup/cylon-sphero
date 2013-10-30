@@ -12,7 +12,8 @@ namespace = require 'node-namespace'
 
 Spheron = require('spheron')
 
-Commands = ['roll', 'setRGB', 'detectCollisions', 'stop']
+namespace "Cylon.Sphero", ->
+  @Commands = ['roll', 'setRGB', 'detectCollisions', 'stop']
 
 require './adaptor'
 require './driver'

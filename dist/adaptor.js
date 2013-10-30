@@ -26,11 +26,11 @@
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
-        this.proxyMethods(Commands, this.sphero, Sphero);
+        this.proxyMethods(Cylon.Sphero.Commands, this.sphero, Sphero);
       }
 
       Sphero.prototype.commands = function() {
-        return Commands;
+        return Cylon.Sphero.Commands;
       };
 
       Sphero.prototype.connect = function(callback) {

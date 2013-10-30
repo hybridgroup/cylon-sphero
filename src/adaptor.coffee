@@ -19,9 +19,9 @@ namespace "Cylon.Adaptor", ->
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
-      @proxyMethods Commands, @sphero, Sphero
+      @proxyMethods Cylon.Sphero.Commands, @sphero, Sphero
 
-    commands: -> Commands
+    commands: -> Cylon.Sphero.Commands
 
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
