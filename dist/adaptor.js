@@ -9,11 +9,13 @@
 
 (function() {
   'use strict';
-  var namespace,
+  var Spheron, namespace,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   require('./cylon-sphero');
+
+  Spheron = require('spheron');
 
   namespace = require('node-namespace');
 
@@ -37,22 +39,22 @@
         var _this = this;
         Logger.info("Connecting to Sphero '" + this.name + "'...");
         this.sphero.on('open', function() {
-          return _this.connection.emit('connect', _this.self);
+          return _this.connection.emit('connect');
         });
         this.sphero.on('close', function() {
-          return _this.connection.emit('disconnect', _this.self);
+          return _this.connection.emit('disconnect');
         });
         this.sphero.on('error', function() {
-          return _this.connection.emit('error', _this.self);
+          return _this.connection.emit('error');
         });
         this.sphero.on('data', function(data) {
-          return _this.connection.emit('update', _this.self, data);
+          return _this.connection.emit('update', data);
         });
         this.sphero.on('message', function(data) {
-          return _this.connection.emit('message', _this.self, data);
+          return _this.connection.emit('message', data);
         });
         this.sphero.on('notification', function(data) {
-          return _this.connection.emit('notification', _this.self, data);
+          return _this.connection.emit('notification', data);
         });
         this.sphero.open(this.connection.port.toString());
         return callback(null);

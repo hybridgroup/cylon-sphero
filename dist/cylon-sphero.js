@@ -9,12 +9,10 @@
 
 (function() {
   'use strict';
-  var Spheron, namespace,
+  var namespace,
     __slice = [].slice;
 
   namespace = require('node-namespace');
-
-  Spheron = require('spheron');
 
   namespace("Cylon.Sphero", function() {
     return this.Commands = ['roll', 'setRGB', 'detectCollisions', 'stop'];

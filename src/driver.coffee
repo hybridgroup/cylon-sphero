@@ -25,13 +25,13 @@ namespace "Cylon.Driver", ->
     start: (callback) ->
       Logger.info "#{@device.name} started"
 
-      @connection.on 'connect', (obj) =>
+      @connection.on 'connect', =>
         @device.emit 'connect'
 
-      @connection.on 'message', (obj, data) =>
+      @connection.on 'message', (data) =>
         @device.emit 'message', data
 
-      @connection.on 'notification', (obj, data) =>
+      @connection.on 'notification', (data) =>
         @device.emit 'notification', data
         @device.emit 'collision', data
 

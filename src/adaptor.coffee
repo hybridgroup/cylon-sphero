@@ -9,7 +9,7 @@
 'use strict';
 
 require './cylon-sphero'
-
+Spheron = require('spheron')
 namespace = require 'node-namespace'
 
 namespace "Cylon.Adaptor", ->
@@ -27,22 +27,22 @@ namespace "Cylon.Adaptor", ->
       Logger.info "Connecting to Sphero '#{@name}'..."
 
       @sphero.on 'open', =>
-        @connection.emit 'connect', @self
+        @connection.emit 'connect'
 
       @sphero.on 'close', =>
-        @connection.emit 'disconnect', @self
+        @connection.emit 'disconnect'
 
       @sphero.on 'error', =>
-        @connection.emit 'error', @self
+        @connection.emit 'error'
 
       @sphero.on 'data', (data) =>
-        @connection.emit 'update', @self, data
+        @connection.emit 'update', data
 
       @sphero.on 'message', (data) =>
-        @connection.emit 'message', @self, data
+        @connection.emit 'message', data
 
       @sphero.on 'notification', (data) =>
-        @connection.emit 'notification', @self, data
+        @connection.emit 'notification', data
 
       @sphero.open(@connection.port.toString())
       (callback)(null)
@@ -59,3 +59,4 @@ namespace "Cylon.Adaptor", ->
 
     stop: ->
       @sphero.roll(0, 0, 0)
+  

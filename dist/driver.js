@@ -35,13 +35,13 @@
       Sphero.prototype.start = function(callback) {
         var _this = this;
         Logger.info("" + this.device.name + " started");
-        this.connection.on('connect', function(obj) {
+        this.connection.on('connect', function() {
           return _this.device.emit('connect');
         });
-        this.connection.on('message', function(obj, data) {
+        this.connection.on('message', function(data) {
           return _this.device.emit('message', data);
         });
-        this.connection.on('notification', function(obj, data) {
+        this.connection.on('notification', function(data) {
           _this.device.emit('notification', data);
           return _this.device.emit('collision', data);
         });
