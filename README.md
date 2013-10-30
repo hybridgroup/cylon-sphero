@@ -1,8 +1,8 @@
-# Cylon.js Module For Sphero
+# Cylon.js For Sphero
 
-Cylon.js (http://cylonjs.com) is a JavaScript framework for robotics and physical computing using node.js
+Cylon.js (http://cylonjs.com) is a JavaScript framework for robotics and physical computing using Node.js
 
-This module provides an interface to the Sphero robot from Orbotix. It uses the Hybrid Group fork of the Spheron module (https://github.com/hybridgroup/spheron) originally created by [@alchemycs](https://github.com/alchemycs)
+This module provides an adaptor and driver for the Sphero robot from Orbotix (http://www.gosphero.com/). It uses the Hybrid Group fork of the Spheron module (https://github.com/hybridgroup/spheron) originally created by [@alchemycs](https://github.com/alchemycs)
 
 Want to use Ruby on robots? Check out our sister project Artoo (http://artoo.io)
 
