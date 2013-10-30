@@ -54,7 +54,7 @@ namespace "Cylon.Adaptor", ->
     detectCollisions: ->
       @sphero.configureCollisionDetection(0x01, 0x40, 0x40, 0x50, 0x50, 0x50,)
 
-     setRGB: (color, persist) ->
+    setRGB: (color, persist) ->
       @sphero.setRGB(color, persist)
 
     stop: ->
