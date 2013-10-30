@@ -1,6 +1,6 @@
 {
   "name": "cylon-sphero",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "dist/cylon-sphero.js",
   "description": "Cylon module for Sphero robot",
   "homepage": "http://cylonjs.com",
@@ -29,12 +29,11 @@
     "sinon-chai": "~2.4.0",
     "chai": "~1.7.2",
     "mocha": "~1.12.1",
-    "sinon": "~1.7.3",
-    "cylon": "0.0.0"
+    "sinon": "~1.7.3"
   },
   "dependencies": {
     "spheron": "git://github.com/hybridgroup/spheron.git",
     "node-namespace": "~1.0.0",
-    "cylon": "~0.1.0"
+    "cylon": "~0.2.0"
   }
 }
