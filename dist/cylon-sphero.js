@@ -14,9 +14,7 @@
 
   namespace = require('node-namespace');
 
-  namespace("Cylon.Sphero", function() {
-    return this.Commands = ['roll', 'setRGB', 'detectCollisions', 'setColor', 'stop'];
-  });
+  require('./commands');
 
   require('./adaptor');
 

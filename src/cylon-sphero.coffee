@@ -10,9 +10,7 @@
 
 namespace = require 'node-namespace'
 
-namespace "Cylon.Sphero", ->
-  @Commands = ['roll', 'setRGB', 'detectCollisions', 'setColor', 'stop']
-
+require './commands'
 require './adaptor'
 require './driver'
 
