@@ -9,7 +9,8 @@
 'use strict';
 
 require './cylon-sphero'
-Spheron = require('spheron')
+Spheron = require 'spheron'
+Colors = require './colors'
 namespace = require 'node-namespace'
 
 namespace "Cylon.Adaptor", ->
@@ -56,6 +57,14 @@ namespace "Cylon.Adaptor", ->
 
     setRGB: (color, persist) ->
       @sphero.setRGB(color, persist)
+
+    setColor: (color, persist = true) ->
+      color = Colors.fromString(color) if typeof color is 'string'
+      @setRGB color, persist
+
+    setRandomColor: (persist = true) ->
+      color = Colors.randomColor()
+      @setRGB color, persist
 
     stop: ->
       @sphero.roll(0, 0, 0)
