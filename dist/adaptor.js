@@ -30,6 +30,7 @@
         this.connection = opts.connection;
         this.name = opts.name;
         this.sphero = Spheron.sphero();
+        this.connector = this.sphero;
         this.proxyMethods(Cylon.Sphero.Commands, this.sphero, Sphero);
       }
 
@@ -38,25 +39,32 @@
       };
 
       Sphero.prototype.connect = function(callback) {
-        var _this = this;
         Logger.info("Connecting to Sphero '" + this.name + "'...");
-        this.sphero.on('open', function() {
-          return _this.connection.emit('connect');
+        this.createAdaptorEvent({
+          on: 'open',
+          emit: 'connect',
+          emitUpdate: true
         });
-        this.sphero.on('close', function() {
-          return _this.connection.emit('disconnect');
+        this.createAdaptorEvent({
+          on: 'close',
+          emit: 'disconnect',
+          emitUpdate: true
         });
-        this.sphero.on('error', function() {
-          return _this.connection.emit('error');
+        this.proxyAdaptorEvent({
+          on: 'error',
+          emitUpdate: true
         });
-        this.sphero.on('data', function(data) {
-          return _this.connection.emit('update', data);
+        this.proxyAdaptorEvent({
+          on: 'data',
+          emitUpdate: true
         });
-        this.sphero.on('message', function(data) {
-          return _this.connection.emit('message', data);
+        this.proxyAdaptorEvent({
+          on: 'message',
+          emitUpdate: true
         });
-        this.sphero.on('notification', function(data) {
-          return _this.connection.emit('notification', data);
+        this.proxyAdaptorEvent({
+          on: 'notification',
+          emitUpdate: true
         });
         this.sphero.open(this.connection.port.toString());
         return callback(null);

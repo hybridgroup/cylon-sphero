@@ -35,16 +35,26 @@
       Sphero.prototype.start = function(callback) {
         var _this = this;
         Logger.info("" + this.device.name + " started");
-        this.connection.on('connect', function() {
-          return _this.device.emit('connect');
+        this.proxyDriverEvent({
+          on: 'connect'
         });
-        this.connection.on('message', function(data) {
-          return _this.device.emit('message', data);
+        this.proxyDriverEvent({
+          on: 'message'
+        });
+        this.proxyDriverEvent({
+          on: 'update'
+        });
+        this.proxyDriverEvent({
+          on: 'notification'
+        });
+        this.createDriverEvent({
+          on: 'notification',
+          emit: 'collision'
         });
         this.connection.on('notification', function(data) {
-          _this.device.emit('notification', data);
           return _this.device.emit('collision', data);
         });
+        Logger.info("" + this.device.name + " finished");
         return callback(null);
       };
 
