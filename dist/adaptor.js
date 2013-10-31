@@ -9,13 +9,15 @@
 
 (function() {
   'use strict';
-  var Spheron, namespace,
+  var Colors, Spheron, namespace,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   require('./cylon-sphero');
 
   Spheron = require('spheron');
+
+  Colors = require('./colors');
 
   namespace = require('node-namespace');
 
@@ -71,6 +73,25 @@
 
       Sphero.prototype.setRGB = function(color, persist) {
         return this.sphero.setRGB(color, persist);
+      };
+
+      Sphero.prototype.setColor = function(color, persist) {
+        if (persist == null) {
+          persist = true;
+        }
+        if (typeof color === 'string') {
+          color = Colors.fromString(color);
+        }
+        return this.setRGB(color, persist);
+      };
+
+      Sphero.prototype.setRandomColor = function(persist) {
+        var color;
+        if (persist == null) {
+          persist = true;
+        }
+        color = Colors.randomColor();
+        return this.setRGB(color, persist);
       };
 
       Sphero.prototype.stop = function() {
