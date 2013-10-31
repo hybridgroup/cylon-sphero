@@ -20,6 +20,7 @@ namespace "Cylon.Adaptor", ->
       @connection = opts.connection
       @name = opts.name
       @sphero = Spheron.sphero()
+      @connector = @sphero
       @proxyMethods Cylon.Sphero.Commands, @sphero, Sphero
 
     commands: -> Cylon.Sphero.Commands
@@ -27,23 +28,12 @@ namespace "Cylon.Adaptor", ->
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
 
-      @sphero.on 'open', =>
-        @connection.emit 'connect'
-
-      @sphero.on 'close', =>
-        @connection.emit 'disconnect'
-
-      @sphero.on 'error', =>
-        @connection.emit 'error'
-
-      @sphero.on 'data', (data) =>
-        @connection.emit 'update', data
-
-      @sphero.on 'message', (data) =>
-        @connection.emit 'message', data
-
-      @sphero.on 'notification', (data) =>
-        @connection.emit 'notification', data
+      @createAdaptorEvent(on: 'open', emit: 'connect', emitUpdate: true)
+      @createAdaptorEvent(on: 'close', emit: 'disconnect', emitUpdate: true)
+      @proxyAdaptorEvent(on: 'error', emitUpdate: true)
+      @proxyAdaptorEvent(on: 'data', emitUpdate: true)
+      @proxyAdaptorEvent(on: 'message', emitUpdate: true)
+      @proxyAdaptorEvent(on: 'notification', emitUpdate: true)
 
       @sphero.open(@connection.port.toString())
       (callback)(null)
