@@ -33,29 +33,25 @@
       };
 
       Sphero.prototype.start = function(callback) {
-        var _this = this;
         Logger.info("" + this.device.name + " started");
-        this.proxyDriverEvent({
-          on: 'connect'
+        this.defineDriverEvent({
+          eventName: 'connect'
         });
-        this.proxyDriverEvent({
-          on: 'message'
+        this.defineDriverEvent({
+          eventName: 'message'
         });
-        this.proxyDriverEvent({
-          on: 'update'
+        this.defineDriverEvent({
+          eventName: 'update'
         });
-        this.proxyDriverEvent({
-          on: 'notification'
+        this.defineDriverEvent({
+          eventName: 'notification'
         });
-        this.createDriverEvent({
-          on: 'notification',
-          emit: 'collision'
+        this.defineDriverEvent({
+          eventName: 'notification',
+          targetEventName: 'collision'
         });
-        this.connection.on('notification', function(data) {
-          return _this.device.emit('collision', data);
-        });
-        Logger.info("" + this.device.name + " finished");
-        return callback(null);
+        callback(null);
+        return this.device.emit('start');
       };
 
       Sphero.prototype.roll = function(speed, heading, state) {

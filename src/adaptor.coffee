@@ -28,15 +28,17 @@ namespace "Cylon.Adaptor", ->
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
 
-      @createAdaptorEvent(on: 'open', emit: 'connect', emitUpdate: true)
-      @createAdaptorEvent(on: 'close', emit: 'disconnect', emitUpdate: true)
-      @proxyAdaptorEvent(on: 'error', emitUpdate: true)
-      @proxyAdaptorEvent(on: 'data', emitUpdate: true)
-      @proxyAdaptorEvent(on: 'message', emitUpdate: true)
-      @proxyAdaptorEvent(on: 'notification', emitUpdate: true)
+      @defineAdaptorEvent eventName: 'open', targetEventName: 'connect'
+      @defineAdaptorEvent eventName: 'close', targetEventName: 'disconnect'
+      @defineAdaptorEvent eventName: 'error'
+      @defineAdaptorEvent eventName: 'data'
+      @defineAdaptorEvent eventName: 'message'
+      @defineAdaptorEvent eventName: 'notification'
 
       @sphero.open(@connection.port.toString())
+
       (callback)(null)
+      @connection.emit 'connect'
 
     disconnect: ->
       Logger.info "Disconnecting from Sphero '#{@name}'..."

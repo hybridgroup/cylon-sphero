@@ -25,14 +25,14 @@ namespace "Cylon.Driver", ->
     start: (callback) ->
       Logger.info "#{@device.name} started"
 
-      @proxyDriverEvent(on: 'connect')
-      @proxyDriverEvent(on: 'message')
-      @proxyDriverEvent(on: 'update')
-      @proxyDriverEvent(on: 'notification')
-      @createDriverEvent(on: 'notification', emit: 'collision')
+      @defineDriverEvent eventName: 'connect'
+      @defineDriverEvent eventName: 'message'
+      @defineDriverEvent eventName: 'update'
+      @defineDriverEvent eventName: 'notification'
+      @defineDriverEvent eventName: 'notification', targetEventName: 'collision'
 
-      Logger.info "#{@device.name} finished"
       (callback)(null)
+      @device.emit 'start'
 
     roll: (speed, heading, state = 1) ->
       @connection.roll(speed, heading, state)
