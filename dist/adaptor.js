@@ -40,34 +40,29 @@
 
       Sphero.prototype.connect = function(callback) {
         Logger.info("Connecting to Sphero '" + this.name + "'...");
-        this.createAdaptorEvent({
-          on: 'open',
-          emit: 'connect',
-          emitUpdate: true
+        this.defineAdaptorEvent({
+          eventName: 'open',
+          targetEventName: 'connect'
         });
-        this.createAdaptorEvent({
-          on: 'close',
-          emit: 'disconnect',
-          emitUpdate: true
+        this.defineAdaptorEvent({
+          eventName: 'close',
+          targetEventName: 'disconnect'
         });
-        this.proxyAdaptorEvent({
-          on: 'error',
-          emitUpdate: true
+        this.defineAdaptorEvent({
+          eventName: 'error'
         });
-        this.proxyAdaptorEvent({
-          on: 'data',
-          emitUpdate: true
+        this.defineAdaptorEvent({
+          eventName: 'data'
         });
-        this.proxyAdaptorEvent({
-          on: 'message',
-          emitUpdate: true
+        this.defineAdaptorEvent({
+          eventName: 'message'
         });
-        this.proxyAdaptorEvent({
-          on: 'notification',
-          emitUpdate: true
+        this.defineAdaptorEvent({
+          eventName: 'notification'
         });
         this.sphero.open(this.connection.port.toString());
-        return callback(null);
+        callback(null);
+        return this.connection.emit('connect');
       };
 
       Sphero.prototype.disconnect = function() {
