@@ -57,5 +57,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 ## Release History
 Version 0.1.0 - Initial release for ongoing development
 
+Version 0.2.0 - Lots of colors, support for entire Sphero API, and uses Basestar for DRY code
+
 ## License
 Copyright (c) 2013 The Hybrid Group. Licensed under the Apache 2.0 license.
