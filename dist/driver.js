@@ -25,7 +25,7 @@
         Sphero.__super__.constructor.apply(this, arguments);
         this.device = opts.device;
         this.connection = this.device.connection;
-        this.proxyMethods(Cylon.Sphero.Commands, this.connection, Sphero);
+        this.proxyMethods(Cylon.Sphero.Commands, this.connection, this);
       }
 
       Sphero.prototype.commands = function() {
