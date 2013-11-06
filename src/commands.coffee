@@ -48,6 +48,7 @@ namespace "Cylon.Sphero", ->
     'setMotionTimeout',
     'setPermanentOptionFlags',
     'setRGB',
+    'setRandomColor',
     'setRawMotorValues',
     'setRotationRate',
     'setStabalisation',
