@@ -18,7 +18,7 @@ namespace "Cylon.Driver", ->
       super
       @device = opts.device
       @connection = @device.connection
-      @proxyMethods Cylon.Sphero.Commands, @connection, Sphero
+      @proxyMethods Cylon.Sphero.Commands, @connection, this
 
     commands: -> Cylon.Sphero.Commands
 

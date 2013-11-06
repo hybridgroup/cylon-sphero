@@ -31,7 +31,7 @@
         this.name = opts.name;
         this.sphero = Spheron.sphero();
         this.connector = this.sphero;
-        this.proxyMethods(Cylon.Sphero.Commands, this.sphero, Sphero);
+        this.proxyMethods(Cylon.Sphero.Commands, this.sphero, this);
       }
 
       Sphero.prototype.commands = function() {

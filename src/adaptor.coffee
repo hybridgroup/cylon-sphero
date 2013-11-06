@@ -21,7 +21,7 @@ namespace "Cylon.Adaptor", ->
       @name = opts.name
       @sphero = Spheron.sphero()
       @connector = @sphero
-      @proxyMethods Cylon.Sphero.Commands, @sphero, Sphero
+      @proxyMethods Cylon.Sphero.Commands, @sphero, this
 
     commands: -> Cylon.Sphero.Commands
 
