@@ -30,7 +30,7 @@ Cylon.robot({
 ```
 
 ```coffee-script
-Cylon = require('cylon')
+Cylon = require 'cylon'
 
 Cylon.robot
   connection:
@@ -58,6 +58,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Version 0.1.0 - Initial release for ongoing development
 
 Version 0.2.0 - Lots of colors, support for entire Sphero API, and uses Basestar for DRY code
+
+Version 0.3.0 - Use new Basestar proxying and events
 
 ## License
 Copyright (c) 2013 The Hybrid Group. Licensed under the Apache 2.0 license.
