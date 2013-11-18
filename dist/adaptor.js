@@ -66,8 +66,7 @@
       };
 
       Sphero.prototype.disconnect = function() {
-        Logger.info("Disconnecting from Sphero '" + this.name + "'...");
-        return this.sphero.close;
+        return Logger.info("Disconnecting from Sphero '" + this.name + "'...");
       };
 
       Sphero.prototype.detectCollisions = function() {

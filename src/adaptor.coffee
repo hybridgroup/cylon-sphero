@@ -42,7 +42,7 @@ namespace "Cylon.Adaptor", ->
 
     disconnect: ->
       Logger.info "Disconnecting from Sphero '#{@name}'..."
-      @sphero.close
+      #@sphero.close
 
     detectCollisions: ->
       @sphero.configureCollisionDetection(0x01, 0x40, 0x40, 0x50, 0x50, 0x50,)
