@@ -154,11 +154,9 @@ module.exports =
     colors[colors.length * Math.random() << 0]
 
   fromString: (string) ->
+    err = "No Matching Color. Please provide a color name or literal hex number"
+
     if Colors[string]?
       Colors[string]
     else
-      message = """
-        No matching color found.
-        Please provide a string color name or literal hex number.
-      """
-      throw message
+      throw err

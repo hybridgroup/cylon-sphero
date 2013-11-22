@@ -168,12 +168,12 @@
       return colors[colors.length * Math.random() << 0];
     },
     fromString: function(string) {
-      var message;
+      var err;
+      err = "No Matching Color. Please provide a color name or literal hex number";
       if (Colors[string] != null) {
         return Colors[string];
       } else {
-        message = "No matching color found.\nPlease provide a string color name or literal hex number.";
-        throw message;
+        throw err;
       }
     }
   };
