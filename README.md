@@ -6,6 +6,8 @@ This module provides an adaptor and driver for the Sphero robot from Orbotix (ht
 
 Want to use Ruby on robots? Check out our sister project Artoo (http://artoo.io)
 
+Want to use the Go programming language to power your robots? Check out our sister project Gobot (http://gobot.io).
+
 [![Build Status](https://secure.travis-ci.org/hybridgroup/cylon-sphero.png?branch=master)](http://travis-ci.org/hybridgroup/cylon-sphero)
 
 ## Getting Started
@@ -14,6 +16,7 @@ Install the module with: `npm install cylon-sphero`
 
 ## Examples
 
+### JavaScript:
 ```javascript
 var Cylon = require('cylon');
 
@@ -29,7 +32,8 @@ Cylon.robot({
 }).start();
 ```
 
-```coffee-script
+### CoffeeScript:
+```
 Cylon = require 'cylon'
 
 Cylon.robot
