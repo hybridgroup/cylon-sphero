@@ -14,6 +14,8 @@
 
   namespace = require('node-namespace');
 
+  require('cylon');
+
   require('./commands');
 
   require('./adaptor');
