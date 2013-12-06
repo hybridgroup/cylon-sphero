@@ -62,6 +62,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 [![NPM](https://nodei.co/npm/cylon-sphero.png?compact=true)](https://nodei.co/npm/cylon-sphero/)
 
+Version 0.4.0 - Update for cylon 0.7.0
+
 Version 0.3.0 - Use new Basestar proxying and events
 
 Version 0.2.0 - Lots of colors, support for entire Sphero API, and uses Basestar for DRY code
