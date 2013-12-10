@@ -60,9 +60,16 @@
         this.defineAdaptorEvent({
           eventName: 'notification'
         });
-        this.sphero.open(this.connection.port.toString());
-        callback(null);
-        return this.connection.emit('connect');
+        
+        var self = this;
+        this.sphero.open(this.connection.port.toString(), function(err){
+          if (err) {
+            Logger.info(err);
+          } else {
+            callback(null);
+            return self.connection.emit('connect');
+          }
+        });
       };
 
       Sphero.prototype.disconnect = function() {
