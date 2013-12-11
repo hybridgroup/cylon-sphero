@@ -35,10 +35,14 @@ namespace "Cylon.Adaptor", ->
       @defineAdaptorEvent eventName: 'message'
       @defineAdaptorEvent eventName: 'notification'
 
-      @sphero.open(@connection.port.toString())
+      @sphero.open(@connection.port.toString(), (err) =>
+        if err
+          return (callback)(err)
+        (callback)(null)
+        @connection.emit 'connect'
+      )
 
-      (callback)(null)
-      @connection.emit 'connect'
+      true
 
     disconnect: ->
       Logger.info "Disconnecting from Sphero '#{@name}'..."
