@@ -63,10 +63,11 @@
         });
         this.sphero.open(this.connection.port.toString(), function(err) {
           if (err) {
-            return callback(err);
+            _this.connection.emit('err', err);
+          } else {
+            _this.connection.emit('connect');
           }
-          callback(null);
-          return _this.connection.emit('connect');
+          return callback(err);
         });
         return true;
       };

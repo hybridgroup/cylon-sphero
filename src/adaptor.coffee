@@ -37,9 +37,11 @@ namespace "Cylon.Adaptor", ->
 
       @sphero.open(@connection.port.toString(), (err) =>
         if err
-          return (callback)(err)
-        (callback)(null)
-        @connection.emit 'connect'
+          @connection.emit 'err', err
+        else
+          @connection.emit 'connect'
+ 
+        (callback)(err) 
       )
 
       true
