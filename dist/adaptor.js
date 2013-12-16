@@ -108,7 +108,7 @@
 
       return Sphero;
 
-    })(Cylon.Adaptors.Adaptor);
+    })(Cylon.Adaptor);
   });
 
 }).call(this);

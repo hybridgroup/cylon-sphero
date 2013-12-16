@@ -14,7 +14,7 @@ Colors = require './colors'
 namespace = require 'node-namespace'
 
 namespace "Cylon.Adaptors", ->
-  class @Sphero extends Cylon.Adaptors.Adaptor
+  class @Sphero extends Cylon.Adaptor
     constructor: (opts) ->
       super
       @sphero = Spheron.sphero()

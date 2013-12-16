@@ -13,7 +13,7 @@ require './cylon-sphero'
 namespace = require 'node-namespace'
 
 namespace "Cylon.Drivers", ->
-  class @Sphero extends Cylon.Drivers.Driver
+  class @Sphero extends Cylon.Driver
     constructor: (opts) ->
       super
       @proxyMethods Cylon.Sphero.Commands, @connection, this
