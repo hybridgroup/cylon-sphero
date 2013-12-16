@@ -21,14 +21,12 @@
 
   namespace = require('node-namespace');
 
-  namespace("Cylon.Adaptor", function() {
+  namespace("Cylon.Adaptors", function() {
     return this.Sphero = (function(_super) {
       __extends(Sphero, _super);
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
-        this.connection = opts.connection;
-        this.name = opts.name;
         this.sphero = Spheron.sphero();
         this.connector = this.sphero;
         this.proxyMethods(Cylon.Sphero.Commands, this.sphero, this);
@@ -110,7 +108,7 @@
 
       return Sphero;
 
-    })(Cylon.Basestar);
+    })(Cylon.Adaptors.Adaptor);
   });
 
 }).call(this);

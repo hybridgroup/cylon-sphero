@@ -2,5 +2,5 @@
 
 source 'driver'
 
-describe 'Cylon.Driver.Sphero', ->
+describe 'Cylon.Drivers.Sphero', ->
   it 'needs test coverage'

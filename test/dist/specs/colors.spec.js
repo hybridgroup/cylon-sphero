@@ -4,7 +4,7 @@
 
   Colors = source('colors');
 
-  describe('Colors', function() {
+  describe('Cylon.Sphero.Colors', function() {
     it('can fetch hex colors from a string', function() {
       return Colors.fromString('cyan').should.be.equal(0x00FFFF);
     });
