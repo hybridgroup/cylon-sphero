@@ -2,5 +2,5 @@
 
 source 'adaptor'
 
-describe 'Cylon.Adaptor.Sphero', ->
+describe 'Cylon.Adaptors.Sphero', ->
   it 'needs test coverage'

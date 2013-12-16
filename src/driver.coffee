@@ -12,27 +12,22 @@ require './cylon-sphero'
 
 namespace = require 'node-namespace'
 
-namespace "Cylon.Driver", ->
-  class @Sphero extends Cylon.Basestar
+namespace "Cylon.Drivers", ->
+  class @Sphero extends Cylon.Driver
     constructor: (opts) ->
       super
-      @device = opts.device
-      @connection = @device.connection
       @proxyMethods Cylon.Sphero.Commands, @connection, this
 
     commands: -> Cylon.Sphero.Commands
 
     start: (callback) ->
-      Logger.info "#{@device.name} started"
-
       @defineDriverEvent eventName: 'connect'
       @defineDriverEvent eventName: 'message'
       @defineDriverEvent eventName: 'update'
       @defineDriverEvent eventName: 'notification'
       @defineDriverEvent eventName: 'notification', targetEventName: 'collision'
 
-      (callback)(null)
-      @device.emit 'start'
+      super
 
     roll: (speed, heading, state = 1) ->
       @connection.roll(speed, heading, state)

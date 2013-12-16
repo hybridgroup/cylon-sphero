@@ -2,7 +2,7 @@
 
 Colors = source 'colors'
 
-describe 'Colors', ->
+describe 'Cylon.Sphero.Colors', ->
   it 'can fetch hex colors from a string', ->
     Colors.fromString('cyan').should.be.equal 0x00FFFF
 

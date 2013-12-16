@@ -13,12 +13,10 @@ Spheron = require 'spheron'
 Colors = require './colors'
 namespace = require 'node-namespace'
 
-namespace "Cylon.Adaptor", ->
-  class @Sphero extends Cylon.Basestar
+namespace "Cylon.Adaptors", ->
+  class @Sphero extends Cylon.Adaptor
     constructor: (opts) ->
       super
-      @connection = opts.connection
-      @name = opts.name
       @sphero = Spheron.sphero()
       @connector = @sphero
       @proxyMethods Cylon.Sphero.Commands, @sphero, this

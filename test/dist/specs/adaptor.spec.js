@@ -2,7 +2,7 @@
   'use strict';
   source('adaptor');
 
-  describe('Cylon.Adaptor.Sphero', function() {
+  describe('Cylon.Adaptors.Sphero', function() {
     return it('needs test coverage');
   });
 

@@ -17,14 +17,12 @@
 
   namespace = require('node-namespace');
 
-  namespace("Cylon.Driver", function() {
+  namespace("Cylon.Drivers", function() {
     return this.Sphero = (function(_super) {
       __extends(Sphero, _super);
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
-        this.device = opts.device;
-        this.connection = this.device.connection;
         this.proxyMethods(Cylon.Sphero.Commands, this.connection, this);
       }
 
@@ -33,7 +31,6 @@
       };
 
       Sphero.prototype.start = function(callback) {
-        Logger.info("" + this.device.name + " started");
         this.defineDriverEvent({
           eventName: 'connect'
         });
@@ -50,8 +47,7 @@
           eventName: 'notification',
           targetEventName: 'collision'
         });
-        callback(null);
-        return this.device.emit('start');
+        return Sphero.__super__.start.apply(this, arguments);
       };
 
       Sphero.prototype.roll = function(speed, heading, state) {
@@ -78,7 +74,7 @@
 
       return Sphero;
 
-    })(Cylon.Basestar);
+    })(Cylon.Driver);
   });
 
 }).call(this);

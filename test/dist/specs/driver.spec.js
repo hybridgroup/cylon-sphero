@@ -2,7 +2,7 @@
   'use strict';
   source('driver');
 
-  describe('Cylon.Driver.Sphero', function() {
+  describe('Cylon.Drivers.Sphero', function() {
     return it('needs test coverage');
   });
 
