@@ -32,8 +32,8 @@
     "sinon": "~1.7.3"
   },
   "dependencies": {
-    "spheron": "git://github.com/hybridgroup/spheron.git",
     "node-namespace": "~1.0.0",
-    "cylon": ">= 0.8.0"
+    "cylon": ">= 0.8.0",
+    "spheron": "git://github.com/hybridgroup/spheron.git"
   }
 }
