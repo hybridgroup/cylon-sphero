@@ -6,7 +6,7 @@
  * Licensed under the Apache 2.0 license.
 ###
 
-'use strict';
+'use strict'
 
 require './cylon-sphero'
 
@@ -14,7 +14,7 @@ namespace = require 'node-namespace'
 
 namespace "Cylon.Drivers", ->
   class @Sphero extends Cylon.Driver
-    constructor: (opts) ->
+    constructor: (opts = {}) ->
       super
       @proxyMethods Cylon.Sphero.Commands, @connection, this
 
@@ -30,7 +30,7 @@ namespace "Cylon.Drivers", ->
       super
 
     roll: (speed, heading, state = 1) ->
-      @connection.roll(speed, heading, state)
+      @connection.roll speed, heading, state
 
     detectCollisions: ->
       @connection.detectCollisions()
@@ -39,4 +39,4 @@ namespace "Cylon.Drivers", ->
       @connection.stop()
 
     setRGB: (color, persist = true) ->
-      @connection.setRGB(color, persist)
+      @connection.setRGB color, persist

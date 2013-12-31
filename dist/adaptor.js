@@ -26,6 +26,9 @@
       __extends(Sphero, _super);
 
       function Sphero(opts) {
+        if (opts == null) {
+          opts = {};
+        }
         Sphero.__super__.constructor.apply(this, arguments);
         this.sphero = Spheron.sphero();
         this.connector = this.sphero;
@@ -80,13 +83,13 @@
       };
 
       Sphero.prototype.setRGB = function(color, persist) {
+        if (persist == null) {
+          persist = true;
+        }
         return this.sphero.setRGB(color, persist);
       };
 
       Sphero.prototype.setColor = function(color, persist) {
-        if (persist == null) {
-          persist = true;
-        }
         if (typeof color === 'string') {
           color = Colors.fromString(color);
         }
@@ -95,9 +98,6 @@
 
       Sphero.prototype.setRandomColor = function(persist) {
         var color;
-        if (persist == null) {
-          persist = true;
-        }
         color = Colors.randomColor();
         return this.setRGB(color, persist);
       };

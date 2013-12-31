@@ -6,22 +6,25 @@
  * Licensed under the Apache 2.0 license.
 ###
 
-'use strict';
+'use strict'
 
 require './cylon-sphero'
+
 Spheron = require 'spheron'
 Colors = require './colors'
+
 namespace = require 'node-namespace'
 
 namespace "Cylon.Adaptors", ->
   class @Sphero extends Cylon.Adaptor
-    constructor: (opts) ->
+    constructor: (opts = {}) ->
       super
       @sphero = Spheron.sphero()
       @connector = @sphero
       @proxyMethods Cylon.Sphero.Commands, @sphero, this
 
-    commands: -> Cylon.Sphero.Commands
+    commands: ->
+      Cylon.Sphero.Commands
 
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
@@ -33,14 +36,13 @@ namespace "Cylon.Adaptors", ->
       @defineAdaptorEvent eventName: 'message'
       @defineAdaptorEvent eventName: 'notification'
 
-      @sphero.open(@connection.port.toString(), (err) =>
+      @sphero.open @connection.port.toString(), (err) =>
         if err
           @connection.emit 'err', err
         else
           @connection.emit 'connect'
- 
-        (callback)(err) 
-      )
+
+        (callback)(err)
 
       true
 
@@ -51,17 +53,16 @@ namespace "Cylon.Adaptors", ->
     detectCollisions: ->
       @sphero.configureCollisionDetection(0x01, 0x40, 0x40, 0x50, 0x50, 0x50,)
 
-    setRGB: (color, persist) ->
-      @sphero.setRGB(color, persist)
+    setRGB: (color, persist = true) ->
+      @sphero.setRGB color, persist
 
-    setColor: (color, persist = true) ->
+    setColor: (color, persist) ->
       color = Colors.fromString(color) if typeof color is 'string'
       @setRGB color, persist
 
-    setRandomColor: (persist = true) ->
+    setRandomColor: (persist) ->
       color = Colors.randomColor()
       @setRGB color, persist
 
     stop: ->
-      @sphero.roll(0, 0, 0)
-  
+      @sphero.roll 0, 0, 0

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 namespace = require 'node-namespace'
 
@@ -36,6 +36,6 @@ describe "Cylon.Sphero", ->
 
   it "can create adaptor", ->
     sphero.adaptor.should.be.a 'function'
-    
+
   it "can create driver", ->
     sphero.driver.should.be.a 'function'

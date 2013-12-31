@@ -22,6 +22,9 @@
       __extends(Sphero, _super);
 
       function Sphero(opts) {
+        if (opts == null) {
+          opts = {};
+        }
         Sphero.__super__.constructor.apply(this, arguments);
         this.proxyMethods(Cylon.Sphero.Commands, this.connection, this);
       }

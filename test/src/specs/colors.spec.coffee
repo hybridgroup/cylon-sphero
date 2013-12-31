@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 Colors = source 'colors'
 
