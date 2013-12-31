@@ -21,14 +21,12 @@
 
   namespace = require('node-namespace');
 
-  namespace("Cylon.Adaptor", function() {
+  namespace("Cylon.Adaptors", function() {
     return this.Sphero = (function(_super) {
       __extends(Sphero, _super);
 
       function Sphero(opts) {
         Sphero.__super__.constructor.apply(this, arguments);
-        this.connection = opts.connection;
-        this.name = opts.name;
         this.sphero = Spheron.sphero();
         this.connector = this.sphero;
         this.proxyMethods(Cylon.Sphero.Commands, this.sphero, this);
@@ -39,6 +37,7 @@
       };
 
       Sphero.prototype.connect = function(callback) {
+        var _this = this;
         Logger.info("Connecting to Sphero '" + this.name + "'...");
         this.defineAdaptorEvent({
           eventName: 'open',
@@ -60,13 +59,20 @@
         this.defineAdaptorEvent({
           eventName: 'notification'
         });
-        this.sphero.open(this.connection.port.toString());
-        callback(null);
-        return this.connection.emit('connect');
+        this.sphero.open(this.connection.port.toString(), function(err) {
+          if (err) {
+            _this.connection.emit('err', err);
+          } else {
+            _this.connection.emit('connect');
+          }
+          return callback(err);
+        });
+        return true;
       };
 
       Sphero.prototype.disconnect = function() {
-        return Logger.info("Disconnecting from Sphero '" + this.name + "'...");
+        Logger.info("Disconnecting from Sphero '" + this.name + "'...");
+        return this.sphero.close;
       };
 
       Sphero.prototype.detectCollisions = function() {
@@ -102,7 +108,7 @@
 
       return Sphero;
 
-    })(Cylon.Basestar);
+    })(Cylon.Adaptor);
   });
 
 }).call(this);

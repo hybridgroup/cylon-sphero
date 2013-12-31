@@ -10,16 +10,17 @@
 
 namespace = require 'node-namespace'
 
+require 'cylon'
 require './commands'
 require './adaptor'
 require './driver'
 
 module.exports =
   adaptor: (args...) ->
-    new Cylon.Adaptor.Sphero(args...)
+    new Cylon.Adaptors.Sphero(args...)
 
   driver: (args...) ->
-    new Cylon.Driver.Sphero(args...)
+    new Cylon.Drivers.Sphero(args...)
 
   register: (robot) ->
     Logger.info "Registering Sphero adaptor for #{robot.name}"

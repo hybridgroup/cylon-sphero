@@ -2,7 +2,7 @@
   'use strict';
   source('commands');
 
-  describe('Commands', function() {
+  describe('Cylon.Sphero.Commands', function() {
     return it('is an array of string commands', function() {
       var command, _i, _len, _ref, _results;
       assert(Cylon.Sphero.Commands instanceof Array);

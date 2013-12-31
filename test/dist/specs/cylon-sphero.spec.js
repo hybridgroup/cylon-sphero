@@ -4,18 +4,9 @@
 
   namespace = require('node-namespace');
 
-  namespace('Cylon', function() {
-    return this.Basestar = (function() {
-      function Basestar() {}
-
-      return Basestar;
-
-    })();
-  });
-
   sphero = source("cylon-sphero");
 
-  describe("Sphero", function() {
+  describe("Cylon.Sphero", function() {
     it("standard async test", function(done) {
       var bool;
       bool = false;
@@ -45,11 +36,14 @@
       data[0].should.be.eql(obj);
       return data[0].should.be.equal(obj);
     });
-    it("should be able to register", function() {
+    it("can register the adaptor and driver", function() {
       return sphero.register.should.be.a('function');
     });
-    return it("should be able to create adaptor", function() {
+    it("can create adaptor", function() {
       return sphero.adaptor.should.be.a('function');
+    });
+    return it("can create driver", function() {
+      return sphero.driver.should.be.a('function');
     });
   });
 

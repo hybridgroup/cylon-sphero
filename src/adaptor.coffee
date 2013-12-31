@@ -13,12 +13,10 @@ Spheron = require 'spheron'
 Colors = require './colors'
 namespace = require 'node-namespace'
 
-namespace "Cylon.Adaptor", ->
-  class @Sphero extends Cylon.Basestar
+namespace "Cylon.Adaptors", ->
+  class @Sphero extends Cylon.Adaptor
     constructor: (opts) ->
       super
-      @connection = opts.connection
-      @name = opts.name
       @sphero = Spheron.sphero()
       @connector = @sphero
       @proxyMethods Cylon.Sphero.Commands, @sphero, this
@@ -35,14 +33,20 @@ namespace "Cylon.Adaptor", ->
       @defineAdaptorEvent eventName: 'message'
       @defineAdaptorEvent eventName: 'notification'
 
-      @sphero.open(@connection.port.toString())
+      @sphero.open(@connection.port.toString(), (err) =>
+        if err
+          @connection.emit 'err', err
+        else
+          @connection.emit 'connect'
+ 
+        (callback)(err) 
+      )
 
-      (callback)(null)
-      @connection.emit 'connect'
+      true
 
     disconnect: ->
       Logger.info "Disconnecting from Sphero '#{@name}'..."
-      #@sphero.close
+      @sphero.close
 
     detectCollisions: ->
       @sphero.configureCollisionDetection(0x01, 0x40, 0x40, 0x50, 0x50, 0x50,)

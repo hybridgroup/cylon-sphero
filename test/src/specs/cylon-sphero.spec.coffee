@@ -2,14 +2,9 @@
 
 namespace = require 'node-namespace'
 
-# Needed so that tests don't implode
-namespace 'Cylon', ->
-  class @Basestar
-    constructor: ->
-
 sphero = source("cylon-sphero")
 
-describe "Sphero", ->
+describe "Cylon.Sphero", ->
   it "standard async test", (done) ->
     bool = false
     bool.should.be.false
@@ -36,9 +31,11 @@ describe "Sphero", ->
     # hard equal
     data[0].should.be.equal obj
 
-  it "should be able to register", ->
+  it "can register the adaptor and driver", ->
     sphero.register.should.be.a 'function'
 
-  it "should be able to create adaptor", ->
+  it "can create adaptor", ->
     sphero.adaptor.should.be.a 'function'
     
+  it "can create driver", ->
+    sphero.driver.should.be.a 'function'
