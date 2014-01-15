@@ -73,6 +73,8 @@ Thank you!
 
 [![NPM](https://nodei.co/npm/cylon-sphero.png?compact=true)](https://nodei.co/npm/cylon-sphero/)
 
+Version 0.6.0 - Update for cylon 0.9.0
+
 Version 0.5.0 - Update to match new Spheron module's callback and for cylon 0.8.0
 
 Version 0.4.0 - Update for cylon 0.7.0
