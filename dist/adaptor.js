@@ -42,6 +42,10 @@
       Sphero.prototype.connect = function(callback) {
         var _this = this;
         Logger.info("Connecting to Sphero '" + this.name + "'...");
+        this.connector.on('open', function() {
+          callback();
+          return _this.connection.emit('connect');
+        });
         this.defineAdaptorEvent({
           eventName: 'close',
           targetEventName: 'disconnect'
@@ -61,11 +65,8 @@
         this.sphero.open(this.connection.port.toString(), function(err) {
           if (err) {
             return _this.connection.emit('err', err);
-          } else {
-            return _this.connection.emit('connect');
           }
         });
-        callback();
         return true;
       };
 
