@@ -29,7 +29,6 @@ namespace "Cylon.Adaptors", ->
     connect: (callback) ->
       Logger.info "Connecting to Sphero '#{@name}'..."
 
-      #@defineAdaptorEvent eventName: 'open', targetEventName: 'connect'
       @connector.on('open', () =>
         callback()
         @connection.emit 'connect'
@@ -43,9 +42,6 @@ namespace "Cylon.Adaptors", ->
       @sphero.open @connection.port.toString(), (err) =>
         if err
           @connection.emit 'err', err
-        #else
-          #callback()
-          #@connection.emit 'connect'
 
       true
 
