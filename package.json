@@ -1,6 +1,6 @@
 {
   "name": "cylon-sphero",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": "dist/cylon-sphero.js",
   "description": "Cylon module for Sphero robot",
   "homepage": "http://cylonjs.com",
