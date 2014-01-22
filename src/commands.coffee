@@ -21,6 +21,7 @@ namespace "Cylon.Sphero", ->
     'detectCollisions',
     'eraseOrbBasicStorage',
     'executeOrbBasicProgram',
+    'finishCalibration',
     'getApplicationConfigurationBlock',
     'getConfigurationBlock',
     'getDeviceMode',
@@ -53,6 +54,7 @@ namespace "Cylon.Sphero", ->
     'setRotationRate',
     'setStabilization',
     'setTemporaryOptionFlags',
+    'startCalibration',
     'stop',
     'submitValueToInputStatement'
   ]
