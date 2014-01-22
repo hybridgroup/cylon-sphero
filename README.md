@@ -50,6 +50,33 @@ Cylon.robot
 .start()
 ```
 
+## How To Connect
+
+### OSX
+
+In order to allow Cylon.js running on your Mac to access the Sphero, go to "Bluetooth > Open Bluetooth Preferences > Sharing Setup" and make sure that "Bluetooth Sharing" is checked.
+
+Thank you to [@kopipejst](https://github.com/kopipejst) for the above connnection info.
+
+### Ubuntu
+
+Connecting to the Sphero from Ubuntu or any other Linux-based OS can be done entirely from the command line. Here are the steps.
+
+Find the address of the Sphero, by using:
+```
+hcitool scan
+```
+
+Pair to Sphero using this command (substituting the actual address of your Sphero):
+```
+sudo bluez-simple-agent hci0 <address>
+```
+
+Connect to the Sphero using this command (substituting the actual address of your Sphero):
+```
+sudo rfcomm connect /dev/rfcomm1 <address> 1
+```
+
 ## Documentation
 We're busy adding documentation to our web site at http://cylonjs.com/ please check there as we continue to work on Cylon.js
 
