@@ -51,7 +51,7 @@ namespace "Cylon.Sphero", ->
     'setRandomColor',
     'setRawMotorValues',
     'setRotationRate',
-    'setStabalisation',
+    'setStabilization',
     'setTemporaryOptionFlags',
     'stop',
     'submitValueToInputStatement'

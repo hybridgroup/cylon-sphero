@@ -34,10 +34,12 @@
         sphero.stop();
         return assert(stopSpy.calledOnce);
       });
-      return it("proxies the #setRGB method to the @connection", function() {
+      it("proxies the #setRGB method to the @connection", function() {
         sphero.setRGB();
         return assert(setRGBSpy.calledOnce);
       });
+      it("should be able to startCalibration");
+      return it("should be able to finishCalibration");
     });
   });
 

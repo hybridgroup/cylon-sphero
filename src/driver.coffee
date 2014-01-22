@@ -40,3 +40,12 @@ namespace "Cylon.Drivers", ->
 
     setRGB: (color, persist = true) ->
       @connection.setRGB color, persist
+
+    startCalibration: ->
+      @connection.setBackLED 127
+      @connection.setStabilization 0
+
+    finishCalibration: ->
+      @connection.setHeading 0
+      @connection.setBackLED 0
+      @connection.setStabilization 1

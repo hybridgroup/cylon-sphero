@@ -75,6 +75,17 @@
         return this.connection.setRGB(color, persist);
       };
 
+      Sphero.prototype.startCalibration = function() {
+        this.connection.setBackLED(127);
+        return this.connection.setStabilization(0);
+      };
+
+      Sphero.prototype.finishCalibration = function() {
+        this.connection.setHeading(0);
+        this.connection.setBackLED(0);
+        return this.connection.setStabilization(1);
+      };
+
       return Sphero;
 
     })(Cylon.Driver);

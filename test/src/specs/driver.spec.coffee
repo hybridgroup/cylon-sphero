@@ -37,3 +37,6 @@ describe 'Cylon.Drivers.Sphero', ->
     it "proxies the #setRGB method to the @connection", ->
       sphero.setRGB()
       assert setRGBSpy.calledOnce
+
+    it "should be able to startCalibration"
+    it "should be able to finishCalibration"
