@@ -77,6 +77,10 @@ Connect to the Sphero using this command (substituting the actual address of you
 sudo rfcomm connect /dev/rfcomm1 <address> 1
 ```
 
+### Windows
+
+You should be able to simply pair your Sphero using your normal system tray applet for Bluetooth, and then connect to the COM port that is bound to the device, such as `COM3`.
+
 ## Documentation
 We're busy adding documentation to our web site at http://cylonjs.com/ please check there as we continue to work on Cylon.js
 
