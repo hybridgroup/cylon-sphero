@@ -34,7 +34,7 @@ namespace "Cylon.Drivers", ->
 
       super
 
-    # Public: This command aborts any executing macro and returns both 
+    # Public: This command aborts any executing macro and returns both
     # its ID code and the command number currently in process.
     #
     # Returns (ID code , command number).
@@ -43,15 +43,15 @@ namespace "Cylon.Drivers", ->
     #
     # Returns null.
 
-    # Public: This stores the attached macro definition into the temporary RAM 
-    # buffer for later execution. It is similar to the Save Temporary Macro 
+    # Public: This stores the attached macro definition into the temporary RAM
+    # buffer for later execution. It is similar to the Save Temporary Macro
     # call but allows you to build up longer temporary macros.
     #
     # chunk - params
     #
     # Returns true | false.
 
-    # Public: Sending an orbBasic program to Sphero involves appending blocks of 
+    # Public: Sending an orbBasic program to Sphero involves appending blocks of
     # text to existing ones in the specified storage area.
     #
     # area - params
@@ -70,7 +70,7 @@ namespace "Cylon.Drivers", ->
     #
     # Returns true | false.
 
-    # Public: Through the streaming interface, Sphero provides real-time location 
+    # Public: Through the streaming interface, Sphero provides real-time location
     # data in the form of (X,Y) coordinates on the ground plane.
     #
     # flag - params
@@ -80,15 +80,15 @@ namespace "Cylon.Drivers", ->
     #
     # Returns true | false.
 
-    # Public: This erases any existing program in the specified storage area. Specify 
+    # Public: This erases any existing program in the specified storage area. Specify
     # 00h for the temporary RAM buffer or 01h for the persistent storage area.
     #
     # area - params
     #
     # Returns null.
 
-    # Public: This attempts to run a program in the specified storage area beginning 
-    # at the specified line number. This command will fail if there is already 
+    # Public: This attempts to run a program in the specified storage area beginning
+    # at the specified line number. This command will fail if there is already
     # an orbBasic program executing.
     #
     # area - params
@@ -96,7 +96,7 @@ namespace "Cylon.Drivers", ->
     #
     # Returns null.
 
-    # Public: This allows you to retrieve the application configuration block that is 
+    # Public: This allows you to retrieve the application configuration block that is
     # set aside for exclusive use by applications.
     #
     # Returns null.
@@ -105,19 +105,19 @@ namespace "Cylon.Drivers", ->
     #
     # id - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: Gets the operation mode of Sphero based on the supplied mode value.
     #
-    # Returns 00h (Normal mode) | 01h (User Hack mode). 
+    # Returns 00h (Normal mode) | 01h (User Hack mode).
 
     # Public: This command returns the ID code and command number of the currently executing macro.
     #
-    # Returns (ID code, cmd number, cmd number). 
+    # Returns (ID code, cmd number, cmd number).
 
     # Public: This command returns the ID code and command number of the currently executing macro.
     #
-    # Returns FLAGS opt: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 6-31. 
+    # Returns FLAGS opt: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 6-31.
 
     # Public: This retrieves the "user LED color" which is stored in the config block.
     #
@@ -136,7 +136,7 @@ namespace "Cylon.Drivers", ->
     #
     # Returns (XPOS, YPOS, XVEL, YVEL, SOG).
 
-    # Public: This commands Sphero to roll along the provided vector. Both a speed and a 
+    # Public: This commands Sphero to roll along the provided vector. Both a speed and a
     # heading are required; the latter is considered relative to the last calibrated direction.
     #
     # speed - params
@@ -149,7 +149,7 @@ namespace "Cylon.Drivers", ->
 
     # Public: Sets the sphero to detect collisions and report them.
     #
-    # Returns null. 
+    # Returns null.
     detectCollisions: ->
       @connection.detectCollisions()
 
@@ -159,19 +159,19 @@ namespace "Cylon.Drivers", ->
     # dLen - params
     # id - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: This stores the attached macro definition into the persistent store for later execution.
     #
     # data - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: This stores the attached macro definition into the temporary RAM buffer for later execution.
     #
     # data - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: This command controls the self level routine.
     #
@@ -180,45 +180,45 @@ namespace "Cylon.Drivers", ->
     # timeout - params
     # trueTime - params
     #
-    # Returns options: array [(0 | 1 | 2 |3 ), (0 | 1 to 90), (0 | 1 to 255), (0 | 1 to 255)]. 
+    # Returns options: array [(0 | 1 | 2 |3 ), (0 | 1 to 90), (0 | 1 to 255), (0 | 1 to 255)].
 
     # Public: This command controls the self level routine.
     #
     # range - params
     #
-    # Returns integer opt: 0 | 1 | 2 | 3. 
+    # Returns integer opt: 0 | 1 | 2 | 3.
 
-    # Public: This allows you to retrieve the application configuration block that is set 
+    # Public: This allows you to retrieve the application configuration block that is set
     # aside for exclusive use by applications.
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This allows you to control the brightness of the back LED. The value does 
+    # Public: This allows you to control the brightness of the back LED. The value does
     # not persist across power cycles.
     #
     # level - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: setBoostWithTime(state)
     #
     # state - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This allows you to set the color of the sphero, just pass an array 
+    # Public: This allows you to set the color of the sphero, just pass an array
     # containing RGB hex or a string with one of the color names of the list.
     #
     # color - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This command accepts an exact copy of the configuration block and loads 
+    # Public: This command accepts an exact copy of the configuration block and loads
     # it into the RAM copy of the configuration block.
     #
     # value - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: Sphero supports asynchronous data streaming of certain control system and sensor parameters.
     #
@@ -228,38 +228,38 @@ namespace "Cylon.Drivers", ->
     # pcnt - params
     # mask2 - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: Assigns the operation mode of Sphero based on the supplied mode value.
     #
     # mode - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This allows the smartphone client to adjust the orientation of Sphero by 
+    # Public: This allows the smartphone client to adjust the orientation of Sphero by
     # commanding a new reference heading in degrees, which ranges from 0 to 359.
     #
     # heading - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This command allows system globals that influence certain macro commands 
+    # Public: This command allows system globals that influence certain macro commands
     # to be selectively altered from outside of the macro system itself.
     #
     # param - params
     # val1 - params
     # val2 - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This sets the ultimate timeout for the last motion command to keep 
+    # Public: This sets the ultimate timeout for the last motion command to keep
     # Sphero from rolling away in the case of a crashed (or paused) client app.
     #
     # time - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: Assigns the permanent option flags to the provided value and writes them 
+    # Public: Assigns the permanent option flags to the provided value and writes them
     # immediately to the config block for persistence across power cycles.
     #
     # flags - params
@@ -268,21 +268,21 @@ namespace "Cylon.Drivers", ->
 
     # Public: Stop the driver.
     #
-    # Returns null.  
+    # Returns null.
     stop: ->
       @connection.stop()
 
-    # Public: This allows you to set the RGB LED color, just pass an array containing 
+    # Public: This allows you to set the RGB LED color, just pass an array containing
     # RGB hex or a string with one of the color names of the list.
     #
     # color - params
     # persist - params
     #
-    # Returns null. 
+    # Returns null.
     setRGB: (color, persist = true) ->
       @connection.setRGB color, persist
 
-    # Public: This allows you to take over one or both of the motor output values, 
+    # Public: This allows you to take over one or both of the motor output values,
     # instead of having the stabilization system control them.
     #
     # lMode - params
@@ -290,45 +290,45 @@ namespace "Cylon.Drivers", ->
     # rMode - params
     # rPower - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This allows you to control the rotation rate that Sphero will use to meet 
+    # Public: This allows you to control the rotation rate that Sphero will use to meet
     # new heading commands.
     #
     # rate - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: setStabalization(on)
     #
     # on - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: Assigns the temporary option flags to the provided value. These do not persist 
+    # Public: Assigns the temporary option flags to the provided value. These do not persist
     # across a power cycle. See below for the bit definitions.
     #
     # flags - params
     #
-    # Returns null. 
+    # Returns null.
 
-    # Public: This takes the place of the typical user console in orbBasic and allows a 
+    # Public: This takes the place of the typical user console in orbBasic and allows a
     # user to answer an input request.
     #
     # val - params
     #
-    # Returns null. 
+    # Returns null.
 
     # Public: Starts the calibration of the driver.
     #
-    # Returns null. 
+    # Returns null.
     startCalibration: ->
       @connection.setBackLED 127
       @connection.setStabilization 0
 
     # Public: Finish the calibration of the driver.
     #
-    # Returns null. 
+    # Returns null.
     finishCalibration: ->
       @connection.setHeading 0
       @connection.setBackLED 0
