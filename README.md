@@ -110,7 +110,7 @@ Thank you!
 
 ## Release History
 
-[![NPM](https://nodei.co/npm/cylon-sphero.png?compact=true)](https://nodei.co/npm/cylon-sphero/)
+Version 0.7.0 - Update for cylon 0.10.0, add calibration commands
 
 Version 0.6.0 - Update for cylon 0.9.0
 
