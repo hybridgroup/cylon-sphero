@@ -268,7 +268,7 @@ This command controls the self level routine.
 
 ##### Returns 
 
-options: array [(0 | 1 | 2 |3 ), (0 | 1 to 90), (0 | 1 to 255), (0 | 1 to 255)].
+options: `array` [(0 , 1 , 2 ,3 ), (0 , 1 to 90), (0 , 1 to 255), (0 , 1 to 255)].
 
 ## selfLevel(Options, Angle Limit, Timeout, True Time), options: ((0 | 1 | 2 |3 ), (0 | 1 to 90), (0 | 1 to 255), (0 | 1 to 255)
 
@@ -280,7 +280,7 @@ This command controls the self level routine.
 
 ##### Returns 
 
-`integer` opt: 0 | 1 | 2 | 3.
+`integer` opt: 0 , 1 , 2 , 3.
 
 ## setAccelerometerRange(Range Idx), options: 0 | 1 | 2 | 3
 
