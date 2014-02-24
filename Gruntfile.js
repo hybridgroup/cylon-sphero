@@ -9,9 +9,7 @@ module.exports = function (grunt) {
 
   var config = {
     dist: 'dist',
-    src: 'src',
-    distTest: 'test/dist',
-    srcTest: 'test/src'
+    src: 'src'
   };
 
   // Project configuration.
@@ -24,7 +22,6 @@ module.exports = function (grunt) {
             dot: true,
             src: [
               '<%= config.dist %>/*',
-              '<%= config.distTest %>/*',
               '!<%= config.dist %>/.git*'
             ]
           }
@@ -39,15 +36,6 @@ module.exports = function (grunt) {
           src: '{,*/}*.coffee',
           dest: '<%= config.dist %>',
           ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.srcTest %>',
-          src: '{,*/}*.spec.coffee',
-          dest: '<%= config.distTest %>',
-          ext: '.spec.js'
         }]
       }
     },
@@ -70,7 +58,7 @@ module.exports = function (grunt) {
       },
       test: {
         files: '<%= config.srcTest %>/specs/*',
-        tasks: ['coffee:test', 'simplemocha:backend']
+        tasks: ['simplemocha:backend']
       }
     },
     simplemocha: {
@@ -95,7 +83,7 @@ module.exports = function (grunt) {
           'test/support/globals.js',
 
           // tests
-          'test/dist/**/*.spec.js',
+          'test/specs/**/*.spec.js',
         ],
       },
     },
