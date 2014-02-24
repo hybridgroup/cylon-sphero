@@ -1,27 +1,23 @@
-(function() {
-  'use strict';
-  var Colors;
+"use strict";
 
-  Colors = source('colors');
+var Colors = source('colors');
 
-  describe('Colors', function() {
-    describe('#fromString', function() {
-      it('can fetch hex colors from a string', function() {
-        return Colors.fromString('cyan').should.be.equal(0x00FFFF);
-      });
-      return it('throws an error if a string is not provided', function() {
-        var wrapper;
-        wrapper = function() {
-          return Colors.fromString('ferrarired');
-        };
-        return expect(wrapper).to["throw"]();
-      });
+describe('Colors', function() {
+  describe('#fromString', function() {
+    it('can fetch hex colors from a string', function() {
+      Colors.fromString('cyan').should.be.equal(0x00FFFF);
     });
-    return describe('#randomColor', function() {
-      return it('can provide random colors', function() {
-        return assert(typeof Colors.randomColor() === 'number');
-      });
+
+    it('throws an error if a string is not provided', function() {
+      var wrapper = function() { Colors.fromString('ferrarired'); };
+
+      expect(wrapper).to["throw"]();
     });
   });
 
-}).call(this);
+  describe('#randomColor', function() {
+    it('can provide random colors', function() {
+      assert(typeof Colors.randomColor() === 'number');
+    });
+  });
+});
