@@ -1,7 +1,7 @@
 {
   "name": "cylon-sphero",
   "version": "0.7.0",
-  "main": "dist/cylon-sphero.js",
+  "main": "lib/cylon-sphero.js",
   "description": "Cylon module for Sphero robot",
   "homepage": "http://cylonjs.com",
   "bugs": "https://github.com/hybridgroup/cylon-sphero/issues",
