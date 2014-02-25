@@ -13,6 +13,5 @@ bdd:
 	$(BIN)/mocha -r cylon --colors -R spec $(TEST_FILES)
 
 # Run JSHint
-# for some reason, errors if not given the full path
 lint:
 	$(BIN)/jshint ./lib
