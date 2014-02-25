@@ -6,11 +6,11 @@ TEST_FILES := test/support/globals.js test/specs/**/*.js
 
 # Run Mocha, with standard reporter.
 test:
-	$(BIN)/mocha --colors $(TEST_FILES)
+	$(BIN)/mocha -r cylon --colors $(TEST_FILES)
 
 # Run Mocha, with more verbose BDD reporter.
 bdd:
-	$(BIN)/mocha --colors -R spec $(TEST_FILES)
+	$(BIN)/mocha -r cylon --colors -R spec $(TEST_FILES)
 
 # Run JSHint
 # for some reason, errors if not given the full path

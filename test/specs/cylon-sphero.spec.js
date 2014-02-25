@@ -10,9 +10,11 @@ describe("Cylon.Sphero", function() {
 
   it("can create adaptor", function() {
     sphero.adaptor.should.be.a('function');
+    expect(sphero.adaptor()).to.be.a('object');
   });
 
   it("can create driver", function() {
     sphero.driver.should.be.a('function');
+    expect(sphero.driver({ device: {} })).to.be.a('object');
   });
 });
