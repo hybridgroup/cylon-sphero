@@ -60,21 +60,22 @@ Thank you to [@kopipejst](https://github.com/kopipejst) for the above connnectio
 
 ### Ubuntu
 
-Connecting to the Sphero from Ubuntu or any other Linux-based OS can be done entirely from the command line. Here are the steps.
+Connecting to the Sphero from Ubuntu or any other Linux-based OS can be done entirely from the command line
+using CylonJS CLI commands. Here are the steps.
 
 Find the address of the Sphero, by using:
 ```
-hcitool scan
+cylon bluetooth scan
 ```
 
 Pair to Sphero using this command (substituting the actual address of your Sphero):
 ```
-sudo bluez-simple-agent hci0 <address>
+cylon bluetooth pair <address>
 ```
 
 Connect to the Sphero using this command (substituting the actual address of your Sphero):
 ```
-sudo rfcomm connect /dev/rfcomm1 <address> 1
+cylon bluetooth connect <address>
 ```
 
 ### Windows
@@ -109,6 +110,8 @@ Thank you!
   * For git help see [progit](http://git-scm.com/book) which is an awesome (and free) book on git
 
 ## Release History
+
+Version 0.8.0 - Update for cylon 0.11.0, migrated to pure JS
 
 Version 0.7.0 - Update for cylon 0.10.0, add calibration commands
 
