@@ -111,6 +111,8 @@ Thank you!
 
 ## Release History
 
+Version 0.9.0 - Update for cylon 0.12.0
+
 Version 0.8.1 - Update dependencies to include npm version of Spheron with Cylon.js pull requests
 
 Version 0.8.0 - Update for cylon 0.11.0, migrated to pure JS
