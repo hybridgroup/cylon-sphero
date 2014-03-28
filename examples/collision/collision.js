@@ -5,8 +5,8 @@ Cylon.robot({
   device: { name: 'sphero', driver: 'sphero' },
 
   work: function(me) {
-    var color = 0x00FF00;
-    var bitFilter = 0xFFFF00;
+    var color = 0x00FF00,
+        bitFilter = 0xFFFF00;
 
     me.sphero.on('connect', function() {
       console.log("Setting up Collision Detection...");
