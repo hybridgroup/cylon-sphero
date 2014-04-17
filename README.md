@@ -111,6 +111,8 @@ Thank you!
 
 ## Release History
 
+Version 0.9.1 - Added new 'locator' event, changed spheron to hybridgroup-spheron module
+
 Version 0.9.0 - Update for cylon 0.12.0
 
 Version 0.8.1 - Update dependencies to include npm version of Spheron with Cylon.js pull requests
