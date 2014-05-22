@@ -1,12 +1,13 @@
 "use strict";
 
-source('driver');
+var Driver = source('driver');
+var Commands = source('./commands');
 
-describe('Cylon.Drivers.Sphero', function() {
-  var sphero = new Cylon.Drivers.Sphero({ device: {} });
+describe('Driver', function() {
+  var sphero = new Driver({ device: {} });
 
   it("exposes a 'commands' method exposing all available commands", function() {
-    expect(sphero.commands()).to.be.eql(Cylon.Sphero.Commands);
+    expect(sphero.commands()).to.be.eql(Commands);
   });
 
   describe("proxies", function() {

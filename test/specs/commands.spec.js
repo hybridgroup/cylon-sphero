@@ -1,10 +1,10 @@
 "use strict";
 
-source('commands');
+var Commands = source('./commands');
 
 describe('Cylon.Sphero.Commands', function() {
   it('is an array of string commands', function() {
-    var commands = Cylon.Sphero.Commands;
+    var commands = Commands;
 
     for (var i = 0; i < commands.length; i++) {
       var command = commands[i];
