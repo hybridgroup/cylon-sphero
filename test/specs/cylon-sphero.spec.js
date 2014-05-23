@@ -1,7 +1,6 @@
 "use strict";
 
-var namespace = require('node-namespace'),
-    sphero = source("cylon-sphero");
+var sphero = source("cylon-sphero");
 
 describe("Cylon.Sphero", function() {
   it("can register the adaptor and driver", function() {
