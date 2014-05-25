@@ -7,9 +7,8 @@ process.env.NODE_ENV = 'test';
 var path = require('path');
 var chai = require('chai');
 var sinonChai = require('sinon-chai');
-
-require('cylon');
-Logger.setup(false) // disable Cylon's logger for tests
+var Cylon = require('cylon');
+Cylon.Logger.setup(false) // disable Cylon's logger for tests
 
 global.chai = chai;
 global.should = chai.should();

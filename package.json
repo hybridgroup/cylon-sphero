@@ -24,7 +24,6 @@
   },
 
   "dependencies": {
-    "node-namespace":      "~1.0.0",
     "cylon":               ">= 0.13.0",
     "hybridgroup-spheron": ">= 0.1.0"
   }
