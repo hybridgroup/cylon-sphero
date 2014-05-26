@@ -111,6 +111,8 @@ Thank you!
 
 ## Release History
 
+Version 0.10.0 - Compatibility with Cylon 0.14.0, remove node-namespace.
+
 Version 0.9.1 - Added new 'locator' event, changed spheron to hybridgroup-spheron module
 
 Version 0.9.0 - Update for cylon 0.12.0
