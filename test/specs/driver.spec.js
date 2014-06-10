@@ -6,8 +6,8 @@ var Commands = source('./commands');
 describe('Driver', function() {
   var sphero = new Driver({ device: {} });
 
-  it("exposes a 'commands' method exposing all available commands", function() {
-    expect(sphero.commands()).to.be.eql(Commands);
+  it("exposes a 'commands' property exposing all available commands", function() {
+    expect(sphero.commands).to.be.eql(Commands);
   });
 
   describe("proxies", function() {

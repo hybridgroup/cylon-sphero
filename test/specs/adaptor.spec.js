@@ -6,8 +6,8 @@ var Commands = source('./commands');
 describe('Adaptor', function() {
   var sphero = new Adaptor;
 
-  it("exposes a 'commands' method exposing all available commands", function() {
-    expect(sphero.commands()).to.be.eql(Commands);
+  it("exposes a 'commands' property exposing all available commands", function() {
+    expect(sphero.commands).to.be.eql(Commands);
   });
 
   it("exposes a 'connect' method to connect to the Sphero", function() {
