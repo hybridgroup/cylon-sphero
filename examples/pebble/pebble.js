@@ -17,10 +17,11 @@ Cylon.robot({
     { name: 'pebble', driver: 'pebble' }
   ],
   heading: 0,
+  speed:   0,
 
   work: function(my) {
-    every((1).second(), function() {
-      my.sphero.roll(100, my.heading);
+    every((0.1).second(), function() {
+      my.sphero.roll(my.speed, my.heading);
     });
 
     my.pebble.on('accel', function(data) {
@@ -28,7 +29,8 @@ Cylon.robot({
       x      = values[0];
       y      = values[1];
 
-      my.heading = ((180.0 - (Math.atan2(y,x) * (180.0 / Math.PI))));
+      my.speed   = Math.round(Math.max(Math.abs(x)/6, Math.abs(y)/6));
+      my.heading = Math.round(((180.0 - (Math.atan2(y,x) * (180.0 / Math.PI)))));
     });
   }
 
