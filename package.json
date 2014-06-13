@@ -1,6 +1,6 @@
 {
   "name": "cylon-sphero",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "main": "lib/cylon-sphero.js",
   "description": "Cylon module for Sphero robot",
   "homepage": "http://cylonjs.com",
@@ -24,7 +24,7 @@
   },
 
   "dependencies": {
-    "cylon":               "~0.14.0",
+    "cylon":               "~0.15.0",
     "hybridgroup-spheron": ">= 0.1.0"
   }
 }
