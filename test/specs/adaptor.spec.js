@@ -4,7 +4,7 @@ var Adaptor = source('adaptor');
 var Commands = source('./commands');
 
 describe('Adaptor', function() {
-  var sphero = new Adaptor;
+  var sphero = new Adaptor({ extraParams: {} });
 
   it("exposes a 'commands' property exposing all available commands", function() {
     expect(sphero.commands).to.be.eql(Commands);
