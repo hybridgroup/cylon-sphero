@@ -11,11 +11,11 @@ Cylon.robot({
     my.sphero.on('connect', function() {
       console.log("Setting up Collision Detection...");
       my.sphero.detectCollisions();
-      // The data sources available for data streamming from the
+      // The data sources available for data Streaming from the
       // sphero API are as follows:
       // ['motorsPWM', 'imu', 'accelerometer', 'gyroscope', 'motorsIMF'
       //  'quaternion', 'locator', 'accelOne', 'velocity']
-      // It is also possible to pass an opts object to setDataStreamming():
+      // It is also possible to pass an opts object to setDataStreaming():
       var opts = {
         // n: int, divisor of the max sampling rate, 400 hz/s
         // n = 40 means 400/40 = 10 data samples per second,
@@ -26,12 +26,12 @@ Cylon.robot({
         // m = 1 is usually best for real time data readings.
         m: 1,
         // pcnt: 1 -255, how many packets to send.
-        // pcnt = 0 means unlimited data streamming
+        // pcnt = 0 means unlimited data Streaming
         // pcnt = 10 means stop after 10 data packets
         pcnt: 0,
       };
 
-      my.sphero.setDataStreamming(['motorsPWM', 'imu', 'accelerometer', 'gyroscope'], opts);
+      my.sphero.setDataStreaming(['motorsPWM', 'imu', 'accelerometer', 'gyroscope'], opts);
       my.sphero.setRGB(color);
       my.sphero.stop();
     });
