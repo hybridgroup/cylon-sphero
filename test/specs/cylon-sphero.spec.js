@@ -25,7 +25,7 @@ describe("cylon-sphero", function() {
 
   describe("#adaptor", function() {
     it("returns a new instance of the Sphero adaptor", function() {
-      expect(module.adaptor()).to.be.an.instanceOf(Adaptor);
+      expect(module.adaptor({ extraParams: {} })).to.be.an.instanceOf(Adaptor);
     });
   });
 
