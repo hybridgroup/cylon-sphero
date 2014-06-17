@@ -4,11 +4,10 @@ var Commands = source('./commands');
 
 describe('Cylon.Sphero.Commands', function() {
   it('is an array of string commands', function() {
-    var commands = Commands;
+    expect(Commands).to.be.a('array');
 
-    for (var i = 0; i < commands.length; i++) {
-      var command = commands[i];
+    Commands.forEach(function(command) {
       expect(command).to.be.a('string');
-    }
+    });
   });
 });
