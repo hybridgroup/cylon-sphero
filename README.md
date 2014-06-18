@@ -14,9 +14,8 @@ Want to use the Go programming language to power your robots? Check out our sist
 
 Install the module with: `npm install cylon-sphero`
 
-## Examples
+## Example
 
-### JavaScript:
 ```javascript
 var Cylon = require('cylon');
 
@@ -30,24 +29,6 @@ Cylon.robot({
     });
   }
 }).start();
-```
-
-### CoffeeScript:
-```
-Cylon = require 'cylon'
-
-Cylon.robot
-  connection:
-    name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm0'
-
-  device:
-    name: 'sphero', driver: 'sphero'
-
-  work: (my) ->
-    every 1.second(), ->
-      my.sphero.roll 60, Math.floor(Math.random() * 360)
-
-.start()
 ```
 
 ## How To Connect
