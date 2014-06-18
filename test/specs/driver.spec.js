@@ -1,48 +1,149 @@
 "use strict";
 
-var Driver = source('driver');
-var Commands = source('./commands');
+var Driver = source('driver'),
+    Commands = source('commands');
 
 describe('Driver', function() {
   var sphero = new Driver({ device: {} });
 
-  it("exposes a 'commands' property exposing all available commands", function() {
-    expect(sphero.commands).to.be.eql(Commands);
+  describe("#constructor", function() {
+    beforeEach(function() {
+      stub(Driver.prototype, 'proxyMethods');
+      sphero = new Driver({ device: {} })
+    });
+
+    afterEach(function() {
+      Driver.prototype.proxyMethods.restore();
+    });
+
+    it("proxies methods to the connection", function() {
+      var proxy = sphero.proxyMethods;
+      expect(proxy).to.be.calledWith(Commands, sphero.connection, sphero);
+    });
   });
 
-  describe("proxies", function() {
-    var spy = sinon.spy;
-    var connection = {
-      roll: spy(),
-      detectCollisions: spy(),
-      stop: spy(),
-      setRGB: spy()
-    }
+  describe("#commands", function() {
+    it("is an array containing Sphero commands", function() {
+      expect(sphero.commands).to.be.eql(Commands);
+    });
+  });
 
-    sphero.connection = connection;
-
-    it("proxies the #roll method to the @connection", function() {
-      sphero.roll();
-      assert(connection.roll.calledOnce);
+  describe("#start", function() {
+    beforeEach(function() {
+      stub(sphero, 'defineDriverEvent');
     });
 
-    it("proxies the #detectCollisions method to the @connection", function() {
+    afterEach(function() {
+      sphero.defineDriverEvent.restore();
+    });
+
+    it("defines Driver events", function() {
+      var events = [
+        'connect', 'message', 'update', 'notification',
+        'collision', 'locator', 'data'
+      ];
+
+      sphero.start(function() {});
+
+      events.forEach(function(event) {
+        expect(sphero.defineDriverEvent).to.be.calledWith({ eventName: event });
+      });
+    });
+  });
+
+  describe("#roll", function() {
+    var roll;
+    beforeEach(function() {
+      sphero.connection = { roll: spy() };
+      roll = sphero.connection.roll;
+    });
+
+    it("tells the sphero to roll", function() {
+      sphero.roll('speed', 'heading', 'state');
+      expect(roll).to.be.calledWith('speed', 'heading', 'state');
+    });
+
+    it('defaults state to 1', function() {
+      sphero.roll('speed', 'heading');
+      expect(roll).to.be.calledWith('speed', 'heading', 1);
+    });
+  });
+
+  describe("#detectCollisions", function() {
+    beforeEach(function() {
+      sphero.connection = { detectCollisions: spy() };
+    });
+
+    it("tells the Sphero to detect collisions", function() {
       sphero.detectCollisions();
-      assert(connection.detectCollisions.calledOnce);
+      expect(sphero.connection.detectCollisions).to.be.called;
+    });
+  });
+
+  describe("#detectLocator", function() {
+    beforeEach(function() {
+      sphero.connection = { detectLocator: spy() };
     });
 
-    it("proxies the #stop method to the @connection", function() {
+    it("tells the Sphero to detect locator events", function() {
+      sphero.detectLocator();
+      expect(sphero.connection.detectLocator).to.be.called;
+    });
+  });
+
+  describe("#stop", function() {
+    beforeEach(function() {
+      sphero.connection = { stop: spy() };
+    });
+
+    it("tells the Sphero to stop", function() {
       sphero.stop();
-      assert(connection.stop.calledOnce);
+      expect(sphero.connection.stop).to.be.called;
+    });
+  });
+
+  describe("#setRGB", function() {
+    beforeEach(function() {
+      sphero.connection = { setRGB: spy() };
     });
 
-    it("proxies the #setRGB method to the @connection", function() {
-      sphero.setRGB();
-      assert(connection.setRGB.calledOnce);
+    it("tells the Sphero to set the RGBs to a color", function() {
+      sphero.setRGB('color', 'persist');
+      expect(sphero.connection.setRGB).to.be.calledWith('color', 'persist');
     });
 
-    it("should be able to startCalibration");
+    it("defaults persistence to true", function() {
+      sphero.setRGB('color');
+      expect(sphero.connection.setRGB).to.be.calledWith('color', true);
+    });
+  });
 
-    it("should be able to finishCalibration");
+  describe("#startCalibration", function() {
+    beforeEach(function() {
+      sphero.connection = { setBackLED: spy(), setStabilization: spy() };
+    });
+
+    it("tells the Sphero to start the calibration", function() {
+      sphero.startCalibration();
+      expect(sphero.connection.setBackLED).to.be.calledWith(127);
+      expect(sphero.connection.setStabilization).to.be.calledWith(0);
+    });
+  });
+
+  describe("#finishCalibration", function() {
+    beforeEach(function() {
+      sphero.connection = {
+        setHeading: spy(),
+        setBackLED: spy(),
+        setStabilization: spy()
+      };
+    });
+
+    it("tells the Sphero to finish the calibration", function() {
+      sphero.finishCalibration();
+      expect(sphero.connection.setHeading).to.be.calledWith(0);
+      expect(sphero.connection.setBackLED).to.be.calledWith(0);
+      expect(sphero.connection.setStabilization).to.be.calledWith(1);
+    });
   });
 });
