@@ -31,10 +31,10 @@ Cylon.robot({
         pcnt: 0,
       };
       my.sphero.setDataStreaming(['locator', 'accelOne', 'velocity'], opts);
-      // SetBackLed turns on the tail LED of the sphero that helps
+      // SetBackLED turns on the tail LED of the sphero that helps
       // identify the direction the sphero is heading.
       // accepts a param with a value from 0 to 255, led brightness.
-      my.sphero.setBackLed(192);
+      my.sphero.setBackLED(192);
       my.sphero.setRGB(color);
       my.sphero.stop();
     });
