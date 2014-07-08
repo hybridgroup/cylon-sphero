@@ -92,6 +92,8 @@ Thank you!
 
 ## Release History
 
+Version 0.12.0 - Compatibility with Cylon 0.16.0
+
 Version 0.11.2 - Added setDataStreamming, updated test coverage.
 
 Version 0.11.1 - Add peerDependencies to package.json
