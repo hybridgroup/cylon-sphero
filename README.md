@@ -92,6 +92,9 @@ Thank you!
 
 ## Release History
 
+Version 0.13.0 - Added `rebeccapurple` as a supported color. Thanks to
+                 [@juliancheal](https://github.com/juliancheal) for the PR.
+
 Version 0.12.0 - Compatibility with Cylon 0.16.0
 
 Version 0.11.2 - Added setDataStreamming, updated test coverage.
