@@ -166,12 +166,18 @@ describe('Adaptor', function() {
 
     beforeEach(function() {
       callback = spy();
-      sphero.sphero = { close: spy() };
+      sphero.sphero = { close: spy(), roll: spy() };
+      sphero.sphero.once = sphero.sphero.close;
     });
 
     it("closes the connection to the Sphero", function() {
       sphero.disconnect(callback);
       expect(sphero.sphero.close).to.be.called;
+    });
+
+    it("stops the sphero", function() {
+      sphero.disconnect(callback);
+      expect(sphero.sphero.roll).to.be.calledWith(0,0,0);
     });
   });
 
