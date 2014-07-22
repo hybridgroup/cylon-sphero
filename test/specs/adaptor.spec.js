@@ -101,7 +101,6 @@ describe('Adaptor', function() {
       });
 
       expect(d).to.be.calledWith('error');
-      expect(d).to.be.calledWith('data');
       expect(d).to.be.calledWith('message');
     });
 
