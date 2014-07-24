@@ -49,7 +49,7 @@ describe('Driver', function() {
     it("defines Driver events", function() {
       var events = [
         'connect', 'message', 'update', 'notification',
-        'collision', 'locator', 'data'
+        'collision', 'data'
       ];
 
       sphero.start(function() {});
@@ -86,17 +86,6 @@ describe('Driver', function() {
     it("tells the Sphero to detect collisions", function() {
       sphero.detectCollisions();
       expect(sphero.connection.detectCollisions).to.be.called;
-    });
-  });
-
-  describe("#detectLocator", function() {
-    beforeEach(function() {
-      sphero.connection = { detectLocator: spy() };
-    });
-
-    it("tells the Sphero to detect locator events", function() {
-      sphero.detectLocator();
-      expect(sphero.connection.detectLocator).to.be.called;
     });
   });
 
