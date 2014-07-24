@@ -29,12 +29,21 @@ describe('Driver', function() {
   });
 
   describe("#start", function() {
+    var setTemporaryOptionFlags;
     beforeEach(function() {
       stub(sphero, 'defineDriverEvent');
+      sphero.connection = { setTemporaryOptionFlags: spy() }
+      setTemporaryOptionFlags = sphero.connection.setTemporaryOptionFlags;
     });
 
     afterEach(function() {
       sphero.defineDriverEvent.restore();
+    });
+
+    it("set temp option flags to stop on disconnect", function() {
+      sphero.start(function() {});
+
+      expect(setTemporaryOptionFlags).to.be.calledWith(0x01);
     });
 
     it("defines Driver events", function() {
