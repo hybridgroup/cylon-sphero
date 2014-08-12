@@ -4,7 +4,10 @@ var Driver = source('driver'),
     Commands = source('commands');
 
 describe('Driver', function() {
-  var sphero = new Driver({ device: {} });
+  var sphero
+  beforeEach(function() {
+    sphero = new Driver({ device: {} });
+  })
 
   describe("#constructor", function() {
     beforeEach(function() {
@@ -23,8 +26,10 @@ describe('Driver', function() {
   });
 
   describe("#commands", function() {
-    it("is an array containing Sphero commands", function() {
-      expect(sphero.commands).to.be.eql(Commands);
+    it("is an object containing Sphero commands", function() {
+      for (var c in sphero.commands) {
+        expect(sphero.commands[c]).to.be.a('function');
+      }
     });
   });
 
