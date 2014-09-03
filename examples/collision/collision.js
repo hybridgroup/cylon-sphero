@@ -8,7 +8,7 @@ Cylon.robot({
     var color = 0x00FF00,
         bitFilter = 0xFFFF00;
 
-    me.sphero.on('connect', function() {
+    after((1).seconds(), function() {
       console.log("Setting up Collision Detection...");
       me.sphero.detectCollisions();
       me.sphero.setRGB(color);
