@@ -1,14 +1,14 @@
 var Cylon = require('cylon');
 
 Cylon.robot({
-  connection: { name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm1' },
+  connection: { name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm0' },
   device: { name: 'sphero', driver: 'sphero' },
 
   work: function(my) {
     var color = 0x00FF00,
         bitFilter = 0xFFFF00;
 
-    my.sphero.on('connect', function() {
+    after((1).seconds(), function() {
       console.log("Setting up Collision Detection...");
       my.sphero.detectCollisions();
       // The data sources available for data Streaming from the
