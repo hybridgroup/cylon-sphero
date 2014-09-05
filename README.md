@@ -92,6 +92,8 @@ Thank you!
 
 ## Release History
 
+Version 0.14.1 - Fix disconnect bug
+
 Version 0.14.0 - Compatibility with Cylon 0.18.0
 
 Version 0.13.0 - Added `rebeccapurple` as a supported color. Thanks to
