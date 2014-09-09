@@ -31,7 +31,7 @@ describe("cylon-sphero", function() {
 
   describe("#driver", function() {
     it("returns a new instance of the Sphero driver", function() {
-      expect(module.driver({ device: {} })).to.be.an.instanceOf(Driver);
+      expect(module.driver({ device: { connection: {} } })).to.be.an.instanceOf(Driver);
     });
   });
 });
