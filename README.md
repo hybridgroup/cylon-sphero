@@ -52,10 +52,10 @@ The port will look something like this:
 /dev/tty.Sphero-BBP-AMP-SPP
 ```
 
-Now you are ready to run the example code, be sure to update this line with correct port:
+Now you are ready to run the example code, be sure to update this line with the correct port:
 
 ```
-connection :sphero, :adaptor => :sphero, :port => '/dev/tty.Sphero-BBP-AMP-SPP'
+connection: { name: "sphero", adaptor: "sphero", port: "/dev/tty.Sphero-BBP-AMP-SPP" },
 ```
 
 ### Ubuntu
