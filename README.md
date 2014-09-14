@@ -39,6 +39,25 @@ In order to allow Cylon.js running on your Mac to access the Sphero, go to "Blue
 
 Thank you to [@kopipejst](https://github.com/kopipejst) for the above connnection info.
 
+First pair your computer and Sphero. You can do this using bluetooth preferences. (Sphero won't stay connected)
+
+Find out serial port address by running this command:
+
+```
+ls /dev/tty.Sphero*
+```
+The port will look something like this:
+
+```
+/dev/tty.Sphero-BBP-AMP-SPP
+```
+
+Now you are ready to run the example code, be sure to update this line with correct port:
+
+```
+connection :sphero, :adaptor => :sphero, :port => '/dev/tty.Sphero-BBP-AMP-SPP'
+```
+
 ### Ubuntu
 
 Connecting to the Sphero from Ubuntu or any other Linux-based OS can be done entirely from the command line
