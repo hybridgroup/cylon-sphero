@@ -4,15 +4,16 @@ var Driver = source('driver'),
     Commands = source('commands');
 
 describe('Driver', function() {
-  var sphero
+  var sphero;
+
   beforeEach(function() {
-    sphero = new Driver({ device: {} });
+    sphero = new Driver({ device: { connection: {} } });
   })
 
   describe("#constructor", function() {
     beforeEach(function() {
       stub(Driver.prototype, 'proxyMethods');
-      sphero = new Driver({ device: {} })
+      sphero = new Driver({ device: { connection: {}} });
     });
 
     afterEach(function() {
