@@ -54,7 +54,7 @@ describe('Driver', function() {
 
     it("defines Driver events", function() {
       var events = [
-        'connect', 'message', 'update', 'notification',
+        'message', 'update', 'notification',
         'collision', 'data'
       ];
 
