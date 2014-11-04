@@ -12,7 +12,7 @@ describe('Adaptor', function() {
   beforeEach(function() {
     stub(Spheron, 'sphero').returns(mockSphero);
 
-    var opts = { extraParams: {} };
+    var opts = {};
     sphero = new Adaptor(opts);
   });
 
@@ -22,7 +22,7 @@ describe('Adaptor', function() {
 
   describe("constructor", function() {
     beforeEach(function() {
-      var opts = { extraParams: { locatorOpts: 'opts' } };
+      var opts = { locatorOpts: 'opts' };
       stub(Adaptor.prototype, 'proxyMethods');
       sphero = new Adaptor(opts);
     });
