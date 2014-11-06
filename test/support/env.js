@@ -1,12 +1,16 @@
 'use strict';
 
 process.env.NODE_ENV = 'test';
+global.CYLON_TEST = true;
 
 var path = require('path');
 
 var chai = require('chai'),
     sinon = require('sinon'),
     sinonChai = require('sinon-chai');
+
+var Cylon = require('cylon');
+Cylon.config({ logging: { logger: false } });
 
 chai.use(sinonChai);
 
