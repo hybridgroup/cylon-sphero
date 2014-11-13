@@ -7,22 +7,22 @@ describe('Driver', function() {
   var sphero;
 
   beforeEach(function() {
-    sphero = new Driver({ device: { connection: {} } });
+    sphero = new Driver({ adaptor: {} });
   })
 
   describe("#constructor", function() {
     beforeEach(function() {
       stub(Driver.prototype, 'proxyMethods');
-      sphero = new Driver({ device: { connection: {}} });
+      sphero = new Driver({ adaptor: {} });
     });
 
     afterEach(function() {
       Driver.prototype.proxyMethods.restore();
     });
 
-    it("proxies methods to the connection", function() {
+    it("proxies methods to the adaptor", function() {
       var proxy = sphero.proxyMethods;
-      expect(proxy).to.be.calledWith(Commands, sphero.connection, sphero);
+      expect(proxy).to.be.calledWith(Commands, sphero.adaptor, sphero);
     });
   });
 
@@ -38,8 +38,7 @@ describe('Driver', function() {
     var setTemporaryOptionFlags;
     beforeEach(function() {
       stub(sphero, 'defineDriverEvent');
-      sphero.connection = { setTemporaryOptionFlags: spy() }
-      setTemporaryOptionFlags = sphero.connection.setTemporaryOptionFlags;
+      setTemporaryOptionFlags = sphero.adaptor.setTemporaryOptionFlags = spy();
     });
 
     afterEach(function() {
@@ -69,8 +68,7 @@ describe('Driver', function() {
   describe("#roll", function() {
     var roll;
     beforeEach(function() {
-      sphero.connection = { roll: spy() };
-      roll = sphero.connection.roll;
+      roll = sphero.adaptor.roll = spy();
     });
 
     it("tells the sphero to roll", function() {
@@ -86,57 +84,57 @@ describe('Driver', function() {
 
   describe("#detectCollisions", function() {
     beforeEach(function() {
-      sphero.connection = { detectCollisions: spy() };
+      sphero.adaptor = { detectCollisions: spy() };
     });
 
     it("tells the Sphero to detect collisions", function() {
       sphero.detectCollisions();
-      expect(sphero.connection.detectCollisions).to.be.called;
+      expect(sphero.adaptor.detectCollisions).to.be.called;
     });
   });
 
   describe("#stop", function() {
     beforeEach(function() {
-      sphero.connection = { stop: spy() };
+      sphero.adaptor = { stop: spy() };
     });
 
     it("tells the Sphero to stop", function() {
       sphero.stop();
-      expect(sphero.connection.stop).to.be.called;
+      expect(sphero.adaptor.stop).to.be.called;
     });
   });
 
   describe("#setRGB", function() {
     beforeEach(function() {
-      sphero.connection = { setRGB: spy() };
+      sphero.adaptor = { setRGB: spy() };
     });
 
     it("tells the Sphero to set the RGBs to a color", function() {
       sphero.setRGB('color', 'persist');
-      expect(sphero.connection.setRGB).to.be.calledWith('color', 'persist');
+      expect(sphero.adaptor.setRGB).to.be.calledWith('color', 'persist');
     });
 
     it("defaults persistence to true", function() {
       sphero.setRGB('color');
-      expect(sphero.connection.setRGB).to.be.calledWith('color', true);
+      expect(sphero.adaptor.setRGB).to.be.calledWith('color', true);
     });
   });
 
   describe("#startCalibration", function() {
     beforeEach(function() {
-      sphero.connection = { setBackLED: spy(), setStabilization: spy() };
+      sphero.adaptor = { setBackLED: spy(), setStabilization: spy() };
     });
 
     it("tells the Sphero to start the calibration", function() {
       sphero.startCalibration();
-      expect(sphero.connection.setBackLED).to.be.calledWith(127);
-      expect(sphero.connection.setStabilization).to.be.calledWith(0);
+      expect(sphero.adaptor.setBackLED).to.be.calledWith(127);
+      expect(sphero.adaptor.setStabilization).to.be.calledWith(0);
     });
   });
 
   describe("#finishCalibration", function() {
     beforeEach(function() {
-      sphero.connection = {
+      sphero.adaptor = {
         setHeading: spy(),
         setBackLED: spy(),
         setStabilization: spy()
@@ -145,9 +143,9 @@ describe('Driver', function() {
 
     it("tells the Sphero to finish the calibration", function() {
       sphero.finishCalibration();
-      expect(sphero.connection.setHeading).to.be.calledWith(0);
-      expect(sphero.connection.setBackLED).to.be.calledWith(0);
-      expect(sphero.connection.setStabilization).to.be.calledWith(1);
+      expect(sphero.adaptor.setHeading).to.be.calledWith(0);
+      expect(sphero.adaptor.setBackLED).to.be.calledWith(0);
+      expect(sphero.adaptor.setStabilization).to.be.calledWith(1);
     });
   });
 });

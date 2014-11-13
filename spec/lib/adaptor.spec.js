@@ -70,7 +70,7 @@ describe('Adaptor', function() {
       callback = spy();
 
       sphero.connector = sphero.sphero = emitter = { on: stub(), open: stub() };
-      sphero.connection = { emit: stub() };
+      sphero.emit = spy();
 
       stub(sphero, 'defineAdaptorEvent');
     });
@@ -112,7 +112,7 @@ describe('Adaptor', function() {
         sphero.connector.on.withArgs("notification").yields(packet);
 
         sphero.connect(callback);
-        expect(sphero.connection.emit).to.be.calledWith('notification', packet);
+        expect(sphero.emit).to.be.calledWith('notification', packet);
       });
 
       context("when the packet contains collision data", function() {
@@ -123,7 +123,7 @@ describe('Adaptor', function() {
 
         it("emits a 'collision' event with the packet", function() {
           sphero.connect(callback);
-          expect(sphero.connection.emit).to.be.calledWith('collision', packet);
+          expect(sphero.emit).to.be.calledWith('collision', packet);
         });
       });
 
@@ -135,13 +135,13 @@ describe('Adaptor', function() {
 
         it("emits a 'data' event with the parsed data", function() {
           sphero.connect(callback);
-          expect(sphero.connection.emit).to.be.calledWith('data', [258, 772]);
+          expect(sphero.emit).to.be.calledWith('data', [258, 772]);
         })
       });
     });
 
     it("opens a connection to the Sphero", function() {
-      sphero.connection = { port: '/dev/null' }
+      sphero.port = '/dev/null'
       sphero.connect(callback);
       expect(sphero.sphero.open).to.be.calledWith('/dev/null');
     });
@@ -155,7 +155,7 @@ describe('Adaptor', function() {
 
       it("emits a 'err' event with the error object", function() {
         sphero.connect(callback);
-        expect(sphero.connection.emit).to.be.calledWith('err', err);
+        expect(sphero.emit).to.be.calledWith('err', err);
       });
     })
   });
