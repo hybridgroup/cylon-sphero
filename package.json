@@ -29,6 +29,6 @@
 
   "dependencies": {
     "cylon":               "~0.20.1",
-    "hybridgroup-spheron": ">= 0.1.0"
+    "hybridgroup-spheron": "~0.2.0"
   }
 }
