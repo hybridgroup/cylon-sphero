@@ -8,14 +8,17 @@ Cylon.api({
 
 Cylon.robot({
   name: 'pebble',
-  connections: [
-    { name: 'sphero', adaptor: 'sphero', port: '/dev/tty.Sphero-YBW-RN-SPP' },
-    { name: 'pebble', adaptor: 'pebble' }
-  ],
-  devices: [
-    { name: 'sphero', driver: 'sphero' },
-    { name: 'pebble', driver: 'pebble' }
-  ],
+
+  connections: {
+    sphero: { adaptor: 'sphero', port: '/dev/tty.Sphero-YBW-RN-SPP' },
+    pebble: { adaptor: 'pebble' }
+  },
+
+  devices: {
+    sphero: { driver: 'sphero', connection: 'sphero' },
+    pebble: { driver: 'pebble', connection: 'pebble' }
+  },
+
   heading: 0,
   speed:   0,
 
