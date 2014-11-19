@@ -60,7 +60,7 @@ describe('Driver', function() {
       sphero.start(function() {});
 
       events.forEach(function(event) {
-        expect(sphero.defineDriverEvent).to.be.calledWith({ eventName: event });
+        expect(sphero.defineDriverEvent).to.be.calledWith(event);
       });
     });
   });
