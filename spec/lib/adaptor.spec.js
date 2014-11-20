@@ -7,12 +7,12 @@ var Adaptor = source('adaptor'),
 var Spheron = require('hybridgroup-spheron');
 
 describe('Adaptor', function() {
-  var sphero, mockSphero;
+  var sphero, mockSphero, opts;
 
   beforeEach(function() {
     stub(Spheron, 'sphero').returns(mockSphero);
 
-    var opts = {};
+    opts = {port: ''};
     sphero = new Adaptor(opts);
   });
 
@@ -22,7 +22,7 @@ describe('Adaptor', function() {
 
   describe("constructor", function() {
     beforeEach(function() {
-      var opts = { locatorOpts: 'opts' };
+      opts = { port: '', locatorOpts: 'opts' };
       stub(Adaptor.prototype, 'proxyMethods');
       sphero = new Adaptor(opts);
     });
@@ -54,6 +54,13 @@ describe('Adaptor', function() {
         sphero.sphero,
         sphero
       );
+    });
+
+    context("if no pin is specified", function() {
+      it("throws an error", function() {
+        var fn = function() { new Adaptor({ name: 'hi' }); };
+        expect(fn).to.throw("No port specified for Sphero adaptor 'hi'. Cannot proceed");
+      });
     });
   });
 
