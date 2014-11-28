@@ -111,6 +111,8 @@ Thank you!
 
 ## Release History
 
+Version 0.17.0 - Compatibility with Cylon 0.21.0
+
 Version 0.16.0 - Compatibility with Cylon 0.20.0
 
 Version 0.15.0 - Compatibility with Cylon 0.19.0
