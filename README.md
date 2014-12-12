@@ -20,8 +20,13 @@ Install the module with: `npm install cylon-sphero`
 var Cylon = require('cylon');
 
 Cylon.robot({
-  connection: { name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm0' },
-  device: {name: 'sphero', driver: 'sphero'},
+  connections: {
+    sphero: { adaptor: 'sphero', port: '/dev/rfcomm0' }
+  },
+
+  devices: {
+    sphero: { driver: 'sphero' }
+  },
 
   work: function(my) {
     every((1).second(), function() { 
@@ -55,7 +60,9 @@ The port will look something like this:
 Now you are ready to run the example code, be sure to update this line with the correct port:
 
 ```
-connection: { name: "sphero", adaptor: "sphero", port: "/dev/tty.Sphero-BBP-AMP-SPP" },
+connections: {
+  sphero: { adaptor: "sphero", port: "/dev/tty.Sphero-BBP-AMP-SPP" }
+},
 ```
 
 ### Ubuntu
