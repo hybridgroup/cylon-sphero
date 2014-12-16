@@ -16,8 +16,13 @@ With that loaded, we can begin defining our robot.
 We're going to have one connection, and one device for this robot, both the same
 Sphero.
 
-      connection: { name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm0' },
-      device: { name: 'sphero', driver: 'sphero' },
+      connections: {
+        sphero: { adaptor: 'sphero', port: '/dev/rfcomm0' }
+      },
+
+      devices: {
+        sphero: { driver: 'sphero' }
+      },
 
 With the necessary hardware defined, we can now start telling Cylon about the
 work our robot will be performing.

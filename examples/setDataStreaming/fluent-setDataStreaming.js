@@ -1,21 +1,16 @@
 var Cylon = require('cylon');
 
-Cylon.robot({
-  connections: {
-    sphero: { adaptor: 'sphero', port: '/dev/rfcomm0' }
-  },
-
-  devices: {
-    sphero: { driver: 'sphero' }
-  },
-
-  work: function(my) {
+Cylon
+  .robot()
+  .connection("sphero", { adaptor: 'sphero', port: '/dev/rfcomm0' })
+  .device("sphero", { driver: 'sphero' })
+  .on('ready', function(bot) {
     var color = 0x00FF00,
-        bitFilter = 0xFFFF00;
+    bitFilter = 0xFFFF00;
 
-    after((1).seconds(), function() {
+    setTimeout(function() {
       console.log("Setting up Collision Detection...");
-      my.sphero.detectCollisions();
+      bot.sphero.detectCollisions();
       // The data sources available for data Streaming from the
       // sphero API are as follows:
       // ['motorsPWM', 'imu', 'accelerometer', 'gyroscope', 'motorsIMF'
@@ -36,23 +31,24 @@ Cylon.robot({
         pcnt: 0,
       };
 
-      my.sphero.setDataStreaming(['motorsPWM', 'imu', 'accelerometer', 'gyroscope'], opts);
-      my.sphero.setRGB(color);
-      my.sphero.stop();
-    });
+      bot.sphero.setDataStreaming(['motorsPWM', 'imu', 'accelerometer', 'gyroscope'], opts);
+      bot.sphero.setRGB(color);
+      bot.sphero.stop();
 
-    my.sphero.on('data', function(data) {
+    }, 1000);
+
+    bot.sphero.on('data', function(data) {
       console.log("data:");
       console.log(data);
     });
 
-    my.sphero.on('collision', function(data) {
+    bot.sphero.on('collision', function() {
       console.log("Collision:");
       color = color ^ bitFilter;
       console.log("Color: " + (color.toString(16)) + " ");
-      my.sphero.setRGB(color);
-      my.sphero.roll(128, Math.floor(Math.random() * 360));
+      bot.sphero.setRGB(color);
+      bot.sphero.roll(128, Math.floor(Math.random() * 360));
     });
+  });
 
-  }
-}).start();
+Cylon.start();

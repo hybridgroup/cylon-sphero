@@ -1,42 +1,14 @@
-# Multiple Spheros
+# Multiple Sphero
 
-Let's do an example of Cylon controlling multiple Spheros at the same time. The
-Spheros will both randomly roll around and change their colors every second.
 
-Before we run this example, make sure to have `cylon-sphero` installed (`npm
-install cylon-sphero`)
+Let's do an example of Cylon controlling multiple Spheros at the same time.
+The Spheros will both randomly roll around and change their colors every second.
+
+Before we run this example, make sure to have `cylon-sphero` installed (`npm install cylon-sphero`)
 
 First, load up Cylon:
 
     var Cylon = require('cylon');
-
-Since both of our Spheros are going to have faily similar behaviour, we can
-define a class to hold their attributes:
-
-    var SpheroRobot = (function() {
-      function SpheroRobot() {}
-
-We'll define the Sphero's connection sans port, which we'll add later.
-
-      SpheroRobot.prototype.connection = { name: 'Sphero', adaptor: 'sphero' };
-
-Both Spheros have the same device configuration
-
-      SpheroRobot.prototype.device = { name: 'sphero', driver: 'sphero' };
-
-Now we can define the work for the Spheros. Every second, they'll print their
-name, change to a random color, and roll in a random direction.
-
-      SpheroRobot.prototype.work = function(my) {
-        every((1).second(), function() {
-          console.log(my.name);
-          my.sphero.setRandomColor();
-          my.sphero.roll(60, Math.floor(Math.random() * 360));
-        });
-      };
-
-      return SpheroRobot;
-    })();
 
 Next up, let's define what's different about our bots so we can tell them apart
 later on. We'll give them each a different name, and define their connection
@@ -47,26 +19,37 @@ ports.
       { name: "Louise", port: "/dev/rfcomm1" }
     ];
 
-Now that the pieces are in place, we can start making our robots.
+With our different bots described in code, let's start telling Cylon about them:
 
-    for (var i = 0; i < bots.length; i++) {
+    bots.forEach(function(bot) {
+      Cylon.robot({
+        name: bot.name,
 
-We'll make a new instance of `SpheroRobot`, and modify it.
+Next up, let's tell the robot about the Sphero's port:
 
-      var bot = bots[i];
-      var robot = new SpheroRobot;
+        connections: {
+          sphero: { adaptor: 'sphero', port: bot.port }
+        },
 
-Now we'll tell the robot what it's name is, and what it's connection port should
-be:
+Spheros will both have the same device configuration:
 
-      robot.name = bot.name;
-      robot.connection.port = bot.port;
+        devices: {
+          sphero: { driver: 'sphero' }
+        },
 
-Now our robot's ready, and we can add it to Cylon's collection of robots.
+Now we can define the work for the Spheros.
+Every second, they'll print their name, change to a random color, and roll in a random direction.
 
-      Cylon.robot(robot);
-    }
+        work: function(my) {
+          every((1).second(), function() {
+            console.log(my.name);
+            my.sphero.setRandomColor();
+            my.sphero.roll(60, Math.floor(Math.random() * 360));
+          });
+        }
+      });
+    });
 
-And now that our robots have all been set up, we can start them all at once:
+And with our robots defined, we'll start up Cylon.
 
     Cylon.start();

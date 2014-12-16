@@ -15,8 +15,13 @@ With that set up, we can start defining our robot:
 As with other Sphero examples, we'll have one connection and one device, both
 the same Sphero.
 
-      connection: { name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm0' },
-      device: { name: 'sphero', driver: 'sphero' },
+      connections: {
+        sphero: { adaptor: 'sphero', port: '/dev/rfcomm0' }
+      },
+
+      devices: {
+        sphero: { driver: 'sphero' }
+      },
 
 And now we can start defining our robot's work.
 

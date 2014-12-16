@@ -1,8 +1,13 @@
 var Cylon = require('cylon');
 
 Cylon.robot({
-  connection: { name: 'sphero', adaptor: 'sphero', port: '/dev/rfcomm0' },
-  device: { name: 'sphero', driver: 'sphero' },
+  connections: {
+    sphero: { adaptor: 'sphero', port: '/dev/rfcomm0' }
+  },
+
+  devices: {
+    sphero: { driver: 'sphero' }
+  },
 
   work: function(me) {
     every((1).second(), function() {

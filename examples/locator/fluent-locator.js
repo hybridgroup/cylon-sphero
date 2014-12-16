@@ -1,21 +1,16 @@
 var Cylon = require('cylon');
 
-Cylon.robot({
-  connections: {
-    sphero: { adaptor: 'sphero', port: '/dev/rfcomm0' }
-  },
-
-  devices: {
-    sphero: { driver: 'sphero' }
-  },
-
-  work: function(my) {
+Cylon
+  .robot()
+  .connection("sphero", { adaptor: 'sphero', port: '/dev/rfcomm0' })
+  .device("sphero", { driver: 'sphero' })
+  .on('ready', function(bot) {
     var color = 0x00FF00,
-        bitFilter = 0xFFFF00;
+    bitFilter = 0xFFFF00;
 
-    after((1).seconds(), function() {
+    setTimeout(function() {
       console.log("Setting up Collision Detection...");
-      my.sphero.detectCollisions();
+      bot.sphero.detectCollisions();
       // To detect locator, accelOne and velocity from the sphero
       // we use setDataStreaming.
       // sphero API data sources for locator info are as follows:
@@ -35,27 +30,27 @@ Cylon.robot({
         // pcnt = 10 means stop after 10 data packets
         pcnt: 0,
       };
-      my.sphero.setDataStreaming(['locator', 'accelOne', 'velocity'], opts);
+      bot.sphero.setDataStreaming(['locator', 'accelOne', 'velocity'], opts);
       // SetBackLED turns on the tail LED of the sphero that helps
       // identify the direction the sphero is heading.
       // accepts a param with a value from 0 to 255, led brightness.
-      my.sphero.setBackLED(192);
-      my.sphero.setRGB(color);
-      my.sphero.stop();
-    });
+      bot.sphero.setBackLED(192);
+      bot.sphero.setRGB(color);
+      bot.sphero.stop();
+    }, 1000);
 
-    my.sphero.on('data', function(data) {
+    bot.sphero.on('data', function(data) {
       console.log("locator:");
       console.log(data);
     });
 
-    my.sphero.on('collision', function(data) {
+    bot.sphero.on('collision', function(data) {
       console.log("Collision:");
       color = color ^ bitFilter;
       console.log("Color: " + (color.toString(16)) + " ");
-      my.sphero.setRGB(color);
-      my.sphero.roll(128, Math.floor(Math.random() * 360));
+      bot.sphero.setRGB(color);
+      bot.sphero.roll(128, Math.floor(Math.random() * 360));
     });
+  });
 
-  }
-}).start();
+Cylon.start();

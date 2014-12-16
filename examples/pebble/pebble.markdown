@@ -9,8 +9,7 @@ To get started, let's import the Cylon module:
 
     var Cylon = require('cylon');
 
-Then whe setup API to listen on port 8080:
-
+Then we setup API to listen on port 8080:
 
     Cylon.api({
       host: '0.0.0.0',
@@ -24,14 +23,15 @@ With that set up, we can start defining our robot:
 
 We setup connections an devices for sphero and pebble:
 
-    connections: [
-      { name: 'sphero', adaptor: 'sphero', port: '/dev/tty.Sphero-YBW-RN-SPP' },
-      { name: 'pebble', adaptor: 'pebble' }
-    ],
-    devices: [
-      { name: 'sphero', driver: 'sphero' },
-      { name: 'pebble', driver: 'pebble' }
-    ],
+    connections: {
+      sphero: { adaptor: 'sphero', port: '/dev/tty.Sphero-YBW-RN-SPP' },
+      pebble: { adaptor: 'pebble' }
+    },
+
+    devices: {
+      sphero: { driver: 'sphero' },
+      pebble: { driver: 'pebble' }
+    },
 
 Then we create and set variable heading and speed to 0:
 
@@ -40,7 +40,7 @@ Then we create and set variable heading and speed to 0:
 
 And now we can start defining our robot's work.
 
-      work: function(my) {
+    work: function(my) {
 
 Every second we will change update sphero direction using calculated heading value:
 
