@@ -10,11 +10,15 @@ Want to use the Go programming language to power your robots? Check out our sist
 
 [![Build Status](https://secure.travis-ci.org/hybridgroup/cylon-sphero.png?branch=master)](http://travis-ci.org/hybridgroup/cylon-sphero) [![Code Climate](https://codeclimate.com/github/hybridgroup/cylon-sphero/badges/gpa.svg)](https://codeclimate.com/github/hybridgroup/cylon-sphero) [![Test Coverage](https://codeclimate.com/github/hybridgroup/cylon-sphero/badges/coverage.svg)](https://codeclimate.com/github/hybridgroup/cylon-sphero)
 
-## Getting Started
+## How to Install
 
-Install the module with: `npm install cylon-sphero`
+Install the module with:
 
-## Example
+    $ npm install cylon-sphero
+
+## How to Use
+
+Example of a simple program that makes the Sphero roll.
 
 ```javascript
 var Cylon = require('cylon');
@@ -29,14 +33,14 @@ Cylon.robot({
   },
 
   work: function(my) {
-    every((1).second(), function() { 
+    every((1).second(), function() {
       my.sphero.roll(60, Math.floor(Math.random() * 360));
     });
   }
 }).start();
 ```
 
-## How To Connect
+## How to Connect
 
 ### OSX
 
@@ -48,22 +52,17 @@ First pair your computer and Sphero. You can do this using bluetooth preferences
 
 Find out serial port address by running this command:
 
-```
-ls /dev/tty.Sphero*
-```
+    ls /dev/tty.Sphero*
+
 The port will look something like this:
 
-```
-/dev/tty.Sphero-BBP-AMP-SPP
-```
+    /dev/tty.Sphero-BBP-AMP-SPP
 
 Now you are ready to run the example code, be sure to update this line with the correct port:
 
-```
-connections: {
-  sphero: { adaptor: "sphero", port: "/dev/tty.Sphero-BBP-AMP-SPP" }
-},
-```
+    connections: {
+      sphero: { adaptor: "sphero", port: "/dev/tty.Sphero-BBP-AMP-SPP" }
+    },
 
 ### Ubuntu
 
@@ -71,19 +70,16 @@ Connecting to the Sphero from Ubuntu or any other Linux-based OS can be done ent
 using CylonJS CLI commands. Here are the steps.
 
 Find the address of the Sphero, by using:
-```
-cylon bluetooth scan
-```
+
+    cylon bluetooth scan
 
 Pair to Sphero using this command (substituting the actual address of your Sphero):
-```
-cylon bluetooth pair <address>
-```
+
+    cylon bluetooth pair <address>
 
 Connect to the Sphero using this command (substituting the actual address of your Sphero):
-```
-cylon bluetooth connect <address>
-```
+
+    cylon bluetooth connect <address>
 
 ### Windows
 
@@ -98,6 +94,7 @@ Call `startCalibration()` to put the Sphero into 'calibration mode' by turning o
 Call `finishCalibration()` to turn off 'calibration mode' by turning off the tail LED and turning back on the auto-stablization. Whichever direction that the tail LED was pointed, is now the rear direction for the Sphero.
 
 ## Documentation
+
 We're busy adding documentation to our web site at http://cylonjs.com/ please check there as we continue to work on Cylon.js
 
 Thank you!
