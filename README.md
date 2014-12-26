@@ -71,15 +71,15 @@ using CylonJS CLI commands. Here are the steps.
 
 Find the address of the Sphero, by using:
 
-    cylon bluetooth scan
+    gort bluetooth scan
 
 Pair to Sphero using this command (substituting the actual address of your Sphero):
 
-    cylon bluetooth pair <address>
+    gort bluetooth pair <address>
 
 Connect to the Sphero using this command (substituting the actual address of your Sphero):
 
-    cylon bluetooth connect <address>
+    gort bluetooth connect <address>
 
 ### Windows
 
