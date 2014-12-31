@@ -3,6 +3,8 @@
 var Driver = source('driver'),
     Commands = source('commands');
 
+var Utils = require("cylon").Utils;
+
 describe('Driver', function() {
   var sphero;
 
@@ -12,16 +14,16 @@ describe('Driver', function() {
 
   describe("#constructor", function() {
     beforeEach(function() {
-      stub(Driver.prototype, 'proxyMethods');
+      stub(Utils, 'proxyFunctionsToObject');
       sphero = new Driver({ connection: {} });
     });
 
     afterEach(function() {
-      Driver.prototype.proxyMethods.restore();
+      Utils.proxyFunctionsToObject.restore();
     });
 
     it("proxies methods to the connection", function() {
-      var proxy = sphero.proxyMethods;
+      var proxy = Utils.proxyFunctionsToObject
       expect(proxy).to.be.calledWith(Commands, sphero.connection, sphero);
     });
   });
