@@ -1,12 +1,14 @@
-var Cylon = require('cylon');
+"use strict";
+
+var Cylon = require("cylon");
 
 Cylon.robot({
   connections: {
-    sphero: { adaptor: 'sphero', port: '/dev/rfcomm0' }
+    sphero: { adaptor: "sphero", port: "/dev/rfcomm0" }
   },
 
   devices: {
-    sphero: { driver: 'sphero' }
+    sphero: { driver: "sphero" }
   },
 
   work: function(me) {

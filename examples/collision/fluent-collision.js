@@ -1,11 +1,13 @@
-var Cylon = require('cylon');
+"use strict";
+
+var Cylon = require("cylon");
 
 Cylon
   .robot()
-  .connection("sphero", { adaptor: 'sphero', port: '/dev/rfcomm0' })
-  .device("sphero", { driver: 'sphero' })
+  .connection("sphero", { adaptor: "sphero", port: "/dev/rfcomm0" })
+  .device("sphero", { driver: "sphero" })
 
-  .on('ready', function(bot) {
+  .on("ready", function(bot) {
     var color = 0x00FF00,
         bitFilter = 0xFFFF00;
 
@@ -16,7 +18,7 @@ Cylon
       bot.sphero.stop();
     }, 1000);
 
-    bot.sphero.on('collision', function(data) {
+    bot.sphero.on("collision", function() {
       console.log("Collision:");
       color = color ^ bitFilter;
       console.log("Color: " + (color.toString(16)) + " ");

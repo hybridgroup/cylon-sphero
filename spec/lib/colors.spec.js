@@ -1,16 +1,17 @@
+// jshint expr:true
 "use strict";
 
-var colors = source('colors');
+var colors = source("colors");
 
-describe('Colors', function() {
+describe("Colors", function() {
   describe("#colors", function() {
     it("is an object mapping names to hex colors", function() {
-      expect(colors.colors).to.be.an('object');
+      expect(colors.colors).to.be.an("object");
       for (var color in colors.colors) {
         var hex = colors.colors[color];
-        expect(color).to.be.a('string');
-        expect(hex).to.be.a('number');
-      };
+        expect(color).to.be.a("string");
+        expect(hex).to.be.a("number");
+      }
     });
   });
 
@@ -24,14 +25,14 @@ describe('Colors', function() {
     context("if a color can't be found", function() {
       it("throws an error", function() {
         var fn = function() { return colors.fromString("notacolor"); };
-        expect(fn).to.throw(/No Matching Color/)
+        expect(fn).to.throw(/No Matching Color/);
       });
     });
   });
 
   describe("#randomColor", function() {
     it("returns a random color", function() {
-      expect(colors.randomColor()).to.be.a('number');
+      expect(colors.randomColor()).to.be.a("number");
     });
   });
 });

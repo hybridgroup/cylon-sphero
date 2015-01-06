@@ -1,18 +1,19 @@
+// jshint expr:true
 "use strict";
 
-var Adaptor = source('adaptor'),
-    Commands = source('commands'),
-    Colors = source('colors');
+var Adaptor = source("adaptor"),
+    Commands = source("commands"),
+    Colors = source("colors");
 
-var Spheron = require('hybridgroup-spheron');
+var Spheron = require("hybridgroup-spheron");
 
-describe('Adaptor', function() {
+describe("Adaptor", function() {
   var sphero, mockSphero, opts;
 
   beforeEach(function() {
-    stub(Spheron, 'sphero').returns(mockSphero);
+    stub(Spheron, "sphero").returns(mockSphero);
 
-    opts = {port: ''};
+    opts = {port: ""};
     sphero = new Adaptor(opts);
   });
 
@@ -22,8 +23,8 @@ describe('Adaptor', function() {
 
   describe("constructor", function() {
     beforeEach(function() {
-      opts = { port: '', locatorOpts: 'opts' };
-      stub(Adaptor.prototype, 'proxyMethods');
+      opts = { port: "", locatorOpts: "opts" };
+      stub(Adaptor.prototype, "proxyMethods");
       sphero = new Adaptor(opts);
     });
 
@@ -40,7 +41,7 @@ describe('Adaptor', function() {
     });
 
     it("sets @locatorOpts to the provided options", function() {
-      expect(sphero.locatorOpts).to.be.eql('opts');
+      expect(sphero.locatorOpts).to.be.eql("opts");
     });
 
     it("sets two bitmasks to 0x00000000", function() {
@@ -58,8 +59,10 @@ describe('Adaptor', function() {
 
     context("if no pin is specified", function() {
       it("throws an error", function() {
-        var fn = function() { new Adaptor({ name: 'hi' }); };
-        expect(fn).to.throw("No port specified for Sphero adaptor 'hi'. Cannot proceed");
+        var fn = function() { return new Adaptor({ name: "hi" }); };
+        expect(fn).to.throw(
+          "No port specified for Sphero adaptor 'hi'. Cannot proceed"
+        );
       });
     });
   });
@@ -79,7 +82,7 @@ describe('Adaptor', function() {
       sphero.connector = sphero.sphero = emitter = { on: stub(), open: stub() };
       sphero.emit = spy();
 
-      stub(sphero, 'defineAdaptorEvent');
+      stub(sphero, "defineAdaptorEvent");
     });
 
     afterEach(function() {
@@ -88,7 +91,7 @@ describe('Adaptor', function() {
 
     context("when the Sphero connection opens", function() {
       beforeEach(function() {
-        emitter.on.withArgs('open').yields();
+        emitter.on.withArgs("open").yields();
       });
 
       it("triggers the provided callback", function() {
@@ -103,23 +106,23 @@ describe('Adaptor', function() {
       sphero.connect(callback);
 
       expect(d).to.be.calledWith({
-        eventName: 'close',
-        targetEventName: 'disconnect'
+        eventName: "close",
+        targetEventName: "disconnect"
       });
 
-      expect(d).to.be.calledWith('error');
-      expect(d).to.be.calledWith('message');
+      expect(d).to.be.calledWith("error");
+      expect(d).to.be.calledWith("message");
     });
 
     describe("when it receives a notification packet", function() {
       var packet;
 
       it("emits the raw packet in the 'notification' event", function() {
-        packet = { ID_CODE: 0x09 }
+        packet = { ID_CODE: 0x09 };
         sphero.connector.on.withArgs("notification").yields(packet);
 
         sphero.connect(callback);
-        expect(sphero.emit).to.be.calledWith('notification', packet);
+        expect(sphero.emit).to.be.calledWith("notification", packet);
       });
 
       context("when the packet contains collision data", function() {
@@ -130,7 +133,7 @@ describe('Adaptor', function() {
 
         it("emits a 'collision' event with the packet", function() {
           sphero.connect(callback);
-          expect(sphero.emit).to.be.calledWith('collision', packet);
+          expect(sphero.emit).to.be.calledWith("collision", packet);
         });
       });
 
@@ -142,15 +145,15 @@ describe('Adaptor', function() {
 
         it("emits a 'data' event with the parsed data", function() {
           sphero.connect(callback);
-          expect(sphero.emit).to.be.calledWith('data', [258, 772]);
-        })
+          expect(sphero.emit).to.be.calledWith("data", [258, 772]);
+        });
       });
     });
 
     it("opens a connection to the Sphero", function() {
-      sphero.port = '/dev/null'
+      sphero.port = "/dev/null";
       sphero.connect(callback);
-      expect(sphero.sphero.open).to.be.calledWith('/dev/null');
+      expect(sphero.sphero.open).to.be.calledWith("/dev/null");
     });
 
     context("if an error occurs while connecting to the Sphero", function() {
@@ -162,9 +165,9 @@ describe('Adaptor', function() {
 
       it("emits a 'err' event with the error object", function() {
         sphero.connect(callback);
-        expect(sphero.emit).to.be.calledWith('err', err);
+        expect(sphero.emit).to.be.calledWith("err", err);
       });
-    })
+    });
   });
 
   describe("#disconnect", function() {
@@ -211,15 +214,15 @@ describe('Adaptor', function() {
       it("persists the color", function() {
         sphero.setRGB(0xffff00);
         expect(setRGB).to.be.calledWith(0xffff00, true);
-      })
+      });
     });
 
     context("when persist is false", function() {
       it("tells the Sphero not to persist the color", function() {
         sphero.setRGB(0xffff00, false);
         expect(setRGB).to.be.calledWith(0xffff00, false);
-      })
-    })
+      });
+    });
   });
 
   describe("#setColor", function() {
@@ -234,7 +237,7 @@ describe('Adaptor', function() {
       it("sets the color", function() {
         sphero.setColor(0xffff00);
         expect(setRGB).to.be.calledWith(0xffff00);
-      })
+      });
     });
 
     context("when passed a string", function() {
@@ -251,7 +254,7 @@ describe('Adaptor', function() {
     beforeEach(function() {
       sphero.sphero = { setRGB: spy() };
       setRGB = sphero.sphero.setRGB;
-      stub(Colors, 'randomColor').returns('randomcolor');
+      stub(Colors, "randomColor").returns("randomcolor");
     });
 
     afterEach(function() {
@@ -260,7 +263,7 @@ describe('Adaptor', function() {
 
     it("calls setRGB with a random color", function() {
       sphero.setRandomColor();
-      expect(setRGB).to.be.calledWith('randomcolor');
+      expect(setRGB).to.be.calledWith("randomcolor");
     });
   });
 
@@ -289,7 +292,7 @@ describe('Adaptor', function() {
     });
 
     it("sends data to the Sphero's setDataStreaming method", function() {
-      sphero.setDataStreaming(['locator', 'velocity', 'gyroscope']);
+      sphero.setDataStreaming(["locator", "velocity", "gyroscope"]);
       expect(sds).to.be.calledWith(80, 1, 0x1C00, 0, 0xD800000);
     });
   });
@@ -302,6 +305,6 @@ describe('Adaptor', function() {
     it("makes the sphero stop rolling", function() {
       sphero.stop();
       expect(sphero.sphero.roll).to.be.calledWith(0, 0, 0);
-    })
+    });
   });
 });

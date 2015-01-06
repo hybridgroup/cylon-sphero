@@ -1,4 +1,6 @@
-var Cylon = require('cylon');
+"use strict";
+
+var Cylon = require("cylon");
 
 var bots = [
   { name: "Thelma", port: "/dev/rfcomm0" },
@@ -8,9 +10,9 @@ var bots = [
 bots.forEach(function(bot) {
   Cylon
     .robot({ name: bot.name })
-    .connection("sphero", { adaptor: 'sphero', port: bot.port })
-    .device("sphero", { driver: 'sphero' })
-    .on('ready', function(robot) {
+    .connection("sphero", { adaptor: "sphero", port: bot.port })
+    .device("sphero", { driver: "sphero" })
+    .on("ready", function(robot) {
       setInterval(function() {
         console.log(robot.name);
         robot.sphero.setRandomColor();

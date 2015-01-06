@@ -1,20 +1,21 @@
+// jshint expr:true
 "use strict";
 
-var Driver = source('driver'),
-    Commands = source('commands');
+var Driver = source("driver"),
+    Commands = source("commands");
 
 var Utils = require("cylon").Utils;
 
-describe('Driver', function() {
+describe("Driver", function() {
   var sphero;
 
   beforeEach(function() {
     sphero = new Driver({ connection: {} });
-  })
+  });
 
   describe("#constructor", function() {
     beforeEach(function() {
-      stub(Utils, 'proxyFunctionsToObject');
+      stub(Utils, "proxyFunctionsToObject");
       sphero = new Driver({ connection: {} });
     });
 
@@ -23,7 +24,7 @@ describe('Driver', function() {
     });
 
     it("proxies methods to the connection", function() {
-      var proxy = Utils.proxyFunctionsToObject
+      var proxy = Utils.proxyFunctionsToObject;
       expect(proxy).to.be.calledWith(Commands, sphero.connection, sphero);
     });
   });
@@ -31,16 +32,16 @@ describe('Driver', function() {
   describe("#commands", function() {
     it("is an object containing Sphero commands", function() {
       for (var c in sphero.commands) {
-        expect(sphero.commands[c]).to.be.a('function');
+        expect(sphero.commands[c]).to.be.a("function");
       }
     });
   });
 
   describe("#start", function() {
-    var setTemporaryOptionFlags;
+    var setTempOptFlags;
     beforeEach(function() {
-      stub(sphero, 'defineDriverEvent');
-      setTemporaryOptionFlags = sphero.connection.setTemporaryOptionFlags = spy();
+      stub(sphero, "defineDriverEvent");
+      setTempOptFlags = sphero.connection.setTemporaryOptionFlags = spy();
     });
 
     afterEach(function() {
@@ -50,13 +51,13 @@ describe('Driver', function() {
     it("set temp option flags to stop on disconnect", function() {
       sphero.start(function() {});
 
-      expect(setTemporaryOptionFlags).to.be.calledWith(0x01);
+      expect(setTempOptFlags).to.be.calledWith(0x01);
     });
 
     it("defines Driver events", function() {
       var events = [
-        'message', 'update', 'notification',
-        'collision', 'data'
+        "message", "update", "notification",
+        "collision", "data"
       ];
 
       sphero.start(function() {});
@@ -74,13 +75,13 @@ describe('Driver', function() {
     });
 
     it("tells the sphero to roll", function() {
-      sphero.roll('speed', 'heading', 'state');
-      expect(roll).to.be.calledWith('speed', 'heading', 'state');
+      sphero.roll("speed", "heading", "state");
+      expect(roll).to.be.calledWith("speed", "heading", "state");
     });
 
-    it('defaults state to 1', function() {
-      sphero.roll('speed', 'heading');
-      expect(roll).to.be.calledWith('speed', 'heading', 1);
+    it("defaults state to 1", function() {
+      sphero.roll("speed", "heading");
+      expect(roll).to.be.calledWith("speed", "heading", 1);
     });
   });
 
@@ -112,13 +113,13 @@ describe('Driver', function() {
     });
 
     it("tells the Sphero to set the RGBs to a color", function() {
-      sphero.setRGB('color', 'persist');
-      expect(sphero.connection.setRGB).to.be.calledWith('color', 'persist');
+      sphero.setRGB("color", "persist");
+      expect(sphero.connection.setRGB).to.be.calledWith("color", "persist");
     });
 
     it("defaults persistence to true", function() {
-      sphero.setRGB('color');
-      expect(sphero.connection.setRGB).to.be.calledWith('color', true);
+      sphero.setRGB("color");
+      expect(sphero.connection.setRGB).to.be.calledWith("color", true);
     });
   });
 

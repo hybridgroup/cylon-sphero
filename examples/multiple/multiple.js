@@ -1,30 +1,32 @@
-    var Cylon = require('cylon');
+"use strict";
 
-    var bots = [
-      { name: "Thelma", port: "/dev/rfcomm0" },
-      { name: "Louise", port: "/dev/rfcomm1" }
-    ];
+var Cylon = require("cylon");
 
-    bots.forEach(function(bot) {
-      Cylon.robot({
-        name: bot.name,
+var bots = [
+  { name: "Thelma", port: "/dev/rfcomm0" },
+  { name: "Louise", port: "/dev/rfcomm1" }
+];
 
-        connections: {
-          sphero: { adaptor: 'sphero', port: bot.port }
-        },
+bots.forEach(function(bot) {
+  Cylon.robot({
+    name: bot.name,
 
-        devices: {
-          sphero: { driver: 'sphero' }
-        },
+    connections: {
+      sphero: { adaptor: "sphero", port: bot.port }
+    },
 
-        work: function(my) {
-          every((1).second(), function() {
-            console.log(my.name);
-            my.sphero.setRandomColor();
-            my.sphero.roll(60, Math.floor(Math.random() * 360));
-          });
-        }
+    devices: {
+      sphero: { driver: "sphero" }
+    },
+
+    work: function(my) {
+      every((1).second(), function() {
+        console.log(my.name);
+        my.sphero.setRandomColor();
+        my.sphero.roll(60, Math.floor(Math.random() * 360));
       });
-    });
+    }
+  });
+});
 
-    Cylon.start();
+Cylon.start();
