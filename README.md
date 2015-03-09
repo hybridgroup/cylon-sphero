@@ -14,7 +14,7 @@ Want to use the Go programming language to power your robots? Check out our sist
 
 Install the module with:
 
-    $ npm install cylon-sphero
+    $ npm install cylon cylon-sphero
 
 ## How to Use
 
