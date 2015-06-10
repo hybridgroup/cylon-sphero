@@ -15,11 +15,14 @@ Cylon.robot({
     var max = 0;
     var changingColor = false;
 
-    my.sphero.setDataStreaming(["velocity"], { n: 40, m: 1, pcnt: 0 });
-    my.sphero.on("data", function(data) {
+    my.sphero.setDataStreaming({
+      n: 40, m: 1, pcnt: 0, dataSources: ["velocity"]
+    });
+
+    my.sphero.on("dataStreaming", function(data) {
       if (!changingColor) {
-        var x = Math.abs(data[0]),
-            y = Math.abs(data[1]);
+        var x = Math.abs(data.xVelocity.value),
+            y = Math.abs(data.yVelocity.value);
 
         if (x > max) {
           max = x;
@@ -35,19 +38,19 @@ Cylon.robot({
       changingColor = true;
 
       if (max < 10) {
-        my.sphero.setColor("white");
+        my.sphero.color("white");
       } else if (max < 100) {
-        my.sphero.setColor("lightyellow");
+        my.sphero.color("lightyellow");
       } else if (max < 150) {
-        my.sphero.setColor("yellow");
+        my.sphero.color("yellow");
       } else if (max < 250) {
-        my.sphero.setColor("orange");
+        my.sphero.color("orange");
       } else if (max < 350) {
-        my.sphero.setColor("orangered");
+        my.sphero.color("orangered");
       } else if (max < 450) {
-        my.sphero.setColor("red");
+        my.sphero.color("red");
       } else {
-        my.sphero.setColor("darkred");
+        my.sphero.color("darkred");
       }
 
       max = 0;

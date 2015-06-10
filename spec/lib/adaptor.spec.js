@@ -1,29 +1,29 @@
 // jshint expr:true
 "use strict";
 
-var Adaptor = source("adaptor"),
-    Commands = source("commands"),
-    Colors = source("colors");
+var Adaptor = lib("adaptor"),
+    Commands = lib("commands");
 
-var Spheron = require("hybridgroup-spheron");
+var Cylon = require("cylon");
 
 describe("Adaptor", function() {
-  var sphero, mockSphero, opts;
+  var sphero, opts;
 
   beforeEach(function() {
-    stub(Spheron, "sphero").returns(mockSphero);
-
-    opts = {port: ""};
+    opts = { port: "/dev/rfcomm0" };
     sphero = new Adaptor(opts);
+    Cylon.Logger = {
+      info: stub(),
+      error: stub()
+    };
   });
 
   afterEach(function() {
-    Spheron.sphero.restore();
   });
 
   describe("constructor", function() {
     beforeEach(function() {
-      opts = { port: "", locatorOpts: "opts" };
+      opts = { port: "/dev/rfcomm0", locatorOpts: "opts" };
       stub(Adaptor.prototype, "proxyMethods");
       sphero = new Adaptor(opts);
     });
@@ -32,12 +32,12 @@ describe("Adaptor", function() {
       Adaptor.prototype.proxyMethods.restore();
     });
 
-    it("sets @sphero to a Spheron sphero instance", function() {
-      expect(sphero.sphero).to.be.eql(mockSphero);
+    it("sets @sphero to a sphero.js instance", function() {
+      expect(sphero.sphero).to.not.be.null;
     });
 
     it("sets @connector to the Sphero instance", function() {
-      expect(sphero.connector).to.be.eql(mockSphero);
+      expect(sphero.connector).to.not.be.null;
     });
 
     it("sets @locatorOpts to the provided options", function() {
@@ -57,7 +57,16 @@ describe("Adaptor", function() {
       );
     });
 
-    context("if no pin is specified", function() {
+    context("if opts are NOT provided", function() {
+      it("throws an error", function() {
+        var fn = function() { return new Adaptor(); };
+        expect(fn).to.throw(
+          "No port specified for Sphero adaptor 'undefined'. Cannot proceed"
+        );
+      });
+    });
+
+    context("if no port is specified", function() {
       it("throws an error", function() {
         var fn = function() { return new Adaptor({ name: "hi" }); };
         expect(fn).to.throw(
@@ -78,8 +87,9 @@ describe("Adaptor", function() {
 
     beforeEach(function() {
       callback = spy();
-
-      sphero.connector = sphero.sphero = emitter = { on: stub(), open: stub() };
+      emitter = { on: stub(), connect: stub() };
+      sphero.connector = sphero.sphero = emitter;
+      sphero.sphero.connect.yields();
       sphero.emit = spy();
 
       stub(sphero, "defineAdaptorEvent");
@@ -105,67 +115,38 @@ describe("Adaptor", function() {
 
       sphero.connect(callback);
 
-      expect(d).to.be.calledWith({
-        eventName: "close",
-        targetEventName: "disconnect"
-      });
-
+      expect(d).to.be.calledWith({ event: "open", targetEvent: "connect" });
+      expect(d).to.be.calledWith("connect");
+      expect(d).to.be.calledWith("disconnect");
       expect(d).to.be.calledWith("error");
-      expect(d).to.be.calledWith("message");
-    });
-
-    describe("when it receives a notification packet", function() {
-      var packet;
-
-      it("emits the raw packet in the 'notification' event", function() {
-        packet = { ID_CODE: 0x09 };
-        sphero.connector.on.withArgs("notification").yields(packet);
-
-        sphero.connect(callback);
-        expect(sphero.emit).to.be.calledWith("notification", packet);
-      });
-
-      context("when the packet contains collision data", function() {
-        beforeEach(function() {
-          packet = { ID_CODE: 0x07, DLEN: 0x11 };
-          sphero.connector.on.withArgs("notification").yields(packet);
-        });
-
-        it("emits a 'collision' event with the packet", function() {
-          sphero.connect(callback);
-          expect(sphero.emit).to.be.calledWith("collision", packet);
-        });
-      });
-
-      context("when the packet contains data", function() {
-        beforeEach(function() {
-          packet = { ID_CODE: 0x03, DATA: new Buffer([1, 2, 3, 4]) };
-          sphero.connector.on.withArgs("notification").yields(packet);
-        });
-
-        it("emits a 'data' event with the parsed data", function() {
-          sphero.connect(callback);
-          expect(sphero.emit).to.be.calledWith("data", [258, 772]);
-        });
-      });
+      expect(d).to.be.calledWith("response");
+      expect(d).to.be.calledWith("async");
+      expect(d).to.be.calledWith("data");
+      expect(d).to.be.calledWith("collision");
+      expect(d).to.be.calledWith("version");
+      expect(d).to.be.calledWith("bluetoothInfo");
+      expect(d).to.be.calledWith("powerStateInfo");
+      expect(d).to.be.calledWith("readLocator");
+      expect(d).to.be.calledWith("battery");
+      expect(d).to.be.calledWith("dataStreaming");
     });
 
     it("opens a connection to the Sphero", function() {
-      sphero.port = "/dev/null";
       sphero.connect(callback);
-      expect(sphero.sphero.open).to.be.calledWith("/dev/null");
+      expect(sphero.connector.connect).to.be.calledOnce;
+      expect(callback).to.be.calledOnce;
     });
 
     context("if an error occurs while connecting to the Sphero", function() {
       var err = { error: "something bad happened" };
 
       beforeEach(function() {
-        sphero.sphero.open.yields(err);
+        sphero.sphero.connect.yields(err);
       });
 
       it("emits a 'err' event with the error object", function() {
         sphero.connect(callback);
-        expect(sphero.emit).to.be.calledWith("err", err);
+        expect(sphero.emit).to.be.calledWith("error", err);
       });
     });
   });
@@ -175,111 +156,19 @@ describe("Adaptor", function() {
 
     beforeEach(function() {
       callback = spy();
-      sphero.sphero = { close: spy(), roll: spy() };
-      sphero.sphero.once = sphero.sphero.close;
+      sphero.sphero = { disconnect: stub(), roll: spy() };
+      sphero.sphero.disconnect.yields();
+      sphero.sphero.once = sphero.sphero.disconnect;
     });
 
     it("closes the connection to the Sphero", function() {
       sphero.disconnect(callback);
-      expect(sphero.sphero.close).to.be.called;
+      expect(sphero.sphero.disconnect).to.be.called;
     });
 
     it("stops the sphero", function() {
       sphero.disconnect(callback);
-      expect(sphero.sphero.roll).to.be.calledWith(0,0,0);
-    });
-  });
-
-  describe("#detectCollisions", function() {
-    beforeEach(function() {
-      sphero.sphero = { configureCollisionDetection: spy() };
-    });
-
-    it("configures collision detection on the Sphero", function() {
-      var conf = sphero.sphero.configureCollisionDetection;
-      sphero.detectCollisions();
-      expect(conf).to.be.calledWith(0x01, 0x40, 0x40, 0x50, 0x50, 0x50);
-    });
-  });
-
-  describe("setRGB", function() {
-    var setRGB;
-
-    beforeEach(function() {
-      sphero.sphero = { setRGB: spy() };
-      setRGB = sphero.sphero.setRGB;
-    });
-
-    context("by default", function() {
-      it("persists the color", function() {
-        sphero.setRGB(0xffff00);
-        expect(setRGB).to.be.calledWith(0xffff00, true);
-      });
-    });
-
-    context("when persist is false", function() {
-      it("tells the Sphero not to persist the color", function() {
-        sphero.setRGB(0xffff00, false);
-        expect(setRGB).to.be.calledWith(0xffff00, false);
-      });
-    });
-  });
-
-  describe("#setColor", function() {
-    var setRGB;
-
-    beforeEach(function() {
-      sphero.sphero = { setRGB: spy() };
-      setRGB = sphero.sphero.setRGB;
-    });
-
-    context("when passed a hex number", function() {
-      it("sets the color", function() {
-        sphero.setColor(0xffff00);
-        expect(setRGB).to.be.calledWith(0xffff00);
-      });
-    });
-
-    context("when passed a string", function() {
-      it("looks up the hex color", function() {
-        sphero.setColor("sienna");
-        expect(setRGB).to.be.calledWith(0xA0522D);
-      });
-    });
-  });
-
-  describe("setRandomColor", function() {
-    var setRGB;
-
-    beforeEach(function() {
-      sphero.sphero = { setRGB: spy() };
-      setRGB = sphero.sphero.setRGB;
-      stub(Colors, "randomColor").returns("randomcolor");
-    });
-
-    afterEach(function() {
-      Colors.randomColor.restore();
-    });
-
-    it("calls setRGB with a random color", function() {
-      sphero.setRandomColor();
-      expect(setRGB).to.be.calledWith("randomcolor");
-    });
-  });
-
-  describe("#setBackLED", function() {
-    beforeEach(function() {
-      sphero.sphero = { setBackLED: spy() };
-    });
-
-    it("tells the Sphero to turn on the back LED", function() {
-      sphero.setBackLed(180);
-      expect(sphero.sphero.setBackLED).to.be.calledWith(180);
-    });
-
-    it("defaults to a brightness of 192", function() {
-      sphero.setBackLed();
-      expect(sphero.sphero.setBackLED).to.be.calledWith(192);
+      expect(callback).to.be.calledOnce;
     });
   });
 
@@ -287,24 +176,26 @@ describe("Adaptor", function() {
     var sds;
 
     beforeEach(function() {
-      sphero.sphero = { setDataStreaming: spy() };
+      sphero.sphero = { setDataStreaming: stub() };
       sds = sphero.sphero.setDataStreaming;
     });
 
     it("sends data to the Sphero's setDataStreaming method", function() {
-      sphero.setDataStreaming(["locator", "velocity", "gyroscope"]);
-      expect(sds).to.be.calledWith(80, 1, 0x1C00, 0, 0xD800000);
+      sphero.setDataStreaming({
+        dataSources: ["odometer", "velocity"]
+      });
+      expect(sds).to.be.calledWith({
+        dataSources: ["odometer", "velocity"],
+        mask1: 0x00000000,
+        mask2: 0x0D800000,
+      });
     });
-  });
 
-  describe("#stop", function() {
-    beforeEach(function() {
-      sphero.sphero = { roll: spy() };
-    });
-
-    it("makes the sphero stop rolling", function() {
-      sphero.stop();
-      expect(sphero.sphero.roll).to.be.calledWith(0, 0, 0);
+    context("With no dataSources passed", function() {
+      it("sends data to the Sphero's setDataStreaming method", function() {
+        sphero.setDataStreaming();
+        expect(sds).to.be.calledWith({}, undefined);
+      });
     });
   });
 });

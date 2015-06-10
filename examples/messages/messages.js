@@ -12,11 +12,7 @@ Cylon.robot({
   },
 
   work: function(me) {
-    after((1).seconds(), function() {
-      console.log("Setting up Collision Detection...");
-      me.sphero.detectCollisions();
-      me.sphero.setRGB(0x00FF00);
-    });
+    console.log("Setting up Collision Detection...");
 
     me.sphero.on("update", function(data) {
       console.log("Update event eventName: " + data + " ");
@@ -24,22 +20,31 @@ Cylon.robot({
       console.log(data);
     });
 
-    me.sphero.on("message", function(data) {
-      me.sphero.setRGB(0x0000FF);
-      console.log("Message:");
+    me.sphero.on("data", function(data) {
+      me.sphero.color(0x00FFFF);
+      console.log("Data event args: ");
+      console.log(data);
+    });
+
+    me.sphero.on("response", function(data) {
+      me.sphero.color(0x0000FF);
+      console.log("Response:");
       console.log(data);
     });
 
     me.sphero.on("collision", function(data) {
-      me.sphero.setRGB(0xFF0000);
+      me.sphero.color(0xFFDD00);
       console.log("Collision:");
       console.log(data);
     });
 
-    me.sphero.on("notification", function(data) {
-      me.sphero.setRGB(0xFF0000);
-      console.log("Notification:");
+    me.sphero.on("async", function(data) {
+      me.sphero.color(0xFF0000);
+      console.log("Async:");
       console.log(data);
     });
+
+    me.sphero.detectCollisions();
+    me.sphero.color(0x00FF00);
   }
 }).start();

@@ -35,18 +35,9 @@ a variable we'll use for a bitwise math operation later.
         var color = 0x00FF00,
             bitFilter = 0xFFFF00;
 
-When our Sphero emits the 'connect' event, we're going to hook up collision
-detection, make sure it's not moving, and set a color.
+        console.log("Setting up Collision Detection...");
 
-        me.sphero.on('connect', function() {
-          console.log("Setting up Collision Detection...");
-          me.sphero.detectCollisions();
-          me.sphero.setRGB(color);
-          me.sphero.stop();
-        });
-
-And when our Sphero detects a collision, we want to notify the user of this via
-the console.
+We add a listener on `collision`, since we want to be notified when our Sphero detects a collision.
 
         me.sphero.on('collision', function(data) {
           console.log("Collision:");
@@ -61,10 +52,15 @@ and change the Sphero to that color. We'll also tell the Sphero to roll in
 a random direction, at speed 90.
 
           console.log("Color: " + (color.toString(16)) + " ");
-          me.sphero.setRGB(color);
+          me.sphero.color(color);
           me.sphero.roll(90, Math.floor(Math.random() * 360));
         });
       }
+
+Once the `collision` listener is been added, we change the color and start detecting collisions.
+
+      me.sphero.color(color);
+      me.sphero.detectCollisions();
 
 And with all that said and done, we can now start the robot.
 

@@ -1,7 +1,7 @@
 // jshint expr:true
 "use strict";
 
-var colors = source("colors");
+var colors = lib("colors");
 
 describe("Colors", function() {
   describe("#colors", function() {

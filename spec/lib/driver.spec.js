@@ -1,8 +1,8 @@
 // jshint expr:true
 "use strict";
 
-var Driver = source("driver"),
-    Commands = source("commands");
+var Driver = lib("driver"),
+    Commands = lib("commands");
 
 var Utils = require("cylon").Utils;
 
@@ -38,10 +38,10 @@ describe("Driver", function() {
   });
 
   describe("#start", function() {
-    var setTempOptFlags;
+    var setTempOptionFlags;
     beforeEach(function() {
       stub(sphero, "defineDriverEvent");
-      setTempOptFlags = sphero.connection.setTemporaryOptionFlags = spy();
+      setTempOptionFlags = sphero.connection.setTempOptionFlags = spy();
     });
 
     afterEach(function() {
@@ -51,13 +51,20 @@ describe("Driver", function() {
     it("set temp option flags to stop on disconnect", function() {
       sphero.start(function() {});
 
-      expect(setTempOptFlags).to.be.calledWith(0x01);
+      expect(setTempOptionFlags).to.be.calledWith(0x01);
     });
 
     it("defines Driver events", function() {
       var events = [
-        "message", "update", "notification",
-        "collision", "data"
+        "connect",
+        "disconnect",
+        "error",
+        "version",
+        "battery",
+        "response",
+        "async",
+        "collision",
+        "data"
       ];
 
       sphero.start(function() {});
@@ -68,87 +75,22 @@ describe("Driver", function() {
     });
   });
 
-  describe("#roll", function() {
-    var roll;
+  describe("#halt", function() {
+    var callback;
+
     beforeEach(function() {
-      roll = sphero.connection.roll = spy();
+      callback = spy();
+      sphero.connection.disconnect = stub();
+      sphero.connection.disconnect.yields();
+      sphero.halt(callback);
     });
 
-    it("tells the sphero to roll", function() {
-      sphero.roll("speed", "heading", "state");
-      expect(roll).to.be.calledWith("speed", "heading", "state");
+    it("calls #sphero.disconnect once", function() {
+      expect(sphero.connection.disconnect).to.be.calledOnce;
     });
 
-    it("defaults state to 1", function() {
-      sphero.roll("speed", "heading");
-      expect(roll).to.be.calledWith("speed", "heading", 1);
-    });
-  });
-
-  describe("#detectCollisions", function() {
-    beforeEach(function() {
-      sphero.connection = { detectCollisions: spy() };
-    });
-
-    it("tells the Sphero to detect collisions", function() {
-      sphero.detectCollisions();
-      expect(sphero.connection.detectCollisions).to.be.called;
-    });
-  });
-
-  describe("#stop", function() {
-    beforeEach(function() {
-      sphero.connection = { stop: spy() };
-    });
-
-    it("tells the Sphero to stop", function() {
-      sphero.stop();
-      expect(sphero.connection.stop).to.be.called;
-    });
-  });
-
-  describe("#setRGB", function() {
-    beforeEach(function() {
-      sphero.connection = { setRGB: spy() };
-    });
-
-    it("tells the Sphero to set the RGBs to a color", function() {
-      sphero.setRGB("color", "persist");
-      expect(sphero.connection.setRGB).to.be.calledWith("color", "persist");
-    });
-
-    it("defaults persistence to true", function() {
-      sphero.setRGB("color");
-      expect(sphero.connection.setRGB).to.be.calledWith("color", true);
-    });
-  });
-
-  describe("#startCalibration", function() {
-    beforeEach(function() {
-      sphero.connection = { setBackLED: spy(), setStabilization: spy() };
-    });
-
-    it("tells the Sphero to start the calibration", function() {
-      sphero.startCalibration();
-      expect(sphero.connection.setBackLED).to.be.calledWith(127);
-      expect(sphero.connection.setStabilization).to.be.calledWith(0);
-    });
-  });
-
-  describe("#finishCalibration", function() {
-    beforeEach(function() {
-      sphero.connection = {
-        setHeading: spy(),
-        setBackLED: spy(),
-        setStabilization: spy()
-      };
-    });
-
-    it("tells the Sphero to finish the calibration", function() {
-      sphero.finishCalibration();
-      expect(sphero.connection.setHeading).to.be.calledWith(0);
-      expect(sphero.connection.setBackLED).to.be.calledWith(0);
-      expect(sphero.connection.setStabilization).to.be.calledWith(1);
+    it("triggers the callback", function() {
+      expect(callback).to.be.calledOnce;
     });
   });
 });
