@@ -1,10 +1,10 @@
 // jshint expr:true
 "use strict";
 
-var sphero = source("cylon-sphero");
+var sphero = lib("cylon-sphero");
 
-var Adaptor = source("adaptor"),
-    Driver = source("driver");
+var Adaptor = lib("adaptor"),
+    Driver = lib("driver");
 
 describe("cylon-sphero", function() {
   describe("#adaptors", function() {
@@ -21,7 +21,8 @@ describe("cylon-sphero", function() {
 
   describe("#adaptor", function() {
     it("returns a new instance of the Sphero adaptor", function() {
-      expect(sphero.adaptor({ port: "" })).to.be.an.instanceOf(Adaptor);
+      expect(sphero.adaptor({ port: "/dev/rfcomm0" }))
+        .to.be.an.instanceOf(Adaptor);
     });
   });
 

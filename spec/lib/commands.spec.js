@@ -1,7 +1,7 @@
 // jshint expr:true
 "use strict";
 
-var Commands = source("./commands");
+var Commands = lib("./commands");
 
 describe("Cylon.Sphero.Commands", function() {
   it("is an array of string commands", function() {

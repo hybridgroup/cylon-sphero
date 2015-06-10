@@ -15,7 +15,7 @@ bots.forEach(function(bot) {
     .on("ready", function(robot) {
       setInterval(function() {
         console.log(robot.name);
-        robot.sphero.setRandomColor();
+        robot.sphero.randomColor();
         robot.sphero.roll(60, Math.floor(Math.random() * 360));
       }, 1000);
     });

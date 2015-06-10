@@ -22,7 +22,7 @@ bots.forEach(function(bot) {
     work: function(my) {
       every((1).second(), function() {
         console.log(my.name);
-        my.sphero.setRandomColor();
+        my.sphero.randomColor();
         my.sphero.roll(60, Math.floor(Math.random() * 360));
       });
     }

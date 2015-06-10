@@ -16,15 +16,16 @@
   "license": "Apache 2.0",
 
   "devDependencies": {
-    "sinon-chai": "~2.4.0",
-    "chai":       "~1.7.2",
-    "mocha":      "~1.12.1",
-    "sinon":      "~1.7.3",
-    "jshint":     "~2.4.4"
+    "sinon-chai": "~2.7.0",
+    "chai":       "~2.3.0",
+    "sinon":      "~1.14.1",
+    "mocha":      "~2.2.5",
+
+    "eslint":     "0.22.1"
   },
 
   "dependencies": {
-    "cylon":               "~1.0.0",
-    "hybridgroup-spheron": "~0.3.0"
+    "cylon":  "~1.0.0",
+    "sphero": "~0.3.0"
   }
 }

@@ -43,7 +43,7 @@ Every second, they'll print their name, change to a random color, and roll in a 
         work: function(my) {
           every((1).second(), function() {
             console.log(my.name);
-            my.sphero.setRandomColor();
+            my.sphero.randomColor();
             my.sphero.roll(60, Math.floor(Math.random() * 360));
           });
         }
