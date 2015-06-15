@@ -1,4 +1,3 @@
-// jshint expr:true
 "use strict";
 
 var colors = lib("colors");
