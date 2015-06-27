@@ -1,15 +1,7 @@
-/*
- * cylon-sphero
- * http://cylonjs.com
- *
- * Copyright (c) 2013 The Hybrid Group
- * Licensed under the Apache 2.0 license.
-*/
-
 "use strict";
 
-var Adaptor = require("./adaptor"),
-    Driver = require("./driver");
+var Adaptor = require("./lib/adaptor"),
+    Driver = require("./lib/driver");
 
 module.exports = {
   adaptors: ["sphero"],

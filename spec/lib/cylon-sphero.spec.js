@@ -1,6 +1,6 @@
 "use strict";
 
-var sphero = lib("cylon-sphero");
+var sphero = lib("../");
 
 var Adaptor = lib("adaptor"),
     Driver = lib("driver");
