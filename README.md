@@ -64,10 +64,12 @@ Now you are ready to run the example code, be sure to update this line with the 
       sphero: { adaptor: "sphero", port: "/dev/tty.Sphero-BBP-AMP-SPP" }
     },
 
-### Ubuntu
+### Linux
 
 Connecting to the Sphero from Ubuntu or any other Linux-based OS can be done entirely from the command line
 using CylonJS CLI commands. Here are the steps.
+
+## Ubuntu
 
 Find the address of the Sphero, by using:
 
@@ -80,6 +82,18 @@ Pair to Sphero using this command (substituting the actual address of your Spher
 Connect to the Sphero using this command (substituting the actual address of your Sphero):
 
     gort bluetooth connect <address>
+
+## Fedora
+
+Find the address of the Sphero, by using:
+
+    hcitool scan
+
+Assuming you've already paired the Sphero through Fedora's bluetooth settings, connect the Sphero using the following command (substituting the actual address of your Sphero):
+
+    rfcomm connect 0 <address> 1
+
+This will connect the Sphero to /dev/rfcomm0 as long as the command is running.
 
 ### Windows
 
