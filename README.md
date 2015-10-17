@@ -69,7 +69,7 @@ Now you are ready to run the example code, be sure to update this line with the 
 Connecting to the Sphero from Ubuntu or any other Linux-based OS can be done entirely from the command line
 using CylonJS CLI commands. Here are the steps.
 
-## Ubuntu
+#### Ubuntu
 
 Find the address of the Sphero, by using:
 
@@ -83,7 +83,7 @@ Connect to the Sphero using this command (substituting the actual address of you
 
     gort bluetooth connect <address>
 
-## Fedora
+#### Fedora
 
 Find the address of the Sphero, by using:
 
