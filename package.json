@@ -38,6 +38,6 @@
 
   "dependencies": {
     "cylon":  "~1.2.0",
-    "sphero": "~0.3.0"
+    "sphero": "~0.4.0"
   }
 }
