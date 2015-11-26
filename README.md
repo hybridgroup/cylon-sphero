@@ -85,6 +85,10 @@ Connect to the Sphero using this command (substituting the actual address of you
 
 You should be able to simply pair your Sphero using your normal system tray applet for Bluetooth, and then connect to the COM port that is bound to the device, such as `COM3`.
 
+### Compatibility
+
+The cylon-sphero module is currently compatible with Node.js versions 0.10.x thru 4.2.x.
+
 ## How To Calibrate Sphero
 
 You might want to calibrate the orientation of the Sphero so that it is pointed 'forward'. There are 2 functions that have been added to the Sphero driver to help with this.

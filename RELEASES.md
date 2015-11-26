@@ -1,6 +1,8 @@
 ## Release History
 
-Version 0.21.0 - Use Cylon 1.2.0
+Version 0.23.0 - Update to use Sphero.js v0.4.0
+
+Version 0.22.0 - Use Cylon 1.2.0
 
 Version 0.21.0 - Use Cylon 1.1.0
 
