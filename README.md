@@ -87,7 +87,9 @@ You should be able to simply pair your Sphero using your normal system tray appl
 
 ### Compatibility
 
-The cylon-sphero module is currently compatible with Node.js versions 0.10.x thru 4.2.x.
+The cylon-sphero module is currently compatible with Node.js versions 0.10.x thru 5.x.
+
+In order to install it with Node.js 5.x+, you will need to have g++ v4.8 or higher.
 
 ## How To Calibrate Sphero
 
