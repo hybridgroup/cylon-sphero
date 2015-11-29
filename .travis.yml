@@ -1,21 +1,14 @@
 language: node_js
 sudo: false
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
-    - g++-4.8-multilib
-    - gcc-multilib
+node_js:
+  - '0.10'
+  - '0.12'
+  - '4.0'
+  - '4.1'
+  - '4.2'
+  - '5.0'
 env:
-  matrix:
-  - TRAVIS_NODE_VERSION="0.10"
-  - TRAVIS_NODE_VERSION="0.12"
-  - TRAVIS_NODE_VERSION="4.0"
-  - TRAVIS_NODE_VERSION="4.1"
-  - TRAVIS_NODE_VERSION="4.2"
-  - TRAVIS_NODE_VERSION="5"
+  - CXX=g++-4.8
 before_install:
   - "mkdir -p ~/.npm"
 install:
@@ -25,3 +18,10 @@ install:
 script:
   - make ci
   - CODECLIMATE_REPO_TOKEN=11c63f9cfb722f57d0b8ca553bb5e26175d6ff3e8404aaf1a5d925a6ded85365 codeclimate-test-reporter < coverage/lcov.info
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+    - g++-4.8-multilib
