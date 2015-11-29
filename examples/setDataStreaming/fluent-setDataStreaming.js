@@ -28,7 +28,7 @@ Cylon
     // The data sources available for data Streaming from the
     // sphero API are as follows:
     // ["motorsPWM", "imu", "accelerometer", "gyroscope", "motorsIMF"
-    //  "quaternion", "locator", "accelOne", "velocity"]
+    //  "quaternion", "odometer", "accelOne", "velocity"]
     // It is also possible to pass an opts object to setDataStreaming():
     var opts = {
       // n: int, divisor of the max sampling rate, 400 hz/s

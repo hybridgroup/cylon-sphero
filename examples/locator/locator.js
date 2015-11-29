@@ -31,10 +31,10 @@ Cylon.robot({
     });
 
     my.sphero.detectCollisions();
-    // To detect locator, accelOne and velocity from the sphero
+    // To detect odometer, accelOne and velocity from the sphero
     // we use setDataStreaming.
     // sphero API data sources for locator info are as follows:
-    // ["locator", "accelOne", "velocity"]
+    // ["odometer", "accelOne", "velocity"]
     // It is also possible to pass an opts object to setDataStreaming():
     var opts = {
       // n: int, divisor of the max sampling rate, 400 hz/s
@@ -49,7 +49,7 @@ Cylon.robot({
       // pcnt = 0 means unlimited data Streaming
       // pcnt = 10 means stop after 10 data packets
       pcnt: 0,
-      dataSources: ["locator", "accelOne", "velocity"]
+      dataSources: ["odometer", "accelOne", "velocity"]
     };
 
     my.sphero.setDataStreaming(opts);
