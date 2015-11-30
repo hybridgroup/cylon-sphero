@@ -12,26 +12,15 @@ Cylon.robot({
   },
 
   work: function(bot) {
-    var color = 0x00FF00,
-    bitFilter = 0xFFFF00;
-
-    console.log("Setting up Collision Detection...");
+    console.log("Setting up Data Streaming...");
 
     bot.sphero.on("dataStreaming", function(data) {
       console.log("data:");
       console.log(data);
     });
 
-    bot.sphero.on("collision", function() {
-      console.log("Collision:");
-      color = color ^ bitFilter;
-      console.log("Color: " + (color.toString(16)) + " ");
-      bot.sphero.color(color);
-      bot.sphero.roll(128, Math.floor(Math.random() * 360));
-    });
-
-    // The data sources available for data Streaming from the
-    // sphero API are as follows:
+    // The data sources available for data streaming from the
+    // Sphero API are as follows:
     // ["motorsPWM", "imu", "accelerometer", "gyroscope", "motorsIMF"
     //  "quaternion", "odometer", "accelOne", "velocity"]
     // It is also possible to pass an opts object to setDataStreaming():
@@ -48,12 +37,10 @@ Cylon.robot({
       // pcnt = 0 means unlimited data Streaming
       // pcnt = 10 means stop after 10 data packets
       pcnt: 0,
-      dataSources: ["velocity", "odomoter"]
+      dataSources: ["motorsPWM", "imu", "accelerometer", "gyroscope", "motorsIMF",
+                    "quaternion", "odometer", "accelOne", "velocity"]
     };
 
     bot.sphero.setDataStreaming(opts);
-    bot.sphero.detectCollisions();
-
-    bot.sphero.color(color);
   }
 }).start();

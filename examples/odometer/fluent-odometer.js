@@ -7,29 +7,18 @@ Cylon
   .connection("sphero", { adaptor: "sphero", port: "/dev/rfcomm0" })
   .device("sphero", { driver: "sphero" })
   .on("ready", function(bot) {
-    var color = 0x00FF00,
-    bitFilter = 0xFFFF00;
-
-    console.log("Setting up Collision Detection...");
+    console.log("Setting up Odometer Data Streaming...");
 
     bot.sphero.on("dataStreaming", function(data) {
       console.log("data:");
       console.log(data);
     });
 
-    bot.sphero.on("collision", function() {
-      console.log("Collision:");
-      color = color ^ bitFilter;
-      console.log("Color: " + (color.toString(16)) + " ");
-      bot.sphero.color(color);
-      bot.sphero.roll(128, Math.floor(Math.random() * 360));
-    });
-
-    bot.sphero.detectCollisions();
-    // To detect odometer, accelOne and velocity from the sphero
-    // we use setDataStreaming.
-    // sphero API data sources for locator info are as follows:
-    // ["odometer", "accelOne", "velocity"]
+    // To detect odometer from the Sphero we use setDataStreaming.
+    // The data sources available for data streaming from the
+    // Sphero API are as follows:
+    // ["motorsPWM", "imu", "accelerometer", "gyroscope", "motorsIMF"
+    //  "quaternion", "odometer", "accelOne", "velocity"]
     // It is also possible to pass an opts object to setDataStreaming():
     var opts = {
       // n: int, divisor of the max sampling rate, 400 hz/s
@@ -44,16 +33,10 @@ Cylon
       // pcnt = 0 means unlimited data Streaming
       // pcnt = 10 means stop after 10 data packets
       pcnt: 0,
-      dataSources: ["odometer", "accelOne", "velocity"]
+      dataSources: ["odometer"]
     };
 
     bot.sphero.setDataStreaming(opts);
-
-    // SetBackLED turns on the tail LED of the sphero that helps
-    // identify the direction the sphero is heading.
-    // accepts a param with a value from 0 to 255, led brightness.
-    bot.sphero.setBackLed(192);
-    bot.sphero.color(color);
   });
 
 Cylon.start();
