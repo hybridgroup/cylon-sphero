@@ -37,8 +37,9 @@ Cylon.robot({
       // pcnt = 0 means unlimited data Streaming
       // pcnt = 10 means stop after 10 data packets
       pcnt: 0,
-      dataSources: ["motorsPWM", "imu", "accelerometer", "gyroscope", "motorsIMF",
-                    "quaternion", "odometer", "accelOne", "velocity"]
+      dataSources: ["motorsPWM", "imu", "accelerometer", "gyroscope",
+                    "motorsIMF", "quaternion", "odometer", "accelOne",
+                    "velocity"]
     };
 
     bot.sphero.setDataStreaming(opts);
