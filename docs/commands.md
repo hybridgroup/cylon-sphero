@@ -61,9 +61,9 @@ opts contains attributes meth, xt, yt, xs, ys, dead
 - **yt** - an 8-bit settable threshold for the Y axis of the Sphero.
   A setting of `0x00` disables the contribution of this aYis
 - **xs** - an 8-bit settable speed value for the X speed. This is ranged,
-  then added to `thresholdX` to generate the final threshold value.
+  then added to `xt` to generate the final threshold value.
 - **ys** - an 8-bit settable speed value for the Y speed. This is ranged,
-  then added to `thresholdY` to generate the final threshold value.
+  then added to `yt` to generate the final threshold value.
 - **dead** - an 8-bit post-collision dead time to prevent re-triggering of
   the collision event. Specified in 10ms increments
 
