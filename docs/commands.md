@@ -1,21 +1,21 @@
 # Commands
 
-## abortMacro() 
+## abortMacro()
 
 This command aborts any executing macro, and returns both it's ID code
 and the command number currently in progress.
 
-##### Returns 
+##### Returns
 
 an array containing the ID code and command number.
 
-## abortOrbBasicProgram() 
+## abortOrbBasicProgram()
 
 Public: Aborts execution of any currently-running orbBasic program.
 
-##### Returns 
+##### Returns
 
-`null
+`null`
 
 ## appendMacroChunck(chunk)
 
@@ -28,7 +28,7 @@ you to build up a longer temporary macros.
 - **chunk** - macro definition to be executed later. Will throw an
   error if any larger than 254 bytes.
 
-##### Returns 
+##### Returns
 
 a boolean indicating whether or not the macro could be packeted.
 
@@ -43,7 +43,7 @@ written to the Sphero eventually.
 - **fragment** - fragment of orbBasic to be sent to the Sphero. Will throw an
   error if larger than 253 bytes
 
-##### Returns 
+##### Returns
 
 a boolean indicating whether or not the fragment could be packeted
 
@@ -66,7 +66,7 @@ params to decide what constitutes a 'collision'.
 - **deadTime** - an 8-bit post-collision dead time to prevent re-triggering of
   the collision event. Specified in 10ms increments
 
-##### Returns 
+##### Returns
 
 a boolean whether or not the packet to be sent to the Sphero has been built successfully
 
@@ -77,16 +77,16 @@ data in the form of X, Y coordinates on the ground plane.
 
 ##### Params
 
-  - **flag** - number (0-1), determines whether the calibrate commands automatically set the
-    yaw tare value.
-  - **y** - set the current X coordinates of Sphero on the ground plane in
-    centimeters.
-  - **x** - set the current Y coordinates of Sphero on the ground plane in
-    centimeters.
-  - **yawTare** - (0-359) value for the orientation the Sphero should use after
-    calibration.
+- **flag** - number (0-1), determines whether the calibrate commands automatically set the
+  yaw tare value.
+- **y** - set the current X coordinates of Sphero on the ground plane in
+  centimeters.
+- **x** - set the current Y coordinates of Sphero on the ground plane in
+  centimeters.
+- **yawTare** - (0-359) value for the orientation the Sphero should use after
+  calibration.
 
-##### Returns 
+##### Returns
 
 a boolean whether or not the packet to be sent to the Sphero has beenbuilt successfully
 
@@ -98,7 +98,7 @@ a collision, it will emit the `collision` event.
 Shortcut method to `configureCollisionDetection` so you don't have to deal
 with setting it up manually.
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -112,7 +112,7 @@ Specify 00h for the temporary RAM buffer or 01h for the persistent storage area.
 - **area** - which buffer should be erased, `0x00` for the temporary RAM buffer or
   `0x01` for the persistent storage area
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -127,7 +127,7 @@ an orbBasic program executing.
 - **area** - params
 - **startLine** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -136,7 +136,7 @@ an orbBasic program executing.
 This allows you to retrieve the application configuration block that
 is set aside for exclusive use by applications.
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -148,7 +148,7 @@ This command retrieves one of the configuration blocks.
 
 - **id** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -156,7 +156,7 @@ This command retrieves one of the configuration blocks.
 
 Gets the operation mode of Sphero based on the supplied mode value.
 
-##### Returns 
+##### Returns
 
 `00h (Normal mode) or 01h (User Hack mode)`
 
@@ -165,7 +165,7 @@ Gets the operation mode of Sphero based on the supplied mode value.
 This command returns the ID code and command number of the currently
 executing macro.
 
-##### Returns 
+##### Returns
 
 `(ID code, cmd number, cmd number)`
 
@@ -174,7 +174,7 @@ executing macro.
 This command returns the ID code and command number of the currently
 executing macro.
 
-##### Returns 
+##### Returns
 
 an array of option flags
 
@@ -183,7 +183,7 @@ an array of option flags
 This retrieves the "user LED color" which is stored in the config
 block.
 
-##### Returns 
+##### Returns
 
 the sphero's LED color
 
@@ -191,7 +191,7 @@ the sphero's LED color
 
 Returns the temporary option flags.
 
-##### Returns 
+##### Returns
 
 FLAGS
 
@@ -199,7 +199,7 @@ FLAGS
 
 This terminates any running macro and reinitializes the macro system.
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -208,7 +208,7 @@ This terminates any running macro and reinitializes the macro system.
 This reads Sphero's current position (X,Y), component velocities and
 SOG (speed over ground).
 
-##### Returns 
+##### Returns
 
 `(XPOS, YPOS, XVEL, YVEL, SOG)`
 
@@ -224,7 +224,7 @@ calibrated direction.
 - **heading** - params
 - **state** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -238,7 +238,7 @@ This attempts to execute the specified macro.
 - **dLen** - params
 - **id** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -251,7 +251,7 @@ for later execution.
 
 - **data** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -266,7 +266,7 @@ This command controls the self level routine.
 - **timeout** - params
 - **trueTime** - params
 
-##### Returns 
+##### Returns
 
 options: `array` [(0 , 1 , 2 ,3 ), (0 , 1 to 90), (0 , 1 to 255), (0 , 1 to 255)].
 
@@ -278,7 +278,7 @@ This command controls the self level routine.
 
 - **range** - params
 
-##### Returns 
+##### Returns
 
 `integer` opt: 0 , 1 , 2 , 3.
 
@@ -295,7 +295,7 @@ not persist across power cycles.
 
 - **level** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -307,7 +307,7 @@ setBoostWithTime(state)
 
 - **state** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -323,7 +323,7 @@ or a color name string
 - **persist** - boolean, whether or not the color should persist. Defaults to
   `true`
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -336,7 +336,7 @@ Changes the Sphero to a random color.
 - **persist** - boolean, whether or not the color should persist. Defaults to
   `true`
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -349,7 +349,7 @@ loads it into the RAM copy of the configuration block.
 
 - **value** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -363,9 +363,9 @@ Sphero supports asynchronous data streaming of certain control system and sensor
 - **m** -params
 - **mask** - params
 - **pcnt** - params
-- **mask2*+ - params
+- **mask2** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -375,9 +375,9 @@ Assigns the operation mode of Sphero based on the supplied mode value.
 
 ##### Params
 
-- **mode*+ - params
+- **mode** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -390,7 +390,7 @@ by commanding a new reference heading in degrees, which ranges from 0 to 359.
 
 - **heading** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -405,7 +405,7 @@ commands to be selectively altered from outside of the macro system itself.
 - **val1** - params
 - **val2** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -418,7 +418,7 @@ Sphero from rolling away in the case of a crashed (or paused) client app.
 
 - **time** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -429,7 +429,7 @@ immediately to the config block for persistence across power cycles.
 
 - **flags** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -444,7 +444,7 @@ or a color name string
 - **persist** - boolean, whether or not the color should persist. Defaults to
   `true`
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -460,7 +460,7 @@ instead of having the stabilization system control them.
 - **rMode** - params
 - **rPower** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -472,7 +472,7 @@ Sets the rotation rate of the Sphero
 
 - **rate** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -482,7 +482,7 @@ Sets whether the Sphero should have stabilization enabled
 
 - **bool** - whether or not the sphero should have stabilization
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -493,9 +493,9 @@ persist across a power cycle. See below for the bit definitions.
 
 ##### Params
 
-- **flags*+ - params
+- **flags** - params
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -503,7 +503,7 @@ persist across a power cycle. See below for the bit definitions.
 
 Stops the Sphero from rolling around.
 
-##### Returns 
+##### Returns
 
 `nil`
 
@@ -516,6 +516,6 @@ user to answer an input request.
 
 - **val** - params
 
-##### Returns 
+##### Returns
 
 `nil`
