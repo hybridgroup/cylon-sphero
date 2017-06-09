@@ -47,30 +47,33 @@ written to the Sphero eventually.
 
 a boolean indicating whether or not the fragment could be packeted
 
-## configureCollisionDetection(method, thresholdX, thresholdY, speedX, speedY, deadTime)
+## configureCollisions(opts, cb)
 
 Internal: Configures collision detection on the Sphero, using the provided
 params to decide what constitutes a 'collision'.
+opts contains attributes meth, xt, yt, xs, ys, dead
 
 ##### Params
 
-- **method** - detection method to use. Pass `0x01` to enable collision detection
-- **thresholdX** - an 8-bit settable threshold for the X axis of the Sphero.
+- **meth** - detection method to use. Pass `0x01` to enable collision detection
+- **xt** - an 8-bit settable threshold for the X axis of the Sphero.
   A setting of `0x00` disables the contribution of this axis
-- **thresholdY** - an 8-bit settable threshold for the Y axis of the Sphero.
+- **yt** - an 8-bit settable threshold for the Y axis of the Sphero.
   A setting of `0x00` disables the contribution of this aYis
-- **speedX** - an 8-bit settable speed value for the X speed. This is ranged,
-  then added to `thresholdX` to generate the final threshold value.
-- **speedY** - an 8-bit settable speed value for the Y speed. This is ranged,
-  then added to `thresholdY` to generate the final threshold value.
-- **deadTime** - an 8-bit post-collision dead time to prevent re-triggering of
+- **xs** - an 8-bit settable speed value for the X speed. This is ranged,
+  then added to `xt` to generate the final threshold value.
+- **ys** - an 8-bit settable speed value for the Y speed. This is ranged,
+  then added to `yt` to generate the final threshold value.
+- **dead** - an 8-bit post-collision dead time to prevent re-triggering of
   the collision event. Specified in 10ms increments
 
 ##### Returns
 
 a boolean whether or not the packet to be sent to the Sphero has been built successfully
 
-## configureLocator(flag, x, y, yawTare)
+## configureLocator(opts, cb) 
+
+opts contains attributes flag, x, y, yawTare.
 
 Through the streaming interface, Sphero provides real-time location
 data in the form of X, Y coordinates on the ground plane.
@@ -203,14 +206,15 @@ This terminates any running macro and reinitializes the macro system.
 
 `nil`
 
-## readLocator()
+## readLocator(cb)
 
 This reads Sphero's current position (X,Y), component velocities and
-SOG (speed over ground).
+SOG (speed over ground) and passes these into the callback in error, data.
+data has attributes xpos, ypos, xvel, yvel, sog.
 
 ##### Returns
 
-`(XPOS, YPOS, XVEL, YVEL, SOG)`
+`nil`
 
 ## roll(speed, heading, state)
 
@@ -448,17 +452,18 @@ or a color name string
 
 `nil`
 
-## setRawMotorValues(L-MODE, L-POWER, R-MODE, R-POWER)
+## setRawMotors(opts, cb)
 
 This allows you to take over one or both of the motor output values,
 instead of having the stabilization system control them.
+opts contains attributes lmode, lpower, rmode, rpower
 
 ##### Params
 
-- **lMode** - params
-- **lPower** - params
-- **rMode** - params
-- **rPower** - params
+- **lmode** - params 0=off, 1=forward, 2=reverse, 3=brake, 4=ignore
+- **lpower** - params 0-255 power level
+- **rmode** - params 0=off, 1=forward, 2=reverse, 3=brake, 4=ignore
+- **rpower** - params 0-255 power level
 
 ##### Returns
 
@@ -476,7 +481,7 @@ Sets the rotation rate of the Sphero
 
 `nil`
 
-## setStabalisation(bool)
+## setStabilization(bool)
 
 Sets whether the Sphero should have stabilization enabled
 
